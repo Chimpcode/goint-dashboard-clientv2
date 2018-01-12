@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import CcAvatar from '~/components/CcAvatar.vue'
+  import CcAvatar from '~/components/cc_avatar.vue'
 
   export default {
     middleware: 'auth',

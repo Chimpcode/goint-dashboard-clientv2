@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import { EventBus } from '~/bus/index'
-
 export default {
   name: 'ClusterCard',
   props: {
@@ -42,18 +40,8 @@ export default {
   },
   methods: {
     editClusterData () {
-      this.$emit('on-edit-cluster', this.clusterData)
     },
     deleteSectorFunc (id) {
-      EventBus.$emit('is-shot-loading', true)
-      this.$graphito.call_mutation('deleteSector', { id: id })
-        .then(res => {
-          this.$emit('refresh-data', true)
-          EventBus.$emit('is-shot-loading', false)
-        }, err => {
-          console.log(err)
-          EventBus.$emit('is-shot-loading', false)
-        })
     }
   }
 }

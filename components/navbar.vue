@@ -31,7 +31,7 @@
   </nav>
 </template>
 <script>
-import CcIcon from '~/components/CcIcon'
+import CcIcon from '~/components/cc_icon'
 export default {
   name: 'Navbar',
   components: {

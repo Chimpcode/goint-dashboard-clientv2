@@ -26,7 +26,7 @@ module.exports = {
   */
   plugins: [
     '~/plugins/vue_google_maps',
-    '~/plugins/vue_resource',
+    '~/plugins/vue_resource'
     // '~/plugins/vue_image_lightbox'
     // '~/plugins/vue_fraction_grid',
   ],
@@ -39,6 +39,7 @@ module.exports = {
     '@nuxtjs/axios'
 
   ],
+
   axios: {
     credentials: false
   },
@@ -61,10 +62,6 @@ module.exports = {
       paramTokenName: 'token',
       appendToken: false
     },
-    // redirect: {
-    //   notLoggedIn: '/login',
-    //   loggedIn: '/client/dashboard'
-    // },
     token: {
       enabled: true,
       type: 'Bearer',
@@ -72,7 +69,7 @@ module.exports = {
       name: 'token',
       cookie: true,
       cookieName: 'token'
-    },
+    }
   },
   vuetify: {
     theme: {
@@ -101,7 +98,7 @@ module.exports = {
 
     extractCSS: true,
     vendor: [
-      'vue2-google-maps',
+      'vue2-google-maps'
     ],
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
@@ -116,9 +113,7 @@ module.exports = {
         // config.resolve.extensions.push('.js')
         // config.resolve.extensions.push('.vue')
       }
-
-    },
+    }
 
   }
 }
-

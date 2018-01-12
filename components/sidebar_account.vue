@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ProfileBox from '~/components/ProfileBox'
+import ProfileBox from '~/components/profile_box'
 
 export default {
   name: 'SidebarAccount',

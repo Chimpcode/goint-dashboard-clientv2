@@ -29,7 +29,7 @@
                     :type="pass_v ? 'password' : 'text'"
                   ></v-text-field>
 
-                  <v-btn flat color="primary" light :to="{ path: '/'}" @click.native.stop="processLogin">Login!</v-btn>
+                  <v-btn flat color="primary" light @click.native.stop="processLogin">Login!</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -43,7 +43,7 @@
         <v-dialog v-model="errorDialog" persistent max-width="290">
           <v-card>
             <v-card-title class="headline">Error al iniciar sesion</v-card-title>
-            <v-card-text>Ingresa correctamente los datos requeridos</v-card-text>
+            <v-card-text>Email o contraseña no validos</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="green darken-1" flat="flat" @click.native="errorDialog = false">OK</v-btn>
@@ -56,13 +56,18 @@
 </template>
 
 <script>
-  import ChimpcodeBanner from '../components/ChimpcodeBanner'
+  import ChimpcodeBanner from '~/components/cc_banner'
   // import router from '@/router'
   export default {
+    middleware: 'alreadyauth',
     components: {
       ChimpcodeBanner
     },
-
+    //    beforeCreate () {
+    //      if (this.$store.getters['auth/loggedIn']) {
+    //        this.$router.push('/dashboard')
+    //      }
+    //    },
     data () {
       return {
         errorDialog: false,
@@ -78,30 +83,27 @@
       }
     },
     methods: {
-      processLogin: function () {
-        console.log('Clicked!')
-        console.log(
-          this.email,
-          this.password
-        )
-        this.$store.dispatch('auth/login', {
-          fields: {
-            email: this.email,
-            password: this.password
+      async processLogin () {
+        try {
+          await this.$store.dispatch('auth/login', {
+            fields: {
+              email: this.email,
+              password: this.password
+            }
+          })
+          this.email = ''
+          this.password = ''
+          this.$router.push('/dashboard')
+        } catch (e) {
+          console.log(e)
+          console.log(this.$store.getters['auth/loggedIn'])
+          if (!this.$store.getters['auth/loggedIn']) {
+            this.errorDialog = true
           }
-        })
-        console.log(this.$store.getters['auth/loggedIn'])
-        if (!this.$store.getters['auth/loggedIn']) {
-          this.errorDialog = true
+          this.password = ''
         }
-
-        this.email = ''
-        this.password = ''
       }
-    },
-    created () {
     }
-
   }
 </script>
 

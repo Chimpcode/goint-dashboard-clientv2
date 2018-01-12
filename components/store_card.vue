@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { EventBus } from '~/bus/index'
 
 export default {
   name: 'StoreCard',
@@ -51,15 +50,6 @@ export default {
       this.$emit('on-edit-store', this.placeData)
     },
     deleteStoreFunc (id) {
-      EventBus.$emit('is-shot-loading', true)
-      this.$graphito.call_mutation('deleteStore', { id: id })
-        .then(res => {
-          this.$emit('refresh-data', true)
-          EventBus.$emit('is-shot-loading', false)
-        }, err => {
-          console.log(err)
-          EventBus.$emit('is-shot-loading', false)
-        })
     }
   }
 }

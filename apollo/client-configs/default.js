@@ -3,7 +3,7 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 export default (ctx) => {
-  const httpLink = new HttpLink({ uri: 'http://13.90.253.208:60000/simple/v1/cjb5vhjxf002q01897ggfz3b3' })
+  const httpLink = new HttpLink({ uri: 'http://13.90.253.208:60000/simple/v1/cjcae1ay000en0189jqrz4n2q' })
 
   // auth token
   let token = process.server ? ctx.req.session : window.__NUXT__.state.session

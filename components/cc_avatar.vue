@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import GointGalaxy from '~/components/GointGalaxy'
+  import GointGalaxy from '~/components/goint_galaxy'
 
   export default {
     components: {

@@ -18,9 +18,9 @@
 </template>
 
 <script>
-  import Navbar from '~/components/Navbar'
-  import SidebarAccount from '~/components/SidebarAccount'
-  import Topbar from '~/components/Topbar'
+  import Navbar from '~/components/navbar'
+  import SidebarAccount from '~/components/sidebar_account'
+  import Topbar from '~/components/topbar'
 
   export default {
     components: {

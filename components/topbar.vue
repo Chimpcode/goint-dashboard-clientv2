@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CcIcon from './CcIcon'
+import CcIcon from '~/components/cc_icon'
 
 export default {
   name: 'Topbar',

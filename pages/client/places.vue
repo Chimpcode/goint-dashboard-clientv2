@@ -21,33 +21,32 @@
       </v-flex>
     </v-layout>
     <v-layout row style="height: 85vh;">
-
       <v-flex xs6 sm4 class="overflowy">
         <location-card
           class="ma-2"
           :location-data="location"
           @on-edit-location="editLocation"
           @refresh-data="refreshData"
-          v-for="(location, i) in locations"
+          v-for="(location, i) in allLocations"
           :key="i"
-        />
+        ></location-card>
         <new-card
           class="ma-2"
           kind-card="ubicacion"
-          @on-open-form="openForm"/>
+          :onOpen="openForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <place-card
           class="ma-2"
           :place-data="store"
-          v-for="(store, i) in stores"
+          v-for="(store, i) in allStores"
           @on-edit-store="editStore"
           @refresh-data="refreshData"
-          :key="i"/>
+          :key="i"></place-card>
         <new-card
           class="ma-2"
           kind-card="tienda"
-          @on-open-form="openForm"/>
+          @on-open-form="openForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <cluster-card
@@ -55,12 +54,12 @@
           :cluster-data="group"
           @on-edit-cluster="editCluster"
           @refresh-data="refreshData"
-          v-for="(group, i) in groups"
-          :key="i"/>
+          v-for="(group, i) in allSectors"
+          :key="i"></cluster-card>
         <new-card
           class="ma-2"
           kind-card="sector"
-          @on-open-form="openForm"/>
+          @on-open-form="openForm"></new-card>
       </v-flex>
     </v-layout>
     <LocationForm
@@ -78,12 +77,15 @@
 </template>
 
 <script>
-  import PlaceCard from '~/components/StoreCard'
-  import LocationCard from '~/components/LocationCard'
-  import ClusterCard from '~/components/ClusterCard'
-  import NewCard from '~/components/NewCard'
-  import LocationForm from '~/components/LocationForm'
-  import { EventBus } from '~/bus/index'
+  import PlaceCard from '~/components/store_card'
+  import LocationCard from '~/components/location_card'
+  import ClusterCard from '~/components/cluster'
+  import NewCard from '~/components/new_card'
+  import LocationForm from '~/components/location_form'
+
+  import {allLocationsQuery} from '~/apollo/locations'
+  import {allStoresQuery} from '~/apollo/stores'
+  import {allSectorsQuery} from '~/apollo/sectors'
 
   export default {
     middleware: 'auth',
@@ -96,92 +98,20 @@
       return {
         editData: undefined,
         openFormTrigger: '',
-        locations: [
+        allLocations: [
         ],
-        stores: [
+        allStores: [
         ],
-        groups: [
+        allSectors: [
         ]
       }
     },
-    methods: {
-      editCluster (clusterData) {
-        this.openFormTrigger = 'sector'
-        this.editData = clusterData
-      },
-      editStore (storeData) {
-        this.openFormTrigger = 'tienda'
-        this.editData = storeData
-      },
-      editLocation (storeLocation) {
-        this.openFormTrigger = 'ubicacion'
-        this.editData = storeLocation
-      },
-      openForm: function (kindForm) {
-        // console.log('click places', kindForm)
-        this.editData = undefined
-        this.openFormTrigger = kindForm
-      },
-      onCloseLocationForm: function (closeValue) {
-        this.openFormTrigger = ''
-      },
-      onCreateCluster: function (newCluster) {
-        // console.log(newCluster)
-        this.groups.push({
-          id: newCluster.id,
-          name: newCluster.name,
-          stores: newCluster.tiendas
-        })
-      },
-      onCreateStore: function (newStore) {
-        // console.log(newStore)
-        this.stores.push({
-          id: newStore.id,
-          name: newStore.name,
-          description: newStore.description,
-          locations: newStore.positions
-        })
-      },
-      onCreateLocation: function (newLocation) {
-        // console.log(newLocation)
-        this.locations.push({
-          id: newLocation.id,
-          address: newLocation.address,
-          position: newLocation.position
-        })
-      },
-      fetchDependencies () {
-        return new Promise((resolve, reject) => {
-          this.$graphito.call_query('fetchAllLocations')
-            .then(res => {
-              this.locations = res.allLocations.map(location => {
-                location.position = {}
-                location.position.lat = location.latitude
-                location.position.lng = location.longitude
-                return location
-              })
-              return this.$graphito.call_query('fetchAllStores')
-            }).then(res => {
-              this.stores = res.allStores
-              return this.$graphito.call_query('fetchAllSectors')
-            }).then(res => {
-              this.groups = res.allSectors
-              resolve(true)
-            }).catch(err => { reject(err) })
-        })
-      },
-      refreshData () {
-        EventBus.$emit('is-loading', true)
-        this.fetchDependencies().then(res => {
-          EventBus.$emit('is-loading', false)
-        }, err => {
-          console.log(err)
-          EventBus.$emit('is-loading', false)
-        })
-      }
+    apollo: {
+      allLocations: allLocationsQuery,
+      allStores: allStoresQuery,
+      allSectors: allSectorsQuery
     },
-    created () {
-      this.refreshData()
+    methods: {
     }
   }
 </script>
