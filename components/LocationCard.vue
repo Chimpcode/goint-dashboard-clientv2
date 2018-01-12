@@ -1,36 +1,37 @@
 <template>
-  <v-card light id="locationcard">
-    <v-card-title primary-title>
-    <div>
-        <div class="idkey">{{locationData.id}}</div>
-        <h3 class="headline mb-0 mt-2">
-          {{locationData.position.lat}},
-           {{locationData.position.lng}}
-        </h3>
-        <div>{{locationData.address}}
-        </div>
-    </div>
-    </v-card-title>
-    <v-card-actions class="roboto">
-      <v-spacer/>
-      <v-tooltip bottom>
-          <v-btn flat icon color="primary" slot="activator"
+  <md-card id="locationcard">
+    <md-card-header>
+      <div class="md-title">
+          <div class="idkey">{{locationData.id}}</div>
+          <h3 class="headline mb-0 mt-2">
+            {{locationData.position.lat}},
+             {{locationData.position.lng}}
+          </h3>
+          <div>{{locationData.address}}
+          </div>
+      </div>
+    </md-card-header>
+    <md-card-actions class="roboto">
+
+      <md-tooltip md-direction="bottom">
+          <md-button flat icon color="primary" slot="activator"
                  @click.native.stop="deleteLocation(locationData.id)"
           class="">
-            <v-icon>delete</v-icon>
-          </v-btn>
+            <md-icon>delete</md-icon>
+          </md-button>
           <span>Eliminar Ubicacion?</span>
-      </v-tooltip>
-      <v-tooltip bottom>
-        <v-btn flat icon color="primary"
+      </md-tooltip>
+
+      <md-tooltip md-direction="bottom">
+        <md-button flat icon color="primary"
                class="" slot="activator"
                @click.native.stop="onEditLocation">
-          <v-icon>mode_edit</v-icon>
-        </v-btn>
+          <md-icon>mode_edit</md-icon>
+        </md-button>
         <span>Editar?</span>
-      </v-tooltip>
-    </v-card-actions>
-  </v-card>
+      </md-tooltip>
+    </md-card-actions>
+  </md-card>
 </template>
 
 <script>

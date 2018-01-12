@@ -70,6 +70,7 @@
   import { EventBus } from '~/bus/index'
 
   export default {
+    middleware: 'auth',
     layout: 'dashboard',
     name: 'Promociones',
     components: {

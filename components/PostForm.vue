@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 md5 offset-md3>
+    <v-flex xs6 class="px-3">
       <v-layout row wrap>
         <v-flex xs12>
           <h3>{{ isNew? 'Crear promocion': 'Editar promocion'}} <span class="green--text">&nbsp;{{infomessage}}</span></h3>
@@ -95,14 +95,89 @@
             v-model="postEdit.description">
           </v-text-field>
         </v-flex>
+      </v-layout>
+    </v-flex>
+
+    <v-flex xs6 class="px-3">
+      <v-layout row wrap>
+        <v-flex xs12><div class="body-2">Rango de edad</div></v-flex>
+        <v-flex xs3>
+          <v-text-field label="De" :rules="ageRules" type="number"
+                        v-model.number="postEdit.minAge"></v-text-field>
+        </v-flex>
+        <v-flex xs3>
+          <v-text-field label="Hasta" :rules="ageRules" type="number"
+                        v-model.number="postEdit.maxAge"></v-text-field>
+        </v-flex>
+        <v-flex xs12><div class="body-2">Genero</div></v-flex>
+        <v-flex xs12>
+          <v-checkbox label="Hombres"
+                      v-model="genre"
+                      color="red darken-3"
+                      value="Hombres"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Mujeres"
+                      v-model="genre"
+                      color="red darken-3"
+                      value="Mujeres"
+                      hide-details></v-checkbox>
+        </v-flex>
+        <v-flex xs12><div class="body-2">Dias de repeticion</div></v-flex>
+        <v-flex xs6>
+          <v-checkbox label="Lunes"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="L"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Miercoles"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="X"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Viernes"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="V"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Domingo"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="D"
+                      hide-details></v-checkbox>
+        </v-flex>
+        <v-flex xs6>
+          <v-checkbox label="Martes"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="M"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Jueves"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="J"
+                      hide-details></v-checkbox>
+          <v-checkbox label="Sabado"
+                      v-model="cyclicDays"
+                      color="red darken-3"
+                      value="S"
+                      hide-details></v-checkbox>
+        </v-flex>
+        <v-flex xs12><div class="body-2">Horario de disponibilidad</div></v-flex>
+        <v-flex xs3>
+          <v-text-field label="Hora Inicio" mask="time" @input="checkValue" v-model="postEdit.startTime" :rules="timeRules"></v-text-field>
+        </v-flex>
+        <v-flex xs3>
+          <v-text-field label="Hora Final" mask="time" :rules="timeMaxRules"></v-text-field>
+        </v-flex>
 
         <v-flex xs12 class="text-xs-right">
           <v-btn color="primary"
                  :disabled="isDisabledToCreate"
-            @click.native.stop="createOrUpdatePost">
+                 @click.native.stop="createOrUpdatePost">
             {{ isNew ? 'CREAR' : 'EDITAR' }}
           </v-btn>
         </v-flex>
+
       </v-layout>
     </v-flex>
 
@@ -122,14 +197,62 @@ export default {
   },
   data () {
     return {
+      genre: [],
+      cyclicDays: [],
       isDisabledToCreate: false,
       infomessage: '',
       location_items: [],
       timepicker_date: null,
-      timepicker_menu: false
+      timepicker_menu: false,
+      ageRules: [
+        (v) => {
+          if (v !== undefined) {
+            return v > 0 ? true : 'Insertar datos validos'
+          } else {
+            return 'campo requerido'
+          }
+        }
+      ],
+      timeMaxRules: [
+        (v) => !!v || 'Campo requerido',
+        (v) => {
+          if (v !== undefined) {
+            let hour = parseInt(v[0] + v[1])
+            let minute = parseInt(v[2] + v[3])
+            if ((hour >= 0) && (hour <= 24) && (minute >= 0) && (minute <= 59)) {
+              return true
+            } else {
+              return 'Insertar tiempos validos'
+            }
+          } else {
+            return false
+          }
+        },
+        (v) => v > (this.postEdit.startTime) || 'Campo mayor que la hora inicial'
+      ],
+      timeRules: [
+        (v) => !!v || 'Campo requerido',
+        (v) => {
+          if (v !== undefined) {
+            let hour = parseInt(v[0] + v[1])
+            let minute = parseInt(v[2] + v[3])
+            if ((hour >= 0) && (hour <= 24) && (minute >= 0) && (minute <= 59)) {
+              return true
+            } else {
+              return 'Insertar tiempos validos'
+            }
+          } else {
+            return false
+          }
+        }
+      ]
     }
   },
   methods: {
+    checkValue () {
+      console.log(typeof this.postEdit.startTime)
+      console.log(this.postEdit.startTime)
+    },
     fetchDependencies () {
       let self = this
       return new Promise((resolve, reject) => {

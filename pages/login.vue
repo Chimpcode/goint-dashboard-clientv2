@@ -1,57 +1,72 @@
 <template>
   <div id="login">
-    <v-layout row wrap class="cc-container">
-      <v-flex xs12 sm5>
-        <div class="r-side-content">
-          <v-container>
-            <v-layout row>
-              <v-flex xs8 offset-xs2 sm8 offset-sm2 class="text-xs-center translate-middle">
+    <v-app>
+      <v-layout row wrap class="cc-container">
+        <v-flex xs12 sm5>
+          <div class="r-side-content">
+            <v-container>
+              <v-layout row>
+                <v-flex xs8 offset-xs2 sm8 offset-sm2 class="text-xs-center translate-middle">
 
-                <img class="mt-4 mb-5 pb-4 hidden-sm-and-down" src="../assets/logo_goint.png" width="50%"/>
-                <img class="mt-4 mb-5 hidden-md-and-up" src="../assets/logo_goint.png" width="120"/>
+                  <img class="mt-4 mb-5 pb-4 hidden-sm-and-down" src="../assets/logo_goint.png" width="50%"/>
+                  <img class="mt-4 mb-5 hidden-md-and-up" src="../assets/logo_goint.png" width="120"/>
 
-                <v-text-field
-                  name="email"
-                  label="Email"
-                  id="email"
-                  :rules="emailRules"
-                  v-model="email"
-                ></v-text-field>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    :rules="emailRules"
+                    v-model="email"
+                  ></v-text-field>
 
-                <v-text-field
-                  name="password"
-                  label="Password"
-                  id="password"
-                  :append-icon="pass_v ? 'visibility' : 'visibility_off'"
-                  :append-icon-cb="() => (pass_v = !pass_v)"
-                  :type="pass_v ? 'password' : 'text'"
-                ></v-text-field>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    :append-icon="pass_v ? 'visibility' : 'visibility_off'"
+                    :append-icon-cb="() => (pass_v = !pass_v)"
+                    v-model="password"
+                    :type="pass_v ? 'password' : 'text'"
+                  ></v-text-field>
 
-                <v-btn color="primary" :to="{ name: 'Dashboard - Promociones'}" dark>Login</v-btn>
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <chimpcode-banner class="chimpcode-banner"/>
-        </div>
-      </v-flex>
-      <v-flex xs12 sm7>
-        <div class="l-side-content">
-
-        </div>
-      </v-flex>
-    </v-layout>
+                  <v-btn flat color="primary" light :to="{ path: '/'}" @click.native.stop="processLogin">Login!</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <chimpcode-banner class="chimpcode-banner"/>
+          </div>
+        </v-flex>
+        <v-flex xs12 sm7>
+          <div class="l-side-content">
+          </div>
+        </v-flex>
+        <v-dialog v-model="errorDialog" persistent max-width="290">
+          <v-card>
+            <v-card-title class="headline">Error al iniciar sesion</v-card-title>
+            <v-card-text>Ingresa correctamente los datos requeridos</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" flat="flat" @click.native="errorDialog = false">OK</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+    </v-app>
   </div>
 </template>
 
 <script>
   import ChimpcodeBanner from '../components/ChimpcodeBanner'
-
+  // import router from '@/router'
   export default {
     components: {
       ChimpcodeBanner
     },
+
     data () {
       return {
+        errorDialog: false,
+        password: '',
         pass_v: true,
         email: '',
         emailRules: [
@@ -62,14 +77,37 @@
         ]
       }
     },
+    methods: {
+      processLogin: function () {
+        console.log('Clicked!')
+        console.log(
+          this.email,
+          this.password
+        )
+        this.$store.dispatch('auth/login', {
+          fields: {
+            email: this.email,
+            password: this.password
+          }
+        })
+        console.log(this.$store.getters['auth/loggedIn'])
+        if (!this.$store.getters['auth/loggedIn']) {
+          this.errorDialog = true
+        }
+
+        this.email = ''
+        this.password = ''
+      }
+    },
     created () {
     }
+
   }
 </script>
 
 <style lang="stylus">
   html, body, #app, #login
-    height: 100%
+    height: 100vh
 
   .cc-container
     height: 100%

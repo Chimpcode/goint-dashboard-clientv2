@@ -4,8 +4,10 @@
 
 <script>
   export default {
+    middleware: 'auth',
     layout: 'dashboard',
     data () {
+      return {}
     }
   }
 </script>

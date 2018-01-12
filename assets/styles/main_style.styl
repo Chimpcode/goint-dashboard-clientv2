@@ -13,7 +13,8 @@
 //   lazy: #cbcbcb
 // }
 
-@require '../../node_modules/vuetify/src/stylus/main'
+@require '~vuetify/src/stylus/main.styl'
+@require '~vue-image-lightbox/dist/vue-image-lightbox.min.css'
 
 @font-face {
   font-family: NexaBold
@@ -24,6 +25,60 @@
   font-family: NexaLight
   src: url(../fonts/nexa_light.otf)
 }
+body, html
+  margin: 0
+  background-color: #F7F7F8
+  overflow-y auto !important
+#app{
+  background-color: #F7F7F8
+}
+
+.loading-text
+.loading-short-text
+  color: #a72324
+  font-size 18px
+  font-weight bold
+  position absolute
+
+
+.loading-short-text
+  transform translateX(-55px) translateY(-10px)
+  left 40%
+  top 50%
+
+.loading-text
+  transform translateX(-55px) translateY(-10px)
+  left 50%
+  top 50%
+
+
+.loading-screen
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  z-index 9
+  background #fdfdfde8
+
+.loading-screen-black
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  z-index 9998
+  background rgba(0, 0, 0, 0.40)
+
+.loading-dialog
+  position absolute
+  top 50%
+  left 50%
+  transform translateX(-150px) translateY(-75px)
+  width 300px
+  height 150px
+  z-index 9999
+  background #f7f7f8
 
 .nexabold
   font-family: NexaBold

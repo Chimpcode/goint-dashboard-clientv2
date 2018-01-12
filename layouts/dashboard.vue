@@ -1,15 +1,18 @@
 <template>
   <div id="dashboard">
-    <navbar/>
-    <topbar :title="$route.name" @on-menu-btn-click="sidebar = !sidebar"/>
-    <!-- @on-info-submission="onSendSubmission" -->
-    <sidebar-account :open="sidebar"
-                     @update-sidebar-open="onSidebarChange"
-                     transition="slide-x-transition"
-    >
-    </sidebar-account>
+    <v-app>
+      <topbar :title="$nuxt.$route.name" @on-menu-btn-click="sidebar = !sidebar"/>
+      <navbar/>
+       <!--@on-info-submission="onSendSubmission" -->
+      <sidebar-account :open="sidebar"
+                       @update-sidebar-open="onSidebarChange"
+                       transition="slide-x-transition"
+      >
+      </sidebar-account>
 
-    <nuxt/>
+      <nuxt/>
+
+    </v-app>
 
   </div>
 </template>
@@ -21,7 +24,9 @@
 
   export default {
     components: {
-      Navbar, Topbar, SidebarAccount
+      Navbar,
+      SidebarAccount,
+      Topbar
     },
     data () {
       return {

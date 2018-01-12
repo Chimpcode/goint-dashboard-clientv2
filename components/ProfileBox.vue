@@ -3,9 +3,9 @@
     <div>
       <v-icon class="primary--text" style="font-size:72px">person</v-icon>
     </div>
-    <div>INKAFARMA</div>
+    <div>{{companyName}}</div>
     <div class="fix-align">
-      ANTHONY
+      {{socialReason}}
       <v-menu offset-y light>
         <v-icon slot="activator" class="lazy--text">arrow_drop_down</v-icon>
         <v-list light>
@@ -15,12 +15,18 @@
         </v-list>
       </v-menu>
     </div>
-    
+
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      companyName: this.$store.state.auth.user.name,
+      socialReason: this.$store.state.auth.user.social_reason
+    }
+  }
 }
 </script>
 

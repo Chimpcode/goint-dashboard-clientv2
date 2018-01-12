@@ -1,5 +1,15 @@
 <template>
   <v-container>
+    <v-layout row wrap class="mt-4">
+      <v-flex xs12>
+        <p class="subheader">Logo de la empresa</p>
+      </v-flex>
+      <v-flex xs12 class="text-xs-center">
+        <cc-avatar
+          image-url="http://13.90.253.208:9300/api/v1/i/milkyway/default.png">
+        </cc-avatar>
+      </v-flex>
+    </v-layout>
     <v-layout row wrap>
       <v-flex xs12 md6 class="py-3">
         <v-select
@@ -37,11 +47,27 @@
         <v-switch color="primary" v-model="item.value"></v-switch>
       </v-flex>
     </v-layout>
+    <v-layout row wrap class="mt-4">
+      <v-flex xs12>
+        <v-text-field
+          name="input-1"
+          label="Terminos y Condiciones de las promociones"
+          textarea
+          dark
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
+  import CcAvatar from '~/components/CcAvatar.vue'
+
   export default {
+    middleware: 'auth',
+    components: {
+      CcAvatar
+    },
     layout: 'dashboard',
     data () {
       return {
@@ -74,4 +100,6 @@
     margin-left : 72px
     font-family : NexaLight
   // color: #cbcbcb
+  .avatar-hover:hover
+    background-color black
 </style>

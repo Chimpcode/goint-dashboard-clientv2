@@ -86,6 +86,7 @@
   import { EventBus } from '~/bus/index'
 
   export default {
+    middleware: 'auth',
     layout: 'dashboard',
     name: 'Places',
     components: {

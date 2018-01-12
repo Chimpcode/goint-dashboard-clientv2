@@ -1,38 +1,37 @@
 <template>
   <nav class="navbar">
-    <router-link id='top-item' :to="{ path: 'dashboard' }" :class="$route.name === 'Dashboard'? 'active':''">
+    <router-link id='top-item' :to="{ path: 'dashboard' }" :class="$nuxt.$route.name === 'Dashboard'? 'active':''">
       <cc-icon ccicon="send" :ccclass="['navbar-icon', 'main-icon']"/>
       <!-- <div class="navbar-label"> Dashb. </div> -->
     </router-link>
     <ul>
-      <li :class="$route.name === 'Dashboard - Promociones'? 'active':''">
+      <li :class="$nuxt.$route.name === 'Dashboard - Promociones'? 'active':''">
         <router-link class="navbar-items" :to="{ path: 'promotions' }">
           <cc-icon ccicon="send" :ccclass="['navbar-icon']"/>
           <div class="navbar-label"> Promo </div>
         </router-link>
       </li>
-      <li :class="$route.name === 'Dashboard - Mis Tiendas'? 'active':''">
+      <li :class="$nuxt.$route.name === 'Dashboard - Mis Tiendas'? 'active':''">
         <router-link class="navbar-items" :to="{ path: 'places' }">
           <cc-icon ccicon="place" :ccclass="['navbar-icon']"/>
           <div class="navbar-label"> Localiz. </div>
         </router-link>
       </li>
-      <li :class="$route.name === 'Dashboard - Ajustes'? 'active':''">
+      <li :class="$nuxt.$route.name === 'Dashboard - Ajustes'? 'active':''">
         <router-link class="navbar-items" :to="{ path: 'settings' }">
           <cc-icon ccicon="settings" :ccclass="['navbar-icon']"/>
           <div class="navbar-label"> Ajustes </div>
         </router-link>
       </li>
     </ul>
-    <router-link id="logout" class="" :to="{ path: 'login' }">
+    <a id="logout" class="" @click="logout">
       <cc-icon ccicon="exit_to_app" :ccclass="['navbar-icon']"/>
       <div class="navbar-label"> Cerrar Session </div>
-    </router-link>
+    </a>
   </nav>
 </template>
 <script>
 import CcIcon from '~/components/CcIcon'
-
 export default {
   name: 'Navbar',
   components: {
@@ -43,6 +42,9 @@ export default {
     }
   },
   methods: {
+    logout () {
+      this.$store.dispatch('auth/logout')
+    }
   }
 }
 </script>

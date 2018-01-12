@@ -1,7 +1,7 @@
 <template>
-  <v-card light id="placecard" @click.native.stop="openForm">
-    <v-card-title primary-title>
-      <p class="py-4 mb-0 nexabold text-xs-center add-title"><span class="plus">+</span> Agregar {{ kindCard }}</p>
+  <v-card id="placecard" @click.native.stop="openForm" style="background-color: white">
+    <v-card-title>
+      <p class="py-3 mb-0 nexabold text-xs-center add-title"><span class="plus">+</span> Agregar {{ kindCard }}</p>
     </v-card-title>
   </v-card>
 </template>
