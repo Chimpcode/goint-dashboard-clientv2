@@ -24,7 +24,7 @@
       <v-tooltip bottom>
         <v-btn flat icon color="primary"
                class="" slot="activator"
-               @click.native.stop="onEditLocation">
+               @click.native.stop="onEditLocation(locationData)">
           <v-icon>mode_edit</v-icon>
         </v-btn>
         <span>Editar?</span>
@@ -38,16 +38,24 @@
 export default {
   name: 'LocationCard',
   props: {
-    locationData: Object
+    locationData: Object,
+    onDelete: Function,
+    onEdit: Function
   },
   data () {
     return {
     }
   },
   methods: {
-    onEditLocation () {
+    onEditLocation (data) {
+      if (this.onEdit) {
+        this.onEdit(data)
+      }
     },
     deleteLocation (id) {
+      if (this.onDelete) {
+        this.onDelete(id)
+      }
     }
   }
 }

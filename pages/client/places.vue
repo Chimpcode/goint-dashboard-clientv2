@@ -27,20 +27,23 @@
           :location-data="location"
           v-for="(location, i) in allLocations"
           :key="i"
+          :onDelete="deleteLocation"
+          :onEdit="editLocation"
         ></location-card>
         <new-card
           class="ma-2"
-          :onClick="openNewLocation"></new-card>
+          :onClick="openNewLocationForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <place-card
           class="ma-2"
           :place-data="store"
           v-for="(store, i) in allStores"
-          :key="i"></place-card>
+          :key="i"
+        ></place-card>
         <new-card
           class="ma-2"
-          :onClick="openNewStore"></new-card>
+          :onClick="openNewStoreForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <cluster-card
@@ -50,13 +53,15 @@
           :key="i"></cluster-card>
         <new-card
           class="ma-2"
-          @on-open-form="openNewSector"></new-card>
+          @on-open-form="openNewSectorForm"></new-card>
       </v-flex>
     </v-layout>
 
     <LocationForm
       :isOpen="locationFormIsOpen"
-      :onClose="()=>{locationFormIsOpen = false}"
+      :onClose="() => {locationFormIsOpen = false}"
+      :onReturnData="createNewLocation"
+      :editData="editLocationData"
     >
 
     </LocationForm>
@@ -70,9 +75,11 @@
   import NewCard from '~/components/new_card'
   import LocationForm from '~/components/location_form'
 
-  import {allLocationsQuery} from '~/apollo/locations'
+  import {allLocationsQuery, addNewLocationMut, deleteLocationMut, editLocationMut} from '~/apollo/locations'
   import {allStoresQuery} from '~/apollo/stores'
   import {allSectorsQuery} from '~/apollo/sectors'
+
+//  import gql from 'graphql-tag'
 
   export default {
     middleware: 'auth',
@@ -84,7 +91,7 @@
     data () {
       return {
         locationFormIsOpen: false,
-        openFormTrigger: '',
+        editLocationData: undefined,
         allLocations: [
         ],
         allStores: [
@@ -99,13 +106,60 @@
       allSectors: allSectorsQuery
     },
     methods: {
-      openNewLocation () {
+      openNewLocationForm () {
         console.log('opening location form')
         this.locationFormIsOpen = true
       },
-      openNewStore () {
+      openNewStoreForm () {
       },
-      openNewSector () {
+      openNewSectorForm () {
+      },
+      createNewLocation (data) {
+        console.log(data)
+        this.$apollo.mutate({
+          mutation: addNewLocationMut,
+          variables: data,
+          update: (store, { data: {createLocation} }) => {
+            // Read the data from our cache for this query.
+            const data = store.readQuery({ query: allLocationsQuery })
+            data.allLocations.push(createLocation)
+            store.writeQuery({ query: allLocationsQuery, data })
+            this.locationFormIsOpen = false
+          }
+        })
+      },
+      deleteLocation (id) {
+        console.log(id)
+        this.$apollo.mutate({
+          mutation: deleteLocationMut,
+          variables: {'id': id},
+          update: (store, { data: {deleteLocation} }) => {
+            // Read the data from our cache for this query.
+            let data = store.readQuery({ query: allLocationsQuery })
+            console.log(data)
+            data.allLocations = data.allLocations.filter((el) => {
+              return el.id !== deleteLocation.id
+            })
+            console.log(data)
+            store.writeQuery({ query: allLocationsQuery, data })
+            this.locationFormIsOpen = false
+          }
+        })
+      },
+      editLocation (data) {
+        editLocationData = true
+        console.log(data)
+        this.$apollo.mutate({
+          mutation: editLocationMut,
+          variables: data,
+          update: (store, { data: {createLocation} }) => {
+            // Read the data from our cache for this query.
+            const data = store.readQuery({ query: allLocationsQuery })
+            data.allLocations.push(createLocation)
+            store.writeQuery({ query: allLocationsQuery, data })
+            this.locationFormIsOpen = false
+          }
+        })
       }
     }
   }

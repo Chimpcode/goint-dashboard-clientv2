@@ -7,7 +7,7 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-text>
-        <v-card-title class="title mb-4"> {{ editData === undefined ? 'Agregar' : 'Editar' }} Ubicacion &nbsp;<span class="green--text">{{infomessage}}</span></v-card-title>
+        <v-card-title class="title mb-4"> {{ editData === undefined ? 'Agregar' : 'Editar' }} Ubicacion</v-card-title>
         <gmap-map
           :options="{styles: gmapStyles}"
           :center="center"
@@ -52,7 +52,7 @@
     props: {
       editData: { type: Object, default: undefined },
       onClose: Function,
-      returnData: Function,
+      onReturnData: Function,
       isOpen: Boolean
     },
     computed: {
@@ -73,6 +73,9 @@
         this.opened = false
       },
       createNewLocation: function () {
+        if (this.onReturnData) {
+          this.onReturnData(this.currentLocation)
+        }
       },
       updateMarker: function (object, event) {
         object.position = {
