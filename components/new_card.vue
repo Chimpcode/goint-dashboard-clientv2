@@ -13,15 +13,15 @@ export default {
   name: 'NewCard',
   props: {
     kindCard: String,
-    onOpen: Function
+    onClick: Function
   },
   data () {
     return {}
   },
   methods: {
     openForm () {
-      if (this.onOpen) {
-        this.onOpen()
+      if (this.onClick) {
+        this.onClick()
       }
     }
   }

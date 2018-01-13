@@ -65,8 +65,8 @@
 </template>
 
 <script>
-  import PromoCard from '~/components/PromoCard'
-  import PostForm from '~/components/PostForm'
+  import PromoCard from '~/components/promo_card'
+  import PostForm from '~/components/post_form'
   import { EventBus } from '~/bus/index'
 
   export default {

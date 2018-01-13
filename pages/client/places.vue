@@ -25,53 +25,40 @@
         <location-card
           class="ma-2"
           :location-data="location"
-          @on-edit-location="editLocation"
-          @refresh-data="refreshData"
           v-for="(location, i) in allLocations"
           :key="i"
         ></location-card>
         <new-card
           class="ma-2"
-          kind-card="ubicacion"
-          :onOpen="openForm"></new-card>
+          :onClick="openNewLocation"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <place-card
           class="ma-2"
           :place-data="store"
           v-for="(store, i) in allStores"
-          @on-edit-store="editStore"
-          @refresh-data="refreshData"
           :key="i"></place-card>
         <new-card
           class="ma-2"
-          kind-card="tienda"
-          @on-open-form="openForm"></new-card>
+          :onClick="openNewStore"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <cluster-card
           class="ma-2"
           :cluster-data="group"
-          @on-edit-cluster="editCluster"
-          @refresh-data="refreshData"
           v-for="(group, i) in allSectors"
           :key="i"></cluster-card>
         <new-card
           class="ma-2"
-          kind-card="sector"
-          @on-open-form="openForm"></new-card>
+          @on-open-form="openNewSector"></new-card>
       </v-flex>
     </v-layout>
+
     <LocationForm
-      :kind-form="openFormTrigger"
-      :editData="editData"
-      :locations="locations"
-      :stores="stores"
-      @refresh-data="refreshData"
-      @on-close-dialog="onCloseLocationForm"
-      @on-create-location="onCreateLocation"
-      @on-create-cluster="onCreateCluster"
-      @on-create-store="onCreateStore">
+      :isOpen="locationFormIsOpen"
+      :onClose="()=>{locationFormIsOpen = false}"
+    >
+
     </LocationForm>
   </div>
 </template>
@@ -79,7 +66,7 @@
 <script>
   import PlaceCard from '~/components/store_card'
   import LocationCard from '~/components/location_card'
-  import ClusterCard from '~/components/cluster'
+  import ClusterCard from '~/components/cluster_card'
   import NewCard from '~/components/new_card'
   import LocationForm from '~/components/location_form'
 
@@ -96,7 +83,7 @@
     },
     data () {
       return {
-        editData: undefined,
+        locationFormIsOpen: false,
         openFormTrigger: '',
         allLocations: [
         ],
@@ -112,6 +99,14 @@
       allSectors: allSectorsQuery
     },
     methods: {
+      openNewLocation () {
+        console.log('opening location form')
+        this.locationFormIsOpen = true
+      },
+      openNewStore () {
+      },
+      openNewSector () {
+      }
     }
   }
 </script>

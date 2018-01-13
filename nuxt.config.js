@@ -98,7 +98,7 @@ module.exports = {
 
     extractCSS: true,
     vendor: [
-      'vue2-google-maps'
+      '~/plugins/vue_google_maps'
     ],
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
