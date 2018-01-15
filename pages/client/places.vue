@@ -46,14 +46,16 @@
           :onClick="openNewStoreForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
-        <cluster-card
+        <SectorCard
           class="ma-2"
           :cluster-data="group"
           v-for="(group, i) in allSectors"
-          :key="i"></cluster-card>
+          :key="i"
+          :onDelete="deleteSector"
+        ></SectorCard>
         <new-card
           class="ma-2"
-          @on-open-form="openNewSectorForm"></new-card>
+          :onClick="openNewSectorForm"></new-card>
       </v-flex>
     </v-layout>
 
@@ -62,27 +64,35 @@
       :onClose="() => {locationFormIsOpen = false}"
       :onReturnData="createNewLocation"
     />
+
     <StoreForm
       :isOpen="storeFormIsOpen"
       :onClose="() => {storeFormIsOpen = false}"
       :onReturnData="createNewStore"
-      >
-    </StoreForm>
+      />
+
+    <SectorForm
+      :isOpen="sectorFormIsOpen"
+      :onClose="() => {sectorFormIsOpen = false}"
+      :onReturnData="createNewSector"
+    />
+
   </div>
 </template>
 
 <script>
   import PlaceCard from '~/components/store_card'
   import LocationCard from '~/components/location_card'
-  import ClusterCard from '~/components/cluster_card'
+  import SectorCard from '~/components/sector_card'
   import NewCard from '~/components/new_card'
 
   import LocationForm from '~/components/location_form'
   import StoreForm from '~/components/store_form'
+  import SectorForm from '~/components/sector_form'
 
   import {allLocationsQuery, addNewLocationMut, deleteLocationMut, editLocationMut} from '~/apollo/locations'
   import {allStoresQuery, addNewStoreMut, deleteStoreMut} from '~/apollo/stores'
-  import {allSectorsQuery} from '~/apollo/sectors'
+  import {allSectorsQuery, addNewSectorMut, deleteSectorMut} from '~/apollo/sectors'
 
 //  import gql from 'graphql-tag'
 
@@ -91,14 +101,13 @@
     layout: 'dashboard',
     name: 'Places',
     components: {
-      PlaceCard, LocationCard, ClusterCard, NewCard, LocationForm, StoreForm
+      PlaceCard, LocationCard, SectorCard, NewCard, LocationForm, StoreForm, SectorForm
     },
     data () {
       return {
         locationFormIsOpen: false,
         storeFormIsOpen: false,
-
-        editLocationData: null,
+        sectorFormIsOpen: false,
         allLocations: [
         ],
         allStores: [
@@ -122,6 +131,8 @@
         this.storeFormIsOpen = true
       },
       openNewSectorForm () {
+        console.log('opening sector form', this.sectorFormIsOpen)
+        this.sectorFormIsOpen = true
       },
       createNewLocation (data) {
         console.log(data)
@@ -187,7 +198,38 @@
           }
         })
       },
-
+      createNewSector (data) {
+        console.log(data)
+        this.$apollo.mutate({
+          mutation: addNewSectorMut,
+          variables: data,
+          update: (store, { data: {createSector} }) => {
+            // Read the data from our cache for this query.
+            const data = store.readQuery({ query: allSectorsQuery })
+            data.allSectors.push(createSector)
+            store.writeQuery({ query: allSectorsQuery, data })
+            this.sectorFormIsOpen = false
+          }
+        })
+      },
+      deleteSector (id) {
+        console.log(id)
+        this.$apollo.mutate({
+          mutation: deleteSectorMut,
+          variables: {'id': id},
+          update: (store, { data: {deleteSector} }) => {
+            // Read the data from our cache for this query.
+            let data = store.readQuery({ query: allSectorsQuery })
+            console.log(data)
+            data.allSectors = data.allSectors.filter((el) => {
+              return el.id !== deleteSector.id
+            })
+            console.log(data)
+            store.writeQuery({ query: allSectorsQuery, data })
+            this.sectorFormIsOpen = false
+          }
+        })
+      },
     }
   }
 </script>

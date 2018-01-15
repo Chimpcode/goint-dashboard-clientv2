@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="isOpen" :width="'50%'" persistent>
+    <v-dialog v-model="isOpen" :width="'60%'" persistent>
       <v-card>
         <v-card-text>
           <v-btn @click.native.stop="closeDialog" flat icon style="float: right;">

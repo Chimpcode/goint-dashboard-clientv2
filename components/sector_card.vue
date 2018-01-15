@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'ClusterCard',
+  name: 'SectorCard',
   props: {
     clusterData: Object,
     onDelete: Function

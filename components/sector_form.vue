@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen" :width="typeDialog[kindForm]" persistent>
+  <v-dialog v-model="isOpen" :width="'60%'" persistent>
     <v-card>
       <v-card-text>
         <v-btn @click.native.stop="closeDialog" flat icon style="float: right;">
@@ -25,9 +25,9 @@
         <v-spacer/>
 
         <v-btn flat color="primary"
-               class="" @click.native.stop="createNewCluster">
-          <v-icon>{{ editData === undefined ? 'add' : 'edit' }}</v-icon>
-          {{ editData === undefined ? 'Crear' : 'Editar' }}
+               class="" @click.native.stop="returnData(internalData)">
+          <v-icon>add</v-icon>
+          Crear
         </v-btn>
       </v-card-actions>
 
@@ -40,7 +40,7 @@
 <script>
   import { allStoresQuery } from '~/apollo/stores'
   export default {
-    name: 'ClusterForm',
+    name: 'SectorForm',
     props: {
       isOpen: Boolean,
       onClose: Function,
@@ -52,7 +52,23 @@
         internalData: {},
         allStores: []
       }
+    },
+    apollo: {
+      allStores: allStoresQuery
+    },
+    methods: {
+      closeDialog() {
+        if (this.onClose) {
+          this.onClose()
+        }
+      },
+      returnData (data) {
+        if (this.onReturnData) {
+          this.onReturnData(data)
+        }
+      }
     }
+
   }
 </script>
 

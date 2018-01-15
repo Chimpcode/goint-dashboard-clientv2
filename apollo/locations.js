@@ -14,7 +14,7 @@ const addNewLocationMut = gql`
     createLocation (
       address: $address,
       longitude: $lng,
-      latitude: $lat 
+      latitude: $lat
     ) {
       id
       address
