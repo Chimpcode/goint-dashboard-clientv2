@@ -7,7 +7,7 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-text>
-        <v-card-title class="title mb-4"> {{ editData === undefined ? 'Agregar' : 'Editar' }} Ubicacion</v-card-title>
+        <v-card-title class="title mb-4"> {{ editData? 'Editar' : 'Agregar' }} Ubicacion</v-card-title>
         <gmap-map
           :options="{styles: gmapStyles}"
           :center="center"
@@ -16,7 +16,7 @@
           style="width: 100%; height: 300px"
         >
           <gmap-marker
-            :position="currentLocation"
+            :position="editData?editData:currentLocation"
             :clickable="true"
             :draggable="true"
             @position_changed="updateMarker(currentLocation, $event)"
@@ -33,8 +33,8 @@
           <v-tooltip bottom>
             <v-btn flat color="primary"
                    class="" slot="activator" @click.native.stop="createNewLocation">
-              <v-icon>{{ editData === undefined ? 'add' : 'edit' }}</v-icon>
-              {{ editData === undefined ? 'Crear' : 'Editar' }}
+              <v-icon>{{ editData? 'edit' : 'add' }}</v-icon>
+              {{ editData? 'Editar' : 'Crear' }}
             </v-btn>
             <span>Crear?</span>
           </v-tooltip>
@@ -50,16 +50,15 @@
   export default {
     name: 'LocationForm',
     props: {
-      editData: { type: Object, default: undefined },
+      editData: Object,
       onClose: Function,
       onReturnData: Function,
       isOpen: Boolean
     },
-    computed: {
-    },
     data () {
       return {
         currentLocation: {lat: -12.117992, lng: -77.030646},
+        editedLocation: {},
         opened: false,
         gmapStyles: gmapsStyles,
         center: { lat: -12.117992, lng: -77.030646 }
@@ -110,6 +109,8 @@
         // Browser doesn't support Geolocation
         self.handleLocationError(false)
       }
+
+
     }
   }
 </script>

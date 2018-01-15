@@ -36,12 +36,16 @@
 export default {
   name: 'ClusterCard',
   props: {
-    clusterData: Object
+    clusterData: Object,
+    onDelete: Function
   },
   methods: {
     editClusterData () {
     },
     deleteSectorFunc (id) {
+      if (this.onDelete) {
+        this.onDelete(id)
+      }
     }
   }
 }

@@ -28,7 +28,6 @@
           v-for="(location, i) in allLocations"
           :key="i"
           :onDelete="deleteLocation"
-          :onEdit="editLocation"
         ></location-card>
         <new-card
           class="ma-2"
@@ -40,6 +39,7 @@
           :place-data="store"
           v-for="(store, i) in allStores"
           :key="i"
+          :onDelete="deleteStore"
         ></place-card>
         <new-card
           class="ma-2"
@@ -61,10 +61,13 @@
       :isOpen="locationFormIsOpen"
       :onClose="() => {locationFormIsOpen = false}"
       :onReturnData="createNewLocation"
-      :editData="editLocationData"
-    >
-
-    </LocationForm>
+    />
+    <StoreForm
+      :isOpen="storeFormIsOpen"
+      :onClose="() => {storeFormIsOpen = false}"
+      :onReturnData="createNewStore"
+      >
+    </StoreForm>
   </div>
 </template>
 
@@ -73,10 +76,12 @@
   import LocationCard from '~/components/location_card'
   import ClusterCard from '~/components/cluster_card'
   import NewCard from '~/components/new_card'
+
   import LocationForm from '~/components/location_form'
+  import StoreForm from '~/components/store_form'
 
   import {allLocationsQuery, addNewLocationMut, deleteLocationMut, editLocationMut} from '~/apollo/locations'
-  import {allStoresQuery} from '~/apollo/stores'
+  import {allStoresQuery, addNewStoreMut, deleteStoreMut} from '~/apollo/stores'
   import {allSectorsQuery} from '~/apollo/sectors'
 
 //  import gql from 'graphql-tag'
@@ -86,12 +91,14 @@
     layout: 'dashboard',
     name: 'Places',
     components: {
-      PlaceCard, LocationCard, ClusterCard, NewCard, LocationForm
+      PlaceCard, LocationCard, ClusterCard, NewCard, LocationForm, StoreForm
     },
     data () {
       return {
         locationFormIsOpen: false,
-        editLocationData: undefined,
+        storeFormIsOpen: false,
+
+        editLocationData: null,
         allLocations: [
         ],
         allStores: [
@@ -111,6 +118,8 @@
         this.locationFormIsOpen = true
       },
       openNewStoreForm () {
+        console.log('opening store form', this.storeFormIsOpen)
+        this.storeFormIsOpen = true
       },
       openNewSectorForm () {
       },
@@ -146,21 +155,39 @@
           }
         })
       },
-      editLocation (data) {
-        editLocationData = true
+      createNewStore (data) {
         console.log(data)
         this.$apollo.mutate({
-          mutation: editLocationMut,
+          mutation: addNewStoreMut,
           variables: data,
-          update: (store, { data: {createLocation} }) => {
+          update: (store, { data: {createStore} }) => {
             // Read the data from our cache for this query.
-            const data = store.readQuery({ query: allLocationsQuery })
-            data.allLocations.push(createLocation)
-            store.writeQuery({ query: allLocationsQuery, data })
-            this.locationFormIsOpen = false
+            const data = store.readQuery({ query: allStoresQuery })
+            data.allStores.push(createStore)
+            store.writeQuery({ query: allStoresQuery, data })
+            this.storeFormIsOpen = false
           }
         })
-      }
+      },
+      deleteStore (id) {
+        console.log(id)
+        this.$apollo.mutate({
+          mutation: deleteStoreMut,
+          variables: {'id': id},
+          update: (store, { data: {deleteStore} }) => {
+            // Read the data from our cache for this query.
+            let data = store.readQuery({ query: allStoresQuery })
+            console.log(data)
+            data.allStores = data.allStores.filter((el) => {
+              return el.id !== deleteStore.id
+            })
+            console.log(data)
+            store.writeQuery({ query: allStoresQuery, data })
+            this.storeFormIsOpen = false
+          }
+        })
+      },
+
     }
   }
 </script>

@@ -7,12 +7,12 @@
         </v-btn>
       </v-card-text>
 
-      <v-card-title class="title"> {{ editData === undefined ? 'Agregar' : 'Editar' }} Sector &nbsp;<span class="green--text">{{infomessage}}</span></v-card-title>
+      <v-card-title class="title"> Agregar Sector </v-card-title>
       <v-card-text>
-        <v-text-field v-model="sectorForm.name" label="Nombre" name="sectorName"/>
+        <v-text-field v-model="internalData.name" label="Nombre" name="sectorName"/>
         <v-select
-          :items="stores"
-          v-model="sectorForm.stores"
+          :items="allStores"
+          v-model="internalData.stores"
           multiple
           chips
           autocomplete
@@ -38,9 +38,21 @@
 </template>
 
 <script>
+  import { allStoresQuery } from '~/apollo/stores'
   export default {
     name: 'ClusterForm',
-
+    props: {
+      isOpen: Boolean,
+      onClose: Function,
+      onReturnData: Function
+    },
+    data () {
+      return {
+        state: false,
+        internalData: {},
+        allStores: []
+      }
+    }
   }
 </script>
 

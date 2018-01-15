@@ -40,16 +40,17 @@
 export default {
   name: 'StoreCard',
   props: {
-    placeData: Object
+    placeData: Object,
+    onDelete: Function
   },
   methods: {
     drag: function (ev) {
       ev.dataTransfer.setData('Text', ev.target.id)
     },
-    onEditStore () {
-      this.$emit('on-edit-store', this.placeData)
-    },
     deleteStoreFunc (id) {
+      if (this.onDelete) {
+        this.onDelete(id)
+      }
     }
   }
 }
