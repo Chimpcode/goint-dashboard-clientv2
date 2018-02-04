@@ -17,11 +17,11 @@
             <v-btn flat color="primary" slot="activator">
             <v-icon>local_activity</v-icon> &nbsp; {{promoData.stock}}
             </v-btn>
-            <span>Cupones restantes</span>
+            <span>Stock de cupones</span>
         </v-tooltip>
         <v-tooltip bottom>
             <v-btn flat color="primary" slot="activator">
-            <v-icon>event</v-icon> &nbsp; {{promoData.finishDate}}
+            <v-icon>event</v-icon> &nbsp; {{promoData.expireAt}}
             </v-btn>
             <span>Fecha de Vencimiento</span>
         </v-tooltip>
@@ -33,8 +33,8 @@
             </v-card-title>
             <v-card-actions>
               <v-spacer/>
-              <v-btn color="primary" flat @click.native.stop="toggleActivationPost(promoData)">SI</v-btn>
-              <v-btn color="" flat @click.stop="() => {activateSwitchDialog=false; promoData.isActive = !promoData.isActive}">NO</v-btn>
+              <v-btn color="primary" flat @click.native.stop="toggleActivationPost(promoData.id)">SI</v-btn>
+              <v-btn color="" flat @click.stop="() => {activateSwitchDialog=false}">NO</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -50,7 +50,7 @@
             </v-card-title>
             <v-card-actions>
               <v-spacer/>
-              <v-btn color="primary" flat @click.stop="deletePost">Eliminar</v-btn>
+              <v-btn color="primary" flat @click.stop="deletePost(promoData.id)">Eliminar</v-btn>
               <v-btn color="" flat @click.stop="deleteDialog=false">Close</v-btn>
             </v-card-actions>
           </v-card>
@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import { EventBus } from '~/bus/index'
 
 export default {
   name: 'PromoCard',
@@ -82,29 +81,10 @@ export default {
   },
   methods: {
     toggleActivationPost () {
-      EventBus.$emit('is-short-loading', true)
-      this.$graphito.call_mutation('updatePost', { id: this.promoData.id, isActive: this.promoData.isActive })
-        .then(res => {
-          EventBus.$emit('is-short-loading', false)
-          this.activateSwitchDialog = false
-        }, err => {
-          console.log(err)
-          EventBus.$emit('is-short-loading', false)
-          this.activateSwitchDialog = false
-        })
+
     },
-    onEditMode: function () {
-      this.$emit('on-edit-mode', true)
-    },
-    deletePost: function () {
-      this.$graphito.call_mutation('deletePost', { id: this.promoData.id })
-        .then(res => {
-          this.$emit('on-delete', true)
-          this.deleteDialog = false
-        }, err => {
-          console.log(err)
-          this.deleteDialog = false
-        })
+    deletePost () {
+
     }
   }
 }

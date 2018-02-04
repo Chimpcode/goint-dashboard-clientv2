@@ -26,7 +26,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/vue_google_maps',
-    '~/plugins/vue_resource'
+    '~/plugins/vue_resource',
+    '~/plugins/vue_datetime'
     // '~/plugins/vue_image_lightbox'
     // '~/plugins/vue_fraction_grid',
   ],
