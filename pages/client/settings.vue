@@ -6,7 +6,7 @@
       </v-flex>
       <v-flex xs12 class="text-xs-center">
         <cc-avatar
-          image-url="http://13.90.253.208:9300/api/v1/i/milkyway/default.png">
+          :image-url="Company.logoImage">
         </cc-avatar>
       </v-flex>
     </v-layout>
@@ -16,7 +16,6 @@
           label="Categorias"
           v-bind:items="categories"
           v-model="categories_selected"
-          multiple
           chips
           color="primary"
           hint="Que servicios ofrece a sus clientes?"
@@ -62,15 +61,30 @@
 
 <script>
   import CcAvatar from '~/components/cc_avatar.vue'
+  import {logoImage} from '~/apollo/settings'
 
   export default {
+    // just for func
     middleware: 'auth',
     components: {
       CcAvatar
     },
     layout: 'dashboard',
+    apollo: {
+      Company: {
+        query: logoImage,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          console.log(companyId)
+          return {
+            companyid: companyId
+          }
+        }
+      }
+    },
     data () {
       return {
+        Company: {},
         switch_items: [
           { id: '1', label: 'ABCDEFGHIJKLMNOPQRSTUVWZYZ', value: false },
           { id: '1', label: 'ABCDEFGHIJKLMNOPQRSTUVWZYZ', value: true },

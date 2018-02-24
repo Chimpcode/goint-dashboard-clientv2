@@ -3,14 +3,27 @@
     <v-card-title primary-title>
       <div>
         <div class="idkey">{{locationData.id}}</div>
-        <h3 class="mb-0 mt-2">
-          {{locationData.latitude}},
-          {{locationData.longitude}}
-        </h3>
-        <div>{{locationData.address}}
-        </div>
+        <!--<h3 class="mb-0 mt-2">-->
+          <!--{{locationData.latitude}},-->
+          <!--{{locationData.longitude}}-->
+        <!--</h3>-->
       </div>
     </v-card-title>
+    <gmap-map
+      :options="{styles: gmapStyles}"
+      :center="{ lng: locationData.longitude, lat: locationData.latitude }"
+      :zoom="13"
+      map-type-id="terrain"
+      style="width: 100%; height: 150px"
+    >
+      <gmap-marker
+        :position="{ lng: locationData.longitude, lat: locationData.latitude }"
+      />
+    </gmap-map>
+    <v-card-text>
+      <div>{{locationData.address}}
+      </div>
+    </v-card-text>
     <v-card-actions class="roboto">
       <v-spacer/>
       <v-tooltip bottom>
@@ -34,6 +47,7 @@
 </template>
 
 <script>
+import gmapsStyles from '~/assets/gmaps_styles'
 
 export default {
   name: 'LocationCard',
@@ -44,6 +58,7 @@ export default {
   },
   data () {
     return {
+      gmapStyles: gmapsStyles
     }
   },
   methods: {

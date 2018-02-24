@@ -2,7 +2,7 @@
     <div class="avatar-container" @click="openGalaxy">
       <span class="shadow"></span>
       <img class="avatar-img" :src="imageUrl" alt="">
-      <goint-galaxy :is-open="gointGalaxyIsOpen" :onChangeState="changedState"></goint-galaxy>
+      <goint-galaxy :is-open="gointGalaxyIsOpen" :onChangeState="changedState"/>
     </div>
 </template>
 

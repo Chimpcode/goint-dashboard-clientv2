@@ -20,14 +20,14 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#C12B35' },
+  loading: { color: '#E84C55' },
   /*
   ** Build configuration
   */
   plugins: [
     '~/plugins/vue_google_maps',
-    '~/plugins/vue_resource',
-    '~/plugins/vue_datetime'
+    '~/plugins/vue_resource'
+    // '~/plugins/vue_datetime'
     // '~/plugins/vue_image_lightbox'
     // '~/plugins/vue_fraction_grid',
   ],
@@ -74,7 +74,7 @@ module.exports = {
   },
   vuetify: {
     theme: {
-      primary: '#C12B35',
+      primary: '#E84C55',
       lazy: '#cbcbcb'
     }
   },
@@ -115,6 +115,5 @@ module.exports = {
         // config.resolve.extensions.push('.vue')
       }
     }
-
   }
 }

@@ -1,20 +1,27 @@
 import gql from 'graphql-tag'
 
-const allLocationsQuery = gql`{
-        allLocations{
-          id
-          address
-          latitude
-          longitude
-        }
-      }`
+const allLocationsQuery = gql`
+  query allLocationsQuery ($companyid: ID) {
+    allLocations (filter: {
+      createdBy: {
+        id: $companyid
+      }
+    }) {
+      id
+      address
+      latitude
+      longitude
+    }
+  }
+`
 
 const addNewLocationMut = gql`
-  mutation ($address: String!, $lng: Float!, $lat: Float!) {
+  mutation ($address: String!, $lng: Float!, $lat: Float!, $byid: ID!) {
     createLocation (
       address: $address,
       longitude: $lng,
-      latitude: $lat
+      latitude: $lat,
+      createdById: $byid
     ) {
       id
       address

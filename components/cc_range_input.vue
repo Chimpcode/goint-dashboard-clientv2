@@ -9,17 +9,27 @@
     <v-layout row>
       <v-flex xs5>
         <CcTextInput
-          :model="firstValue"
+          v-model.number="firstValue"
+          ref="startVal"
+          @input="checkValidity"
           :name="'Desde'"
           :type="'mini'"
+          mode="number"
+          :max="max"
+          :min="min"
         />
       </v-flex>
 
       <v-flex xs5>
         <CcTextInput
-          :model="lastValue"
+          v-model.number="lastValue"
+          ref="endVal"
+          @input="checkValidity"
           :name="'Hasta'"
           :type="'mini'"
+          mode="number"
+          :max="max"
+          :min="min"
         />
       </v-flex>
 
@@ -35,15 +45,33 @@
     props: {
       model: Number,
       name: String,
-      type: String
+      type: String,
+      max: Number,
+      min: Number
     },
     data () {
       return {
-        firstValue: 0,
-        lastValue: 0
+        firstValue: this.min,
+        lastValue: this.max
       }
     },
-
+    methods: {
+      checkValidity (value) {
+        console.log('check on change', value)
+        if (this.$refs.startVal.value > this.$refs.endVal.value) {
+          // let startValue = this.$refs.startVal.value
+          this.firstValue = this.$refs.endVal.value
+          this.lastValue = this.$refs.startVal.value
+          // this.$refs.startVal.value = this.$refs.endVal.value
+          // this.$refs.endVal.value = startValue
+        }
+        let input = [this.firstValue, this.lastValue]
+        this.emitValue(input)
+      },
+      emitValue (value) {
+        this.$emit('input', value)
+      }
+    }
   }
 </script>
 <style>

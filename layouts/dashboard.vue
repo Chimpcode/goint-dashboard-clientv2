@@ -12,6 +12,14 @@
 
       <nuxt/>
 
+      <v-snackbar
+        :timeout="snackbar.timeout"
+        right
+        vertical
+        v-model="isSnackbarOn"
+      >
+        {{ snackbarMessage }}
+      </v-snackbar>
     </v-app>
 
   </div>
@@ -28,9 +36,25 @@
       SidebarAccount,
       Topbar
     },
+    computed: {
+      isSnackbarOn: {
+        get () {
+          return this.$store.getters.isSnackbarOn
+        },
+        set (value) {
+          this.$store.commit('snackbarOff')
+        }
+      },
+      snackbarMessage () {
+        return this.$store.getters.snackbarMsg
+      }
+    },
     data () {
       return {
-        sidebar: false
+        sidebar: false,
+        snackbar: {
+          timeout: 4000
+        }
       }
     },
     methods: {

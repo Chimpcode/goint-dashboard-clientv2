@@ -54,15 +54,23 @@
       }
     },
     apollo: {
-      allLocations: allLocationsQuery
+      allLocations: {
+        query: allLocationsQuery,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          return {
+            companyid: companyId
+          }
+        }
+      }
     },
     methods: {
-      closeDialog() {
+      closeDialog () {
         if (this.onClose) {
           this.onClose()
         }
       },
-      returnData(data) {
+      returnData (data) {
         if (this.onReturnData) {
           this.onReturnData(data)
         }

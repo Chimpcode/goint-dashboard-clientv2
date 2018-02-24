@@ -5,11 +5,12 @@
       <v-flex xs4>
         <v-text-field
           name="search"
-          label="Buscar"
+          label="Buscar por titulo"
           append-icon="search"
           id="search"
+          v-model="searchText"
           @click="active_state=states[0]"
-        ></v-text-field>
+        />
       </v-flex>
       <v-flex class="mt-2 ml-3" xs6>
 
@@ -41,13 +42,21 @@
 
           <!-- LIST CARDS -->
           <v-layout row wrap v-if="active_state==='list'">
-            <v-flex xs12 sm12 md9 v-for="(promo, index) in promociones" :key="index">
+            <v-flex v-if="promocionesFiltered.length === 0" xs12 sm12 md9 v-for="(promo, index) in promociones" :key="index">
               <promo-card
                 :color="colorvariants[index%5]"
                 :promo-data="promo"
-                @on-edit-mode="postObjToEdit = promo; active_state=states[2]"
+                @on-edit-mode="(_promo) => { postObjToEdit = promo; active_state=states[2] }"
                 @on-delete="onCreateUpdatePost"/>
             </v-flex>
+            <v-flex v-else xs12 sm12 md9 v-for="(promo, index) in promocionesFiltered" :key="index">
+              <promo-card
+                :color="colorvariants[index%5]"
+                :promo-data="promo"
+                @on-edit-mode="(_promo) => { postObjToEdit = promo; active_state=states[2] }"
+                @on-delete="onCreateUpdatePost"/>
+            </v-flex>
+
           </v-layout>
 
           <!-- ADD / EDIT VIEW -->
@@ -68,6 +77,7 @@
   import PromoCard from '~/components/promo_card'
   import PostForm from '~/components/post_form'
   import { EventBus } from '~/bus/index'
+  import { allPostsQuery } from '~/apollo/posts'
 
   export default {
     middleware: 'auth',
@@ -84,6 +94,7 @@
         } else {
           this.active_state = this.states[1]
         }
+        this.postObjToEdit = null
       },
       onCreateUpdatePost: function (newPost) {
         // this.promociones.push({
@@ -106,13 +117,33 @@
       },
       fetchDependencies () {
         return new Promise((resolve, reject) => {
-          this.$graphito.call_query('fetchAllPosts').then(res => {
-            this.promociones = res.allPosts
-            resolve(true)
-          }).catch(err => {
-            reject(err)
-          })
+          resolve(true)
+          // this.$graphito.call_query('fetchAllPosts').then(res => {
+          //   this.promociones = res.allPosts
+          //   resolve(true)
+          // }).catch(err => {
+          //   reject(err)
+          // })
         })
+      }
+    },
+    computed: {
+      searchText: {
+        get () {
+        },
+        set (text) {
+          let self = this
+          if (text === '') {
+            this.promocionesFiltered = []
+          } else {
+            this.promociones.map((item) => {
+              if (item.title.includes(text)) {
+                self.promocionesFiltered.push(item)
+              }
+            })
+            console.log(self.promocionesFiltered)
+          }
+        }
       }
     },
     data () {
@@ -121,23 +152,24 @@
         location_selected: null,
         // active_state: 'list',
         active_state: 'list',
-        postObjToEdit: {
-          finishDate: null
-        },
+        postObjToEdit: null,
 
         timepicker_date: null,
         timepicker_menu: false,
-        promociones: [
-          // {
-          //   createdAt: '12/04/18',
-          //   title: 'PromoA',
-          //   description: 'Lorem Ipsum ....',
-          //   availableCoupons: 13,
-          //   finishDate: '12/18',
-          //   location: '1'
-          // }
-        ],
+        promocionesFiltered: [],
+        promociones: [],
         colorvariants: ['teal', 'pink', 'blue', 'red', 'green']
+      }
+    },
+    apollo: {
+      promociones: {
+        query: allPostsQuery,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          return {
+            companyid: companyId
+          }
+        }
       }
     },
     created () {

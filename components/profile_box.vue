@@ -9,7 +9,7 @@
       <v-menu offset-y light>
         <v-icon slot="activator" class="lazy--text">arrow_drop_down</v-icon>
         <v-list light>
-          <v-list-tile :to="{ name:'Login' }">
+          <v-list-tile :to="{ name:'login' }">
             <v-list-tile-title class="nexafont">SIGN OUT</v-list-tile-title>
           </v-list-tile>
         </v-list>

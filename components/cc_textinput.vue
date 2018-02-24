@@ -10,10 +10,28 @@
         {{name}}
     </span>
     <div :class="focused?'cc-container-focused':'cc-container'">
-      <input class="inner-input" :v-model="model" :placeholder="placeholder"
+      <input class="inner-input" :value="value" ref="numInput" :placeholder="placeholder"
               @focus="focused = true"
               @blur="focused = false"
               :type="mode"
+              :max="max"
+              :min="min"
+              v-if="mode === 'number'"
+              @input="updateInput()"
+      />
+      <input class="inner-input" :value="value" ref="textInput" :placeholder="placeholder"
+             @focus="focused = true"
+             @blur="focused = false"
+             :type="mode"
+             v-else-if="mode === 'date'"
+             @input="updateInput()"
+      />
+      <input class="inner-input" :value="value" ref="textInput" :placeholder="placeholder"
+             @focus="focused = true"
+             @blur="focused = false"
+             @input="updateInput()"
+             type="text"
+             v-else
       />
 
     </div>
@@ -24,11 +42,13 @@
   export default {
     name: 'CcTextInput',
     props: {
-      model: String,
+      value: [String, Number],
       name: String,
       placeholder: String,
       type: String,
-      mode: String
+      mode: String,
+      max: Number,
+      min: Number
     },
     data () {
       return {
@@ -36,16 +56,32 @@
       }
     },
     methods: {
+      updateInput () {
+        if (this.mode === 'number') {
+          if (this.$refs.numInput.value > this.max ||
+            this.$refs.numInput.value < this.min) {
+            if (this.$refs.numInput.value > this.max) {
+              this.$refs.numInput.value = this.max - 1
+              // this.value = this.max - 1
+            } else {
+              this.$refs.numInput.value = this.min + 1
+              // this.value = this.min + 1
+            }
+          }
+          this.$emit('input', this.$refs.numInput.value)
+        } else {
+          this.$emit('input', this.$refs.textInput.value)
+        }
+      }
     }
   }
-
 </script>
 
 <style type="stylus">
 .inner-input {
   border: none;
   width: 100%;
-  padding-right: 30px;
+  /*padding-right: 30px;*/
   position: relative;
   top: 50%;
   transform: translateY(-50%);

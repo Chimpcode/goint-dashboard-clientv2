@@ -90,7 +90,8 @@
   import StoreForm from '~/components/store_form'
   import SectorForm from '~/components/sector_form'
 
-  import {allLocationsQuery, addNewLocationMut, deleteLocationMut, editLocationMut} from '~/apollo/locations'
+  // editLocationMut
+  import {allLocationsQuery, addNewLocationMut, deleteLocationMut} from '~/apollo/locations'
   import {allStoresQuery, addNewStoreMut, deleteStoreMut} from '~/apollo/stores'
   import {allSectorsQuery, addNewSectorMut, deleteSectorMut} from '~/apollo/sectors'
 
@@ -113,13 +114,43 @@
         allStores: [
         ],
         allSectors: [
-        ]
+        ],
+        companyId: this.$store.state.auth.user.id
       }
     },
     apollo: {
-      allLocations: allLocationsQuery,
-      allStores: allStoresQuery,
-      allSectors: allSectorsQuery
+      allLocations: {
+        query: allLocationsQuery,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          return {
+            companyid: companyId
+          }
+        }
+      },
+      allStores: {
+        query: allStoresQuery,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          return {
+            companyid: companyId
+          }
+        }
+      },
+      allSectors: {
+        query: allSectorsQuery,
+        variables () {
+          let companyId = this.$store.state.auth.user.id
+          return {
+            companyid: companyId
+          }
+        }
+      }
+    },
+    created () {
+      // console.log(this.$store.state.auth.user.id)
+      // this.companyId = this.$store.state.auth.user.id
+      // this.$apollo.queries.allLocations
     },
     methods: {
       openNewLocationForm () {
@@ -135,6 +166,7 @@
         this.sectorFormIsOpen = true
       },
       createNewLocation (data) {
+        data.byid = this.$store.state.auth.user.id
         console.log(data)
         this.$apollo.mutate({
           mutation: addNewLocationMut,
@@ -146,7 +178,10 @@
             store.writeQuery({ query: allLocationsQuery, data })
             this.locationFormIsOpen = false
           }
+        }).then((data) => {
+          console.log(data)
         })
+        // this.$apollo.queries.allLocations.refresh()
       },
       deleteLocation (id) {
         console.log(id)
@@ -167,7 +202,8 @@
         })
       },
       createNewStore (data) {
-        console.log(data)
+        data.byid = this.$store.state.auth.user.id
+
         this.$apollo.mutate({
           mutation: addNewStoreMut,
           variables: data,
@@ -199,6 +235,7 @@
         })
       },
       createNewSector (data) {
+        data.byid = this.$store.state.auth.user.id
         console.log(data)
         this.$apollo.mutate({
           mutation: addNewSectorMut,
@@ -229,7 +266,7 @@
             this.sectorFormIsOpen = false
           }
         })
-      },
+      }
     }
   }
 </script>

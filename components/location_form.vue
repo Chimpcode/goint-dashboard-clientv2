@@ -9,6 +9,7 @@
         </v-card-text>
         <v-card-title class="title mb-4"> {{ editData? 'Editar' : 'Agregar' }} Ubicacion</v-card-title>
         <gmap-map
+          v-if="isOpen"
           :options="{styles: gmapStyles}"
           :center="center"
           :zoom="13"
@@ -47,6 +48,7 @@
 
 <script>
   import gmapsStyles from '~/assets/gmaps_styles'
+
   export default {
     name: 'LocationForm',
     props: {
@@ -109,8 +111,6 @@
         // Browser doesn't support Geolocation
         self.handleLocationError(false)
       }
-
-
     }
   }
 </script>

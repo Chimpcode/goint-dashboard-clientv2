@@ -1,8 +1,14 @@
 import gql from 'graphql-tag'
 
 const allStoresQuery = gql`
-{
-    allStores {
+query allStoresQuery ($companyid: ID) {
+    allStores (
+      filter: {
+        createdBy: {
+          id: $companyid
+        }
+      }
+    ) {
         id
         name
         description
@@ -14,11 +20,12 @@ const allStoresQuery = gql`
 `
 
 const addNewStoreMut = gql`
-mutation ($name: String!, $description: String!, $locations: [ID!]) {
+mutation ($name: String!, $description: String!, $locations: [ID!], $byid: ID!) {
     createStore (
         name: $name,
         description: $description,
-        locationsIds: $locations
+        locationsIds: $locations,
+        createdById: $byid
     ) {
         id
         name

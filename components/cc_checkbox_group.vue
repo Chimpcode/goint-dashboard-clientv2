@@ -45,6 +45,18 @@ export default {
       if (this.onChangeState) {
         this.onChangeState(vmodel)
       }
+
+      let value = []
+      for (let key in vmodel) {
+        if (vmodel[key].value === true) {
+          value.push(vmodel[key].name)
+        }
+      }
+      value = value.join(',')
+      this.emitValue(value)
+    },
+    emitValue (value) {
+      this.$emit('input', value)
     }
   }
 
