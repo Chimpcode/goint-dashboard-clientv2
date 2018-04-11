@@ -40,7 +40,6 @@ module.exports = {
     '@nuxtjs/axios'
 
   ],
-
   axios: {
     credentials: false
   },
