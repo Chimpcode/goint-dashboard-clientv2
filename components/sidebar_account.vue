@@ -9,10 +9,12 @@
       </profile-box>
       <div class="body-status">
         <p class="type-account-label nexalight text-xs-left">Tipo de cuenta</p>
-        <p class="type-account-value nexalight text-xs-center mb-5">REGULAR</p>
-        <p class="nexabold text-xs-center"> Promociones Disponibles: 4 </p>
-        <p class="nexabold text-xs-center"> Sedes Disponibles: 4 </p>
-        <p class="nexabold text-xs-center"> Promociones Activas: 4 </p>
+        <p class="type-account-value nexalight text-xs-center mb-1">{{ company.activePlan.type }}</p>
+        <div class="upgrade-container">
+          <v-btn color="primary" class="btn-upgrade" @click.native.stop="$store.state.bombopaymentsdialog = !$store.state.bombopaymentsdialog">UPGRADE</v-btn>
+        </div>
+        <p class="nexabold text-xs-center"> Promociones Disponibles: {{ company.postCount }} </p>
+        <p class="nexabold text-xs-center"> Sedes Disponibles: {{ company.stores.length }} </p>
       </div>
     </div>
 
@@ -22,6 +24,7 @@
 
 <script>
 import ProfileBox from '~/components/profile_box'
+import { companyQuery } from '~/apollo/company'
 
 export default {
   name: 'SidebarAccount',
@@ -37,12 +40,24 @@ export default {
         {label: 'Nombres'}, {label: 'Email'}, {label: 'Telefono'}
       ],
       skills: [
-      ]
+      ],
+      company: {}
     }
   },
   computed: {
     isOpen: function () {
       return this.open
+    }
+  },
+  apollo: {
+    company: {
+      query: companyQuery,
+      variables () {
+        let companyId = this.$store.state.auth.user.id
+        return {
+          companyid: companyId
+        }
+      }
     }
   },
   methods: {
@@ -51,7 +66,14 @@ export default {
     },
     emit_snackbar: function (message) {
       this.$emit('on-info-submission', message)
+    },
+    fetchUserInfo () {
+      // console.log()
+      // const userId = this.$store.state.auth.user.id
     }
+  },
+  mounted () {
+    // this.fetchUserInfo()
   }
 }
 </script>
@@ -65,7 +87,7 @@ export default {
   bottom: 0px
   right: 0px
 
-  z-index: 9999
+  z-index: 10
   background: white
 
 .body-status
@@ -116,5 +138,11 @@ export default {
   transition: all .4s ease
 .slide-enter, .slide-leave-to
   transform: translateX(300px)
+.upgrade-container
+  text-align center;
+
+.btn-upgrade
+  border-radius: 20px
+  color: white
 
 </style>

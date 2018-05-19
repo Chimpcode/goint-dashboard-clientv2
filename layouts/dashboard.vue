@@ -20,6 +20,8 @@
       >
         {{ snackbarMessage }}
       </v-snackbar>
+
+      <goint-payments></goint-payments>
     </v-app>
 
   </div>
@@ -29,12 +31,14 @@
   import Navbar from '~/components/navbar'
   import SidebarAccount from '~/components/sidebar_account'
   import Topbar from '~/components/topbar'
+  import GointPayments from '~/components/goint-payments'
 
   export default {
     components: {
       Navbar,
       SidebarAccount,
-      Topbar
+      Topbar,
+      GointPayments
     },
     computed: {
       isSnackbarOn: {

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 let store = new Vuex.Store({
   state: {
     snackbarMessage: '',
-    snackbar: false
+    snackbar: false,
+    bombopaymentsdialog: false
   },
   getters: {
     snackbarMsg: (state) => {
