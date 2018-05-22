@@ -63,8 +63,10 @@ export default {
   },
   methods: {
     onEditLocation (data) {
+      console.log(this.locationData)
+      this.$store.state.placesForm.locationFormData = { ...this.locationData, edit: true }
       if (this.onEdit) {
-        this.onEdit(data)
+        this.onEdit(false)
       }
     },
     deleteLocation (id) {

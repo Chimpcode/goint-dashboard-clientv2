@@ -41,7 +41,8 @@ export default {
   name: 'StoreCard',
   props: {
     placeData: Object,
-    onDelete: Function
+    onDelete: Function,
+    onEdit: Function
   },
   methods: {
     drag: function (ev) {
@@ -50,6 +51,13 @@ export default {
     deleteStoreFunc (id) {
       if (this.onDelete) {
         this.onDelete(id)
+      }
+    },
+    onEditStore () {
+      const locations = this.placeData.locations.map(location => location.id)
+      this.$store.state.placesForm.storeFormData = { ...this.placeData, locations, edit: true }
+      if (this.onEdit) {
+        this.onEdit(false)
       }
     }
   }

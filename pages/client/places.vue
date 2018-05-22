@@ -28,10 +28,11 @@
           v-for="(location, i) in allLocations"
           :key="i"
           :onDelete="deleteLocation"
+          :onEdit="openLocationForm"
         ></location-card>
         <new-card
           class="ma-2"
-          :onClick="openNewLocationForm"></new-card>
+          :onClick="openLocationForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <place-card
@@ -40,10 +41,11 @@
           v-for="(store, i) in allStores"
           :key="i"
           :onDelete="deleteStore"
+          :onEdit="openStoreForm"
         ></place-card>
         <new-card
           class="ma-2"
-          :onClick="openNewStoreForm"></new-card>
+          :onClick="openStoreForm"></new-card>
       </v-flex>
       <v-flex xs6 sm4 class="overflowy">
         <SectorCard
@@ -51,24 +53,25 @@
           :cluster-data="group"
           v-for="(group, i) in allSectors"
           :key="i"
+          :onEdit="openSectorForm"
           :onDelete="deleteSector"
         ></SectorCard>
         <new-card
           class="ma-2"
-          :onClick="openNewSectorForm"></new-card>
+          :onClick="openSectorForm"></new-card>
       </v-flex>
     </v-layout>
 
     <LocationForm
       :isOpen="locationFormIsOpen"
       :onClose="() => {locationFormIsOpen = false}"
-      :onReturnData="createNewLocation"
+      :onReturnData="createEditNewLocation"
     />
 
     <StoreForm
       :isOpen="storeFormIsOpen"
       :onClose="() => {storeFormIsOpen = false}"
-      :onReturnData="createNewStore"
+      :onReturnData="createEditNewStore"
       />
 
     <SectorForm
@@ -91,9 +94,9 @@
   import SectorForm from '~/components/sector_form'
 
   // editLocationMut
-  import {allLocationsQuery, addNewLocationMut, deleteLocationMut} from '~/apollo/locations'
-  import {allStoresQuery, addNewStoreMut, deleteStoreMut} from '~/apollo/stores'
-  import {allSectorsQuery, addNewSectorMut, deleteSectorMut} from '~/apollo/sectors'
+  import {allLocationsQuery, addNewLocationMut, updateLocationMut, deleteLocationMut} from '~/apollo/locations'
+  import {allStoresQuery, addNewStoreMut, updateStoreMut, deleteStoreMut} from '~/apollo/stores'
+  import {allSectorsQuery, addNewSectorMut, updateSectorMut, deleteSectorMut} from '~/apollo/sectors'
 
 //  import gql from 'graphql-tag'
 
@@ -126,6 +129,10 @@
           return {
             companyid: companyId
           }
+        },
+        update ({ allLocations }) {
+          // The field is different from 'tasks'
+          return allLocations
         }
       },
       allStores: {
@@ -135,6 +142,10 @@
           return {
             companyid: companyId
           }
+        },
+        update ({ allStores }) {
+          // The field is different from 'tasks'
+          return allStores
         }
       },
       allSectors: {
@@ -144,6 +155,10 @@
           return {
             companyid: companyId
           }
+        },
+        update ({ allSectors }) {
+          // The field is different from 'tasks'
+          return allSectors
         }
       }
     },
@@ -153,116 +168,167 @@
       // this.$apollo.queries.allLocations
     },
     methods: {
-      openNewLocationForm () {
+      openLocationForm (clean) {
+        if (clean) {
+          this.$store.commit('placesForm/clean')
+        }
         console.log('opening location form')
         this.locationFormIsOpen = true
       },
-      openNewStoreForm () {
+      openStoreForm (clean) {
+        if (clean) {
+          this.$store.commit('placesForm/clean')
+        }
         console.log('opening store form', this.storeFormIsOpen)
         this.storeFormIsOpen = true
       },
-      openNewSectorForm () {
+      openSectorForm (clean) {
+        if (clean) {
+          this.$store.commit('placesForm/clean')
+        }
         console.log('opening sector form', this.sectorFormIsOpen)
         this.sectorFormIsOpen = true
       },
-      createNewLocation (data) {
-        data.byid = this.$store.state.auth.user.id
+      createEditNewLocation (data) {
+        const userId = this.$store.state.auth.user.id
+        data.byid = userId
+
+        let query = null
+        if (data.edit === true) {
+          query = updateLocationMut
+        } else {
+          query = addNewLocationMut
+        }
+
         console.log(data)
         this.$apollo.mutate({
-          mutation: addNewLocationMut,
+          mutation: query,
           variables: data,
-          update: (store, { data: {createLocation} }) => {
+          update: (store, { data: {createLocation, updateLocation} }) => {
             // Read the data from our cache for this query.
-            const data = store.readQuery({ query: allLocationsQuery })
-            data.allLocations.push(createLocation)
-            store.writeQuery({ query: allLocationsQuery, data })
-            this.locationFormIsOpen = false
+            if (data.edit) {
+              console.log('edit')
+              this.locationFormIsOpen = false
+            } else {
+              const locationsQuery = { query: allLocationsQuery, variables: { companyid: userId } }
+              const cached = store.readQuery(locationsQuery)
+              cached.allLocations.push(createLocation)
+              store.writeQuery({ ...locationsQuery, data: cached })
+              this.locationFormIsOpen = false
+            }
           }
-        }).then((data) => {
-          console.log(data)
         })
-        // this.$apollo.queries.allLocations.refresh()
       },
       deleteLocation (id) {
+        const userId = this.$store.state.auth.user.id
         console.log(id)
         this.$apollo.mutate({
           mutation: deleteLocationMut,
           variables: {'id': id},
           update: (store, { data: {deleteLocation} }) => {
             // Read the data from our cache for this query.
-            let data = store.readQuery({ query: allLocationsQuery })
+            const locationsQuery = { query: allLocationsQuery, variables: { companyid: userId } }
+            let data = store.readQuery(locationsQuery)
             console.log(data)
             data.allLocations = data.allLocations.filter((el) => {
               return el.id !== deleteLocation.id
             })
             console.log(data)
-            store.writeQuery({ query: allLocationsQuery, data })
+            store.writeQuery({ ...locationsQuery, data })
             this.locationFormIsOpen = false
           }
         })
       },
-      createNewStore (data) {
-        data.byid = this.$store.state.auth.user.id
+      createEditNewStore (data) {
+        const userId = this.$store.state.auth.user.id
+        data.byid = userId
+
+        let query = null
+        if (data.edit === true) {
+          query = updateStoreMut
+        } else {
+          query = addNewStoreMut
+        }
 
         this.$apollo.mutate({
-          mutation: addNewStoreMut,
+          mutation: query,
           variables: data,
-          update: (store, { data: {createStore} }) => {
+          update: (store, { data: {createStore, updateStore} }) => {
             // Read the data from our cache for this query.
-            const data = store.readQuery({ query: allStoresQuery })
-            data.allStores.push(createStore)
-            store.writeQuery({ query: allStoresQuery, data })
-            this.storeFormIsOpen = false
+            if (data.edit) {
+              console.log('edit')
+              this.storeFormIsOpen = false
+            } else {
+              const storesQuery = { query: allStoresQuery, variables: { companyid: userId } }
+              const cached = store.readQuery(storesQuery)
+              cached.allStores.push(createStore)
+              store.writeQuery({ ...storesQuery, data: cached })
+              this.storeFormIsOpen = false
+            }
           }
         })
       },
       deleteStore (id) {
+        const userId = this.$store.state.auth.user.id
         console.log(id)
         this.$apollo.mutate({
           mutation: deleteStoreMut,
           variables: {'id': id},
           update: (store, { data: {deleteStore} }) => {
-            // Read the data from our cache for this query.
-            let data = store.readQuery({ query: allStoresQuery })
-            console.log(data)
-            data.allStores = data.allStores.filter((el) => {
-              return el.id !== deleteStore.id
+            const storesQuery = { query: allStoresQuery, variables: { companyid: userId } }
+            const cached = store.readQuery(storesQuery)
+            cached.allStores = cached.allStores.filter(store => {
+              return store.id !== id
             })
-            console.log(data)
-            store.writeQuery({ query: allStoresQuery, data })
-            this.storeFormIsOpen = false
+            store.writeQuery({...storesQuery, data: cached})
           }
         })
       },
       createNewSector (data) {
-        data.byid = this.$store.state.auth.user.id
+        // updateSectorMut
+        const userId = this.$store.state.auth.user.id
+        data.byid = userId
+        let query = null
+        if (data.edit === true) {
+          query = updateSectorMut
+        } else {
+          query = addNewSectorMut
+        }
+
         console.log(data)
         this.$apollo.mutate({
-          mutation: addNewSectorMut,
+          mutation: query,
           variables: data,
-          update: (store, { data: {createSector} }) => {
+          update: (store, { data: {createSector, updateSector} }) => {
             // Read the data from our cache for this query.
-            const data = store.readQuery({ query: allSectorsQuery })
-            data.allSectors.push(createSector)
-            store.writeQuery({ query: allSectorsQuery, data })
-            this.sectorFormIsOpen = false
+            if (data.edit) {
+              this.sectorFormIsOpen = false
+            } else {
+              const sectorsQuery = { query: allSectorsQuery, variables: { companyid: userId } }
+              const cached = store.readQuery(sectorsQuery)
+              cached.allSectors.push(createSector)
+              store.writeQuery({ ...sectorsQuery, data: cached })
+              this.sectorFormIsOpen = false
+            }
           }
         })
       },
       deleteSector (id) {
+        const userId = this.$store.state.auth.user.id
         console.log(id)
         this.$apollo.mutate({
           mutation: deleteSectorMut,
           variables: {'id': id},
           update: (store, { data: {deleteSector} }) => {
             // Read the data from our cache for this query.
-            let data = store.readQuery({ query: allSectorsQuery })
-            console.log(data)
-            data.allSectors = data.allSectors.filter((el) => {
-              return el.id !== deleteSector.id
+            const sectorsQuery = { query: allSectorsQuery, variables: { companyid: userId } }
+            let cached = store.readQuery(sectorsQuery)
+            console.log(cached)
+            cached.allSectors = cached.allSectors.filter((el) => {
+              return el.id !== id
             })
-            console.log(data)
-            store.writeQuery({ query: allSectorsQuery, data })
+            console.log(cached)
+            store.writeQuery({ ...sectorsQuery, data: cached })
             this.sectorFormIsOpen = false
           }
         })

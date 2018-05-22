@@ -7,7 +7,7 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-text>
-        <v-card-title class="title mb-4"> {{ editData? 'Editar' : 'Agregar' }} Ubicacion</v-card-title>
+        <v-card-title class="title mb-4"> {{ currentLocation.edit?'Editar ':'Agregar ' }} Ubicacion</v-card-title>
         <gmap-map
           v-if="isOpen"
           :options="{styles: gmapStyles}"
@@ -17,7 +17,7 @@
           style="width: 100%; height: 300px"
         >
           <gmap-marker
-            :position="editData?editData:currentLocation"
+            :position="{ lat: currentLocation.latitude, lng: currentLocation.longitude }"
             :clickable="true"
             :draggable="true"
             @position_changed="updateMarker(currentLocation, $event)"
@@ -25,17 +25,17 @@
         </gmap-map>
         <v-card-text>
           <div>
-            <h5>{{currentLocation.lng}}, {{currentLocation.lat}}</h5>
+            <h5>{{currentLocation.longitude}}, {{currentLocation.latitude}}</h5>
           </div>
           <v-text-field v-model="currentLocation.address" label="Direccion" name="locationAddress"/>
         </v-card-text>
         <v-card-actions class="roboto">
           <v-spacer/>
           <v-tooltip bottom>
-            <v-btn flat color="primary"
+            <v-btn flat color="primary" :disabled="disableCreate"
                    class="" slot="activator" @click.native.stop="createNewLocation">
-              <v-icon>{{ editData? 'edit' : 'add' }}</v-icon>
-              {{ editData? 'Editar' : 'Crear' }}
+              <v-icon>{{ currentLocation.edit? 'edit' : 'add' }}</v-icon>
+              {{ currentLocation.edit? 'Editar' : 'Crear' }}
             </v-btn>
             <span>Crear?</span>
           </v-tooltip>
@@ -57,10 +57,14 @@
       onReturnData: Function,
       isOpen: Boolean
     },
+    computed: {
+      currentLocation () {
+        return this.$store.state.placesForm.locationFormData
+      }
+    },
     data () {
       return {
-        currentLocation: {lat: -12.117992, lng: -77.030646},
-        editedLocation: {},
+        disableCreate: false,
         opened: false,
         gmapStyles: gmapsStyles,
         center: { lat: -12.117992, lng: -77.030646 }
@@ -74,6 +78,11 @@
         this.opened = false
       },
       createNewLocation: function () {
+        this.disableCreate = true
+        setTimeout(() => {
+          this.disableCreate = false
+        }, 2000)
+
         if (this.onReturnData) {
           this.onReturnData(this.currentLocation)
         }
@@ -83,8 +92,8 @@
           lat: event.lat(),
           lng: event.lng()
         }
-        this.currentLocation.lat = event.lat()
-        this.currentLocation.lng = event.lng()
+        this.currentLocation.latitude = event.lat()
+        this.currentLocation.longitude = event.lng()
       },
       handleLocationError: function (browserHasGeolocation) {
         this.infomessage =
@@ -102,8 +111,8 @@
           self.center.lat = pos.lat
           self.center.lng = pos.lng
 
-          self.currentLocation.lat = pos.lat
-          self.currentLocation.lng = pos.lng
+          self.currentLocation.latitude = pos.lat
+          self.currentLocation.longitude = pos.lng
         }, function () {
           self.handleLocationError(true)
         })

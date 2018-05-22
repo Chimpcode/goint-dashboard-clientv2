@@ -37,10 +37,16 @@ export default {
   name: 'SectorCard',
   props: {
     clusterData: Object,
-    onDelete: Function
+    onDelete: Function,
+    onEdit: Function
   },
   methods: {
     editClusterData () {
+      const stores = this.clusterData.stores.map(store => store.id)
+      this.$store.state.placesForm.sectorFormData = { ...this.clusterData, stores, edit: true }
+      if (this.onEdit) {
+        this.onEdit(false)
+      }
     },
     deleteSectorFunc (id) {
       if (this.onDelete) {

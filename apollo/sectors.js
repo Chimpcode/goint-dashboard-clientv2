@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 const allSectorsQuery = gql`
-query ($companyid: ID) {
-  allSectors (
+query allSectorsQuery ($companyid: ID) {
+  allSectors: allSectors (
     filter: {
       createdBy: {
         id: $companyid
@@ -12,6 +12,7 @@ query ($companyid: ID) {
     id
     name
     stores {
+      id
       name
     }
   }
@@ -27,6 +28,24 @@ mutation ($name: String!, $stores: [ID!], $byid: ID!) {
         id
         name
         stores {
+          id
+          name
+        }
+    }
+}
+`
+
+const updateSectorMut = gql`
+mutation ($id: ID!, $name: String!, $stores: [ID!]) {
+    updateSector (
+        id: $id,
+        name: $name,
+        storesIds: $stores
+    ) {
+        id
+        name
+        stores {
+          id
           name
         }
     }
@@ -41,10 +60,11 @@ mutation ($id: ID!) {
         id
         name
         stores {
+          id
           name
         }
     }
 }
 `
 
-export {allSectorsQuery, addNewSectorMut, deleteSectorMut}
+export {allSectorsQuery, addNewSectorMut, updateSectorMut, deleteSectorMut}

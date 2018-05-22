@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import placesForm from './places_form'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,9 @@ let store = new Vuex.Store({
     snackbarOff (state) {
       state.snackbar = false
     }
+  },
+  modules: {
+    placesForm
   }
 })
 

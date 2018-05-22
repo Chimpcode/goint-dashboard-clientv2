@@ -6,7 +6,7 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-text>
-        <v-card-title class="title"> Agregar nueva Tienda </v-card-title>
+        <v-card-title class="title"> {{ internalData.edit?'Editar ':'Agregar nueva ' }} Tienda </v-card-title>
         <v-card-text>
           <v-text-field v-model="internalData.name" label="Nombre" name="tiendaName"/>
           <v-text-field v-model="internalData.description" label="Descripcion" name="tiendaDescription"/>
@@ -23,10 +23,10 @@
         <v-card-actions class="roboto">
           <v-spacer/>
           <v-tooltip bottom>
-            <v-btn flat color="primary"
+            <v-btn flat color="primary" :disabled="disableCreate"
                    class="" slot="activator" @click.native.stop="returnData(internalData)">
-              <v-icon> add </v-icon>
-              Crear
+              <v-icon v-if="!internalData.edit"> add </v-icon>
+              {{ internalData.edit?'Editar':'Crear' }}
             </v-btn>
             <span>Crear?</span>
           </v-tooltip>
@@ -45,11 +45,17 @@
       onClose: Function,
       onReturnData: Function
     },
+    computed: {
+      internalData () {
+        console.log(this.$store.state.placesForm.storeFormData)
+        return this.$store.state.placesForm.storeFormData
+      }
+    },
     data () {
       return {
         state: false,
-        internalData: { },
-        allLocations: []
+        allLocations: [],
+        disableCreate: false
       }
     },
     apollo: {
@@ -70,6 +76,11 @@
         }
       },
       returnData (data) {
+        this.disableCreate = true
+        setTimeout(() => {
+          this.disableCreate = false
+        }, 2000)
+
         if (this.onReturnData) {
           this.onReturnData(data)
         }

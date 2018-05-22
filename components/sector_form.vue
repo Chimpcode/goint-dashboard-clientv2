@@ -45,10 +45,14 @@
       onClose: Function,
       onReturnData: Function
     },
+    computed: {
+      internalData () {
+        return this.$store.state.placesForm.sectorFormData
+      }
+    },
     data () {
       return {
         state: false,
-        internalData: {},
         allStores: []
       }
     },

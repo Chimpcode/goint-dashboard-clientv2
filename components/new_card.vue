@@ -21,7 +21,7 @@ export default {
   methods: {
     openForm () {
       if (this.onClick) {
-        this.onClick()
+        this.onClick(true)
       }
     }
   }

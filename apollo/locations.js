@@ -16,12 +16,28 @@ const allLocationsQuery = gql`
 `
 
 const addNewLocationMut = gql`
-  mutation ($address: String!, $lng: Float!, $lat: Float!, $byid: ID!) {
+  mutation ($address: String!, $latitude: Float!, $longitude: Float!, $byid: ID!) {
     createLocation (
       address: $address,
-      longitude: $lng,
-      latitude: $lat,
+      longitude: $longitude,
+      latitude: $latitude,
       createdById: $byid
+    ) {
+      id
+      address
+      latitude
+      longitude
+    }
+  }
+`
+
+const updateLocationMut = gql`
+  mutation ($id: ID!, $address: String!, $longitude: Float!, $latitude: Float!) {
+    updateLocation (
+      id: $id,
+      address: $address,
+      longitude: $longitude,
+      latitude: $latitude
     ) {
       id
       address
@@ -64,4 +80,4 @@ const editLocationMut = gql`
     }
   }
 `
-export {allLocationsQuery, addNewLocationMut, deleteLocationMut, editLocationMut}
+export {allLocationsQuery, addNewLocationMut, updateLocationMut, deleteLocationMut, editLocationMut}
