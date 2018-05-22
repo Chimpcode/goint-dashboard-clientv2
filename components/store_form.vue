@@ -76,6 +76,10 @@
         }
       },
       returnData (data) {
+        if (data.name === '' || data.name === undefined) {
+          this.$store.commit('setSnackbarMessage', 'Inserte un nombre a la nueva la tienda')
+          return
+        }
         this.disableCreate = true
         setTimeout(() => {
           this.disableCreate = false

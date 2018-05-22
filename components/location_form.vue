@@ -78,6 +78,13 @@
         this.opened = false
       },
       createNewLocation: function () {
+        const data = this.currentLocation
+        console.log('currentLocation', data)
+        if ((data.address === '' || data.address === undefined) || data.longitude === undefined || data.latitude === undefined) {
+          this.$store.commit('setSnackbarMessage', 'Debe insertar una direccion y la ubicacion en el mapa')
+          return
+        }
+
         this.disableCreate = true
         setTimeout(() => {
           this.disableCreate = false

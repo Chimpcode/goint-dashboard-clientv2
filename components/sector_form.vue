@@ -74,6 +74,11 @@
         }
       },
       returnData (data) {
+        if (data.name === '' || data.name === undefined) {
+          this.$store.commit('setSnackbarMessage', 'Debe insertar el nombre del sector')
+          return
+        }
+
         if (this.onReturnData) {
           this.onReturnData(data)
         }
