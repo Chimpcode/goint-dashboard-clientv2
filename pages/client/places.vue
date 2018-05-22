@@ -216,6 +216,11 @@
               store.writeQuery({ ...locationsQuery, data: cached })
               this.locationFormIsOpen = false
             }
+            if (data.edit) {
+              this.$store.commit('setSnackbarMessage', 'Ubicacion actualizada')
+            } else {
+              this.$store.commit('setSnackbarMessage', 'Ubicacion creada')
+            }
           }
         })
       },
@@ -236,6 +241,8 @@
             console.log(data)
             store.writeQuery({ ...locationsQuery, data })
             this.locationFormIsOpen = false
+
+            this.$store.commit('setSnackbarMessage', 'Ubicacion eliminada')
           }
         })
       },
@@ -265,6 +272,12 @@
               store.writeQuery({ ...storesQuery, data: cached })
               this.storeFormIsOpen = false
             }
+
+            if (data.edit) {
+              this.$store.commit('setSnackbarMessage', 'Tienda actualizada')
+            } else {
+              this.$store.commit('setSnackbarMessage', 'Tienda creada')
+            }
           }
         })
       },
@@ -281,6 +294,7 @@
               return store.id !== id
             })
             store.writeQuery({...storesQuery, data: cached})
+            this.$store.commit('setSnackbarMessage', 'Tienda eliminada')
           }
         })
       },
@@ -310,6 +324,12 @@
               store.writeQuery({ ...sectorsQuery, data: cached })
               this.sectorFormIsOpen = false
             }
+
+            if (data.edit) {
+              this.$store.commit('setSnackbarMessage', 'Sector actualizado')
+            } else {
+              this.$store.commit('setSnackbarMessage', 'Sector creado')
+            }
           }
         })
       },
@@ -330,6 +350,7 @@
             console.log(cached)
             store.writeQuery({ ...sectorsQuery, data: cached })
             this.sectorFormIsOpen = false
+            this.$store.commit('setSnackbarMessage', 'Sector eliminado')
           }
         })
       }

@@ -15,7 +15,6 @@
       <v-snackbar
         :timeout="snackbar.timeout"
         right
-        vertical
         v-model="isSnackbarOn"
       >
         {{ snackbarMessage }}

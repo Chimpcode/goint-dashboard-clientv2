@@ -7,7 +7,7 @@
         </v-btn>
       </v-card-text>
 
-      <v-card-title class="title"> Agregar Sector </v-card-title>
+      <v-card-title class="title"> {{internalData.edit?'Editar':'Agregar '}} Sector </v-card-title>
       <v-card-text>
         <v-text-field v-model="internalData.name" label="Nombre" name="sectorName"/>
         <v-select
@@ -25,8 +25,8 @@
 
         <v-btn flat color="primary"
                class="" @click.native.stop="returnData(internalData)">
-          <v-icon>add</v-icon>
-          Crear
+          <v-icon v-if="!internalData.edit">add</v-icon>
+          {{internalData.edit?'Editar':'Crear '}}
         </v-btn>
       </v-card-actions>
 
