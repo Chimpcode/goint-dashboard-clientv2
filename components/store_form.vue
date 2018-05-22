@@ -15,7 +15,6 @@
             v-model="internalData.locations"
             multiple
             chips
-            autocomplete
             label="Inserte ubicaciones"
             item-value="id"
             item-text="address"
@@ -49,7 +48,7 @@
     data () {
       return {
         state: false,
-        internalData: {},
+        internalData: { },
         allLocations: []
       }
     },

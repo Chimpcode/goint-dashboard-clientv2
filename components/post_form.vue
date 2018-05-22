@@ -43,7 +43,6 @@
             bottom
             multiple
             chips
-            autocomplete
           >
             <template slot="selection" slot-scope="data">
               <v-chip
@@ -67,12 +66,9 @@
             v-bind:items="[]"
             v-model="dataPost.semiTags"
             label="Escribe los tags relacionados a tu promocion (presiona ENTER para agregar mas tags)"
-            single-line
             bottom
             tags
-            multiple
             chips
-            autocomplete
           >
             <template slot="selection" slot-scope="data">
               <v-chip

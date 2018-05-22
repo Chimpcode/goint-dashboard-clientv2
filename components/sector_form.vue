@@ -15,7 +15,6 @@
           v-model="internalData.stores"
           multiple
           chips
-          autocomplete
           label="Inserte tiendas"
           item-value="id"
           item-text="name"

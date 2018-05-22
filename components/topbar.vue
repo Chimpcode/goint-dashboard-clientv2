@@ -1,7 +1,7 @@
 <template>
   <div id="topbar" class="elevation-4">
     <div>
-      {{title}}
+      {{topbarTitle[title]}}
       <v-btn flat icon class="menu-btn" color="black" @click.native.stop="onClickMenuBtn">
         <v-icon>menu</v-icon>
       </v-btn>
@@ -23,6 +23,16 @@ export default {
   methods: {
     onClickMenuBtn: function () {
       this.$emit('on-menu-btn-click', true)
+    }
+  },
+  data () {
+    return {
+      topbarTitle: {
+        'client-dashboard': 'Inicio',
+        'client-promotions': 'Mis promociones',
+        'client-places': 'Ubicaciones',
+        'client-settings': 'Ajustes'
+      }
     }
   }
 }

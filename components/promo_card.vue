@@ -6,7 +6,7 @@
     <div class="info-content">
       <v-card-title primary-title>
       <div>
-          <div class="created-at">{{promoInfo.createdAt}}</div>
+          <div class="created-at">{{promoInfo.createdAt | prettyDate}}</div>
           <h3 class="headline mb-0 mt-2">{{promoInfo.title}}</h3>
           <div>{{promoInfo.description}}
           </div>
@@ -75,6 +75,13 @@ export default {
   props: {
     color: String,
     promoData: Object
+  },
+  filters: {
+    prettyDate (isodate) {
+      if (!isodate) return ''
+      let date = new Date(isodate)
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    }
   },
   computed: {
     promoInfo () {

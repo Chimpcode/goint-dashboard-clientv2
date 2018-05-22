@@ -9,6 +9,7 @@
           append-icon="search"
           id="search"
           v-model="searchText"
+          @input="progressiveSearch(searchText)"
           @click="active_state=states[0]"
         />
       </v-flex>
@@ -42,14 +43,15 @@
 
           <!-- LIST CARDS -->
           <v-layout row wrap v-if="active_state==='list'">
-            <v-flex v-if="promocionesFiltered.length === 0" xs12 sm12 md9 v-for="(promo, index) in promociones" :key="index">
+            <!-- <v-flex v-if="promocionesFiltered.length === 0" xs12 sm12 md9 
+            v-for="(promo, index) in promociones" :key="index + '-promo-card'">
               <promo-card
                 :color="colorvariants[index%5]"
                 :promo-data="promo"
                 @on-edit-mode="(_promo) => { postObjToEdit = promo; active_state=states[2] }"
                 @on-delete="onCreateUpdatePost"/>
-            </v-flex>
-            <v-flex v-else xs12 sm12 md9 v-for="(promo, index) in promocionesFiltered" :key="index">
+            </v-flex> -->
+            <v-flex xs12 sm12 md9 v-for="(promo, index) in promocionesFiltered" :key="index+'-promo-result-card'">
               <promo-card
                 :color="colorvariants[index%5]"
                 :promo-data="promo"
@@ -87,6 +89,18 @@
       PromoCard, PostForm
     },
     methods: {
+      progressiveSearch () {
+        const text = this.searchText
+        let self = this
+        self.promocionesFiltered = []
+        if (text !== '') {
+          self.promocionesFiltered = self.promociones.filter(promotion => {
+            return promotion.title.toUpperCase().indexOf(text.toUpperCase()) !== -1
+          })
+        } else {
+          self.promocionesFiltered = self.promociones
+        }
+      },
       onOpenEditAddPostView: function () {
         if (this.active_state === this.states[1] ||
           this.active_state === this.states[2]) {
@@ -128,26 +142,10 @@
       }
     },
     computed: {
-      searchText: {
-        get () {
-        },
-        set (text) {
-          let self = this
-          if (text === '') {
-            this.promocionesFiltered = []
-          } else {
-            this.promociones.map((item) => {
-              if (item.title.includes(text)) {
-                self.promocionesFiltered.push(item)
-              }
-            })
-            console.log(self.promocionesFiltered)
-          }
-        }
-      }
     },
     data () {
       return {
+        searchText: '',
         states: ['list', 'add', 'edit'],
         location_selected: null,
         // active_state: 'list',
@@ -169,6 +167,9 @@
           return {
             companyid: companyId
           }
+        },
+        result ({data, loading, networkStatus}) {
+          this.promocionesFiltered = data.promociones
         }
       }
     },

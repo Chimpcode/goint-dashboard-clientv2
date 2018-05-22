@@ -12,9 +12,23 @@
       <v-flex xs12>
         <p class="subheader">Detalles de la empresa</p>
       </v-flex>
-      <v-flex xs12 class="text-xs-left" v-for="(item, k) in companyInfo" :key="k+'item-company-data'">
-        <div :class="[`field-company-data field-${k}`]">{{ `${companyFields[k]} : ${item}` }}</div>
+    </v-layout>
+    <v-layout row wrap class="outline-box table-info pb-4">
+      <v-flex xs12 class="px-3 py-2 info-color-text">
+        <v-icon class="info-color-text">info</v-icon>
+        Informacion Actual de tu empresa. Estos datos no son editadables por el momento.
       </v-flex>
+      <table class="ml-4">
+        <tbody class="text-xs-left info-color-text">
+          <tr v-for="(item, k) in companyInfo" :key="k+'item-company-data'" :class="[`field-company-data field-${k}`]">
+            <td class="pr-3">{{ companyFields[k] }}:</td>
+            <td>{{item}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <v-flex xs12 class="text-xs-left info-color-text" v-for="(item, k) in companyInfo" :key="k+'item-company-data'">
+        <div :class="[`field-company-data field-${k}`]">{{ `${companyFields[k]} : ${item}` }}</div>
+      </v-flex> -->
     </v-layout>
     <v-layout row wrap class="mt-4" v-for="(item, index) in []" :key="index">
       <v-flex sm8 xs11 class="pr-4 pt-1">
@@ -106,6 +120,9 @@
           if (this.syncCategories === 2) {
             const categories = data.categories
             let currentCategory = null
+            if (this.company === null) {
+              return
+            }
             if (this.company.categories.length === 0) {
               return false
             }
@@ -279,15 +296,23 @@
   // color: #cbcbcb
   .avatar-hover:hover
     background-color black
+  .field-company-data
+    padding-bottom 8px
+    padding-left 24px
+    font-size 14px
   .field-commercialName
     font-size 18px
     padding-bottom 8px
     font-weight 600
   .field-createdAt
     font-size 12px
-  .field-company-data
-    padding-bottom 8px
-    padding-left 24px
 
-
+  .outline-box
+    border  1px solid #2196f3 !important
+  .info-color-text
+    color #2196f3 !important
+  .table-info
+    margin-left auto
+    margin-right auto
+    display: inline-block
 </style>
