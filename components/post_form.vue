@@ -184,6 +184,7 @@ export default {
         activeDays: availableDays,
         availableAge: availableAge,
         availableHour: availableHour,
+        isActive: this.postObj.isActive,
         genders: genders,
         image: this.postObj.image,
         locationByStoresIds: this.postObj.locationByStores.map((item) => {
@@ -264,7 +265,7 @@ export default {
         this.dataPost.gender = this.dataPost.genders
         this.dataPost.tags = this.dataPost.semiTags.join(',')
         this.dataPost.stock = parseInt(this.dataPost.stock)
-        this.dataPost.isActive = false
+        this.dataPost.isActive = this.dataPost.isActive
 
         this.dataPost.byid = this.$store.state.auth.user.id
 
