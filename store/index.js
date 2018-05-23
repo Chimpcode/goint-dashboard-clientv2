@@ -4,34 +4,34 @@ import placesForm from './places_form'
 
 Vue.use(Vuex)
 
-let store = new Vuex.Store({
-  state: {
-    snackbarMessage: '',
-    snackbar: false,
-    bombopaymentsdialog: false
-  },
-  getters: {
-    snackbarMsg: (state) => {
-      return state.snackbarMessage
+const createStore = () => {
+  return new Vuex.Store({
+    state: {
+      snackbarMessage: '',
+      snackbar: false,
+      bombopaymentsdialog: false
     },
-    isSnackbarOn: (state) => {
-      return state.snackbar
-    }
-  },
-  mutations: {
-    setSnackbarMessage (state, message) {
-      state.snackbarMessage = message
-      state.snackbar = true
+    getters: {
+      snackbarMsg: (state) => {
+        return state.snackbarMessage
+      },
+      isSnackbarOn: (state) => {
+        return state.snackbar
+      }
     },
-    snackbarOff (state) {
-      state.snackbar = false
+    mutations: {
+      setSnackbarMessage (state, message) {
+        state.snackbarMessage = message
+        state.snackbar = true
+      },
+      snackbarOff (state) {
+        state.snackbar = false
+      }
+    },
+    modules: {
+      placesForm
     }
-  },
-  modules: {
-    placesForm
-  }
-})
-
-export default () => {
-  return store
+  })
 }
+
+export default createStore

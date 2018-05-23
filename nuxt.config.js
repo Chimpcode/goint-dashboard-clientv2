@@ -46,31 +46,55 @@ module.exports = {
     credentials: false
   },
   auth: {
-    user: {
-      endpoint: 'http://13.90.253.208:9300/api/v1/dashboard',
-      propertyName: 'company',
-      resetOnFail: true,
-      enabled: true,
-      method: 'GET',
-      appendToken: false
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      // callback: '/login'
+      home: '/client/dashboard'
     },
-    login: {
-      endpoint: 'http://13.90.253.208:9300/api/v1/login',
-      propertyName: 'token'
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'http://13.90.253.208:9300/api/v1/login', method: 'post', propertyName: 'token' },
+          logout: false,
+          // logout: { url: 'http://13.90.253.208:9300/api/v1/logout', method: 'get', propertyName: 'token' },
+          user: { url: 'http://13.90.253.208:9300/api/v1/dashboard', method: 'get', propertyName: 'company' }
+        },
+        tokenRequired: true,
+        tokenType: 'bearer'
+      }
     },
-    logout: {
-      endpoint: 'http://13.90.253.208:9300/api/v1/logout',
-      method: 'GET',
-      paramTokenName: 'token',
-      appendToken: false
-    },
+    // user: {
+    //   endpoint: 'http://13.90.253.208:9300/api/v1/dashboard',
+    //   propertyName: 'company',
+    //   resetOnFail: true,
+    //   enabled: true,
+    //   method: 'GET',
+    //   appendToken: false
+    // },
+    // login: {
+    //   endpoint: 'http://13.90.253.208:9300/api/v1/login',
+    //   propertyName: 'token'
+    // },
+    // logout: {
+    //   endpoint: 'http://13.90.253.208:9300/api/v1/logout',
+    //   method: 'GET',
+    //   enabled: false,
+    //   paramTokenName: 'token',
+    //   appendToken: false
+    // },
     token: {
-      enabled: true,
-      type: 'Bearer',
-      localStorage: true,
-      name: 'token',
-      cookie: true,
-      cookieName: 'token'
+      prefix: '_token.'
+      // enabled: true,
+      // type: 'Bearer',
+      // localStorage: true,
+      // name: 'token',
+      // cookie: true,
+      // cookieName: 'token'
+    },
+    localStorage: false,
+    cookie: {
+      prefix: 'auth.'
     }
   },
   vuetify: {

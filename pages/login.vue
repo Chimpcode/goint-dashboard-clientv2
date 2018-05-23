@@ -85,21 +85,27 @@
     methods: {
       async processLogin () {
         try {
-          await this.$store.dispatch('auth/login', {
-            fields: {
+          this.$auth.loginWith('local', {
+            data: {
               email: this.email,
               password: this.password
             }
           })
+          // await this.$store.dispatch('auth/login', {
+          //   fields: {
+          //     email: this.email,
+          //     password: this.password
+          //   }
+          // })
           this.email = ''
           this.password = ''
-          this.$router.push('/dashboard')
+          // this.$router.push('/dashboard')
         } catch (e) {
           console.log(e)
-          console.log(this.$store.getters['auth/loggedIn'])
-          if (!this.$store.getters['auth/loggedIn']) {
-            this.errorDialog = true
-          }
+          console.log(this.$auth.loggedIn)
+          // if (!this.$store.getters['auth/loggedIn']) {
+          //   this.errorDialog = true
+          // }
           this.password = ''
         }
       }
