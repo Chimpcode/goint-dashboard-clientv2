@@ -85,7 +85,6 @@ export default {
   },
   computed: {
     promoInfo () {
-      console.log(this.promoData.image)
       return {
         id: this.promoData.id,
         image: this.promoData.image,

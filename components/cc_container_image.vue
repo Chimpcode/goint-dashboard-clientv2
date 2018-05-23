@@ -22,7 +22,6 @@
     watch: {
       pastImg: function (newVal, oldVal) {
         // if (this.pastImg !== undefined) {
-        console.log(newVal, oldVal)
         if (newVal !== undefined) {
           this.$refs.imgContainer.style.background = 'black'
           this.$refs.img.src = newVal
@@ -39,8 +38,6 @@
     },
     methods: {
       changedState (prevState) {
-        console.log(this.gointGalaxyIsOpen)
-        console.log(prevState)
         this.gointGalaxyIsOpen = prevState
       },
       openGalaxy () {

@@ -180,7 +180,7 @@ export default {
         description: this.postObj.description,
         expireAt: `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')}`,
         stock: this.postObj.stock,
-        tags: this.postObj.tags,
+        semiTags: this.postObj.tags.split(','),
         activeDays: availableDays,
         availableAge: availableAge,
         availableHour: availableHour,

@@ -177,7 +177,6 @@
       EventBus.$emit('is-loading', true)
       this.fetchDependencies().then(done => {
         EventBus.$emit('is-loading', false)
-        console.log(done)
       }, err => {
         EventBus.$emit('is-loading', false)
         console.log(err)
