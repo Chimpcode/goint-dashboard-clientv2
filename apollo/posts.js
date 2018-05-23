@@ -21,6 +21,17 @@ query allPostsQuery ($companyid: ID) {
         locationByStores{
           id, name
         }
+        targetPublic {
+          availableDays,
+          createdAt
+          gender
+          id
+          lowerHour
+          maxAge
+          minAge
+          updatedAt
+          upperHour
+        }
     }
 }
 `

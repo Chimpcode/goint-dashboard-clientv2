@@ -17,7 +17,7 @@
               :max="max"
               :min="min"
               v-if="mode === 'number'"
-              @input="updateInput()"
+              @change="updateInput()"
       />
       <input class="inner-input" :value="value" ref="textInput" :placeholder="placeholder"
              @focus="focused = true"
@@ -61,10 +61,10 @@
           if (this.$refs.numInput.value > this.max ||
             this.$refs.numInput.value < this.min) {
             if (this.$refs.numInput.value > this.max) {
-              this.$refs.numInput.value = this.max - 1
+              this.$refs.numInput.value = this.max
               // this.value = this.max - 1
             } else {
-              this.$refs.numInput.value = this.min + 1
+              this.$refs.numInput.value = this.min
               // this.value = this.min + 1
             }
           }

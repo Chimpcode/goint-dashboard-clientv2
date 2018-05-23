@@ -24,7 +24,7 @@
         // if (this.pastImg !== undefined) {
         console.log(newVal, oldVal)
         if (newVal !== undefined) {
-          this.$refs.imgContainer.style.background = 'white'
+          this.$refs.imgContainer.style.background = 'black'
           this.$refs.img.src = newVal
         }
         // }

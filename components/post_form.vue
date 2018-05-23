@@ -31,6 +31,7 @@
 
     <v-flex xs6 class="px-3">
       <v-layout row wrap>
+
         <v-flex xs12>
           <v-select
             :name="'Ubicacion'"
@@ -57,18 +58,16 @@
               </v-chip>
             </template>
           </v-select>
-
-          <!--<CcTextInput v-model="dataPost.places" :name="'Ubicacion'" :type="'simple'"/>-->
         </v-flex>
-        <v-flex xs12>
 
+        <v-flex xs12>
           <v-select
             v-bind:items="[]"
             v-model="dataPost.semiTags"
             label="Escribe los tags relacionados a tu promocion (presiona ENTER para agregar mas tags)"
             bottom
-            tags
             chips
+            tags
           >
             <template slot="selection" slot-scope="data">
               <v-chip
@@ -83,11 +82,11 @@
               </v-chip>
             </template>
           </v-select>
-          <!--<CcTextInput v-model="dataPost.tags" :name="'Tags'" :type="'simple'"/>-->
         </v-flex>
+
         <v-flex xs6>
           <CcRangeInput
-          :name="'Rango de edad (2-99)'"
+          :name="'Rango de edad (1-99)'"
           :type="'simple'"
           :max="availableAge.max"
           :min="availableAge.min"
@@ -168,16 +167,24 @@ export default {
     if (this.postObj === null) {
       this.dataPost = { title: '', tags: '', targetPublic: {} }
     } else {
-      let expireDate = new Date(this.postObj.expireAt)
+      let expireDate = new Date(((new Date(this.postObj.expireAt)).getTime() + 5 * 60 * 60 * 1000))
+
+      const availableDays = this.postObj.targetPublic.availableDays
+      const genders = this.postObj.targetPublic.gender
+      const availableAge = [this.postObj.targetPublic.minAge, this.postObj.targetPublic.maxAge]
+      const availableHour = [parseInt(this.postObj.targetPublic.lowerHour), parseInt(this.postObj.targetPublic.upperHour)]
+
       this.dataPost = {
         id: this.postObj.id,
         title: this.postObj.title,
         description: this.postObj.description,
-        expireAt: expireDate.getFullYear() + '-' + (expireDate.getMonth() + 1).toString().padStart(2, '0') + '-' + expireDate.getDate(),
+        expireAt: `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')}`,
         stock: this.postObj.stock,
         tags: this.postObj.tags,
-        activeDays: this.postObj.availableDays,
-        genders: this.postObj.gender,
+        activeDays: availableDays,
+        availableAge: availableAge,
+        availableHour: availableHour,
+        genders: genders,
         image: this.postObj.image,
         locationByStoresIds: this.postObj.locationByStores.map((item) => {
           return item.id

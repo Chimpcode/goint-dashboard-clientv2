@@ -9,7 +9,7 @@
     <v-layout row>
       <v-flex xs5>
         <CcTextInput
-          v-model.number="firstValue"
+          v-model.number="firstValueComputed"
           ref="startVal"
           @input="checkValidity"
           :name="'Desde'"
@@ -22,7 +22,7 @@
 
       <v-flex xs5>
         <CcTextInput
-          v-model.number="lastValue"
+          v-model.number="lastValueComputed"
           ref="endVal"
           @input="checkValidity"
           :name="'Hasta'"
@@ -47,7 +47,34 @@
       name: String,
       type: String,
       max: Number,
-      min: Number
+      min: Number,
+      value: Array
+    },
+    computed: {
+      firstValueComputed: {
+        get () {
+          if (this.value !== undefined) {
+            this.firstValue = this.value[0]
+            return this.firstValue
+          }
+          return this.firstValue
+        },
+        set (value) {
+          this.firstValue = value
+        }
+      },
+      lastValueComputed: {
+        get () {
+          if (this.value !== undefined) {
+            this.lastValue = this.value[1]
+            return this.lastValue
+          }
+          return this.lastValue
+        },
+        set (value) {
+          this.lastValue = value
+        }
+      }
     },
     data () {
       return {
@@ -57,11 +84,11 @@
     },
     methods: {
       checkValidity (value) {
-        console.log('check on change', value)
-        if (this.$refs.startVal.value > this.$refs.endVal.value) {
+        if (this.firstValue > this.lastValue) {
           // let startValue = this.$refs.startVal.value
-          this.firstValue = this.$refs.endVal.value
-          this.lastValue = this.$refs.startVal.value
+          const temporalValue = this.firstValue
+          this.firstValue = this.lastValue
+          this.lastValue = temporalValue
           // this.$refs.startVal.value = this.$refs.endVal.value
           // this.$refs.endVal.value = startValue
         }

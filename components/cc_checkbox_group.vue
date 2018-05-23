@@ -8,14 +8,14 @@
     </span>
 
     <v-layout row style="margin-left: 0px;" v-if="!vertical">
-      <div v-for="(item, key) in model" @click="changeInternalState(key)">
+      <div v-for="(item, key) in modelComputed" @click="changeInternalState(key)" :key="key+ '-elem-checkbox'">
         <span class="item-title-style">{{item.name}}</span>
         <div :class="item.value?'activated-check-container':'deactivated-check-container'">
         </div>
       </div>
     </v-layout>
     <div style="margin-left: 0px;" v-if="vertical">
-      <div v-for="(item, key) in model" @click="changeInternalState(key)">
+      <div v-for="(item, key) in modelComputed" @click="changeInternalState(key)" :key="key+ '-elem-checbox-v'">
         <span class="item-title-style">{{item.name}}</span>
         <div :class="item.value?'activated-check-container':'deactivated-check-container'"/>
       </div>
@@ -27,11 +27,34 @@
 export default {
   name: 'CcCheckBoxGroup',
   props: {
+    value: String,
     model: Object,
     name: String,
     type: String,
     onChangeState: Function,
     vertical: Boolean
+  },
+  computed: {
+    modelComputed () {
+      if (this.value !== '' && this.value !== undefined && this.name !== 'Genero') {
+        const days = this.value.split(',')
+        days.map(keyLetter => {
+          this.model[keyLetter].value = true
+        })
+        return this.model
+      } else if (this.value !== '' && this.value !== undefined) {
+        let gendersValue = this.value.split(',')
+        gendersValue = gendersValue.map(g => g === 'Varon' ? 'male' : 'female')
+
+        gendersValue.map(keyLetter => {
+          this.model[keyLetter].value = true
+        })
+        return this.model
+      } else {
+        return this.model
+      }
+    }
+
   },
   data () {
     return {
