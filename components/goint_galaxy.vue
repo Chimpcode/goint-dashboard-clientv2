@@ -64,7 +64,7 @@
       isOpen: Boolean
     },
     mounted () {
-      console.log(this.$store.state.auth.user)
+      // console.log(this.$store.state.auth.user)
       this.ruc = this.$store.state.auth.user.ruc
       let ruc = this.ruc
       this.refreshImages(ruc)
@@ -91,7 +91,7 @@
         this.$refs.inputFile.click()
       },
       atChangeInputFile () {
-        console.log(this.$refs.inputFile.files)
+        // console.log(this.$refs.inputFile.files)
         //  create form to send file
         let formData = new FormData()
         formData.append('image', this.$refs.inputFile.files[0])
@@ -110,7 +110,7 @@
             newImages.push({src: this.baseUri + response.body[i]})
           }
           this.images = newImages
-          console.log(this.images)
+          // console.log(this.images)
         }, err => {
           // error callback
           console.log(err)
