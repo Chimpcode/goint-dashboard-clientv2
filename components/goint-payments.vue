@@ -1,32 +1,31 @@
 <template>
     <div id="goint-payments">
-        <v-dialog v-model="opened">
-            <v-card>
+        <v-dialog v-model="opened" max-width="800px">
+            <v-card class="payment-card">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon fill="white" points="0,100 100,50 100,100"/>
+              </svg>
+              <v-card-title class="title">Subscripción y pagos</v-card-title>
               <v-card-text>
-                <div class="option" id="option1" ref="option1" @click="selectOption('option1')">
-                  <div class="name-plan">B&Aacute;SICO</div>
-                  <div class="price-plan">s/ 20</div>
-                  <div class="value-plan">10 LUGARES 1 SECTORES</div>
-                </div>
-                <div class="option" id="option2" ref="option2" @click="selectOption('option2')">
-                  <div class="name-plan">ESTANDAR</div>
-                  <div class="price-plan">s/ 30</div>
-                  <div class="value-plan">20 LUGARES 2 SECTORES</div>
-                </div>
-                <div class="option" id="option3" ref="option3" @click="selectOption('option3')">
-                  <div class="name-plan">PREMIUM</div>
-                  <div class="price-plan">s/ 50</div>
-                  <div class="value-plan">50 LUGARES 2 SECTORES</div>
-                </div>
+                <v-alert :value="true" icon="info" outline color="primary">Adquiera a tiempo el paquete para su siguiente plan de publicidad.</v-alert>
+              </v-card-text>
+              <v-card-text class="plans-section">
 
+                <div class="option" :id="option.ref" :ref="option.ref" @click="selectOption(option)" 
+                  v-for="(option, i) in options" :key="i+'-option'">
+                  <div class="name-plan">{{option.name}}</div>
+                  <div class="price-plan">{{option.price}}</div>
+                  <div class="value-plan">{{option.value}}</div>
+                </div>
                 <!-- <v-btn color="red lighten-3">
                   asdsad
                 </v-btn>
                 <v-btn color="blue lighten-3">PREMIUM</v-btn>
                 <v-btn color="yellow lighten-3">PLATINUM</v-btn> -->
               </v-card-text>
-              <cc-credit-card v-model="ccform"></cc-credit-card>
-              <v-card-actions>
+              <v-card-text class="result">Compra: S/ {{ optionSelected === null? 0 : optionSelected.price }}</v-card-text>
+              <cc-credit-card class="cc-form" v-model="ccform"></cc-credit-card>
+              <v-card-actions class="payment-actions">
                   <v-spacer></v-spacer>
                   <v-btn color="primary">COMPRAR</v-btn>
                   <v-btn color="grey darken-3" class="white--text" @click.native.stop="closeDialog">CANCELAR</v-btn>
@@ -56,7 +55,13 @@ export default {
   },
   data () {
     return {
-      ccform: {}
+      ccform: {},
+      optionSelected: null,
+      options: [
+        { price: 20.0, name: 'BÁSICO', value: '10 LUGARES, 1 SECTORES', ref: 'option1' },
+        { price: 30.0, name: 'ESTANDAR', value: '20 LUGARES, 2 SECTORES', ref: 'option2' },
+        { price: 50.0, name: 'PREMIUM', value: '50 LUGARES, 2 SECTORES', ref: 'option3' }
+      ]
     }
   },
   methods: {
@@ -64,11 +69,11 @@ export default {
       this.$store.state.bombopaymentsdialog = !this.$store.state.bombopaymentsdialog
     },
     selectOption (option) {
-      const options = ['option1', 'option2', 'option3']
-      options.map(_option => {
-        document.getElementById(_option).classList.remove('option-selected')
+      this.options.map(_option => {
+        document.getElementById(_option.ref).classList.remove('option-selected')
       })
-      document.getElementById(option).classList.add('option-selected')
+      document.getElementById(option.ref).classList.add('option-selected')
+      this.optionSelected = option
     }
   }
 }
@@ -106,6 +111,34 @@ export default {
   font-weight bold
 .value-plan
   font-size 14px
-
+.plans-section
+  text-align center
+.title
+  font-weight 600
+  font-size 18px
+  padding-top 40px
+  padding-bottom 70px
+  color white
+svg
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 10vw;
+  z-index 1
+  background #e84c55
+  // background-image: linear-gradient(#e84c55, #ff6126);
+  /* set height to pixels if you want angle to change with screen width */
+.payment-card
+  position: relative;
+  height: 300px;
+.cc-form
+.payment-actions
+.plans-section
+.title
+  position relative
+  z-index 2
+.result
+  text-align center
+  font-size 18px
+  font-weight 600
 </style>
-
