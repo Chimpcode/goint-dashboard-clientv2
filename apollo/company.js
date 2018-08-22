@@ -44,6 +44,49 @@ query companyQuery ($companyid: ID) {
 }
 `
 
+const createCompany = gql`
+mutation createCompany($email: String!, $password: String!, $staticPhone: String!, $movilPhone: String!,
+  $socialReason: String!, $commercialName: String!, $fiscalIdentity: String!, $ruc: String!, 
+  $legalAddressAddress: String!, $legalAddressPostalCode: String, $link: String!, $aboutUs: String!,
+  $legalAddressCity: String!, $legalAddressProvince: String!, $legalAddressCountry: String!, $emailPayment: String!,
+  $termsConditions: String!, $legalAddressRegion: String!) {
+    company: createCompany(
+      aboutUs: $aboutUs,
+      email: $email,
+      password: $password,
+      staticPhone: $staticPhone,
+      movilPhone: $movilPhone,
+      socialReason: $socialReason,
+      commercialName: $commercialName,
+      fiscalIdentity: $fiscalIdentity,
+      link: $link,
+      ruc: $ruc,
+      emailPayment: $emailPayment,
+      termsConditions: $termsConditions,
+      legalAddress: {
+        address: $legalAddressAddress,
+        city: $legalAddressCity,
+        country: $legalAddressCountry,
+        province: $legalAddressProvince,
+        postalCode: $legalAddressPostalCode,
+        region: $legalAddressRegion
+      }
+    ) {
+        id
+        email
+        movilPhone
+        termsConditions
+        legalAddress {
+          address
+          city
+          province
+          country
+          postalCode
+        }
+    }
+}
+`
+
 const updateCompany = gql`
 mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: String, $email: String) {
     company: updateCompany(
@@ -103,4 +146,4 @@ mutation removeCompanyCategory($companyid: ID!, $categoryid: ID!) {
 }
 `
 
-export {companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress}
+export {companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress, createCompany}
