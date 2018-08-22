@@ -9,8 +9,12 @@ query companyQuery ($companyid: ID) {
         createdAt
         email
         legalAddress {
+            id
             address
             city
+            province
+            country
+            postalCode
         }
         movilPhone
         postCount
@@ -41,10 +45,39 @@ query companyQuery ($companyid: ID) {
 `
 
 const updateCompany = gql`
-mutation updateCompany($companyid: ID!, $termsConditions: String) {
-    company: updateCompany(id: $companyid, termsConditions: $termsConditions) {
+mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: String, $email: String) {
+    company: updateCompany(
+      id: $companyid,
+      termsConditions: $termsConditions,
+      movilPhone: $movilPhone,
+      email: $email
+    ) {
         id
-        termsConditions    
+        email
+        movilPhone
+        termsConditions
+        legalAddress {
+          address
+          city
+          province
+          country
+          postalCode
+        }
+    }
+}
+`
+
+const updateCompanyLegalAddress = gql`
+mutation updateCompanyLegalAddress($legalAddressId: ID!, $address: String, $city: String, $province: String, $country: String, $postalCode: String) {
+    legalAddress: updateLegalAddress(
+      id: $legalAddressId,
+      address: $address,
+      city: $city,
+      province: $province,
+      country: $country,
+      postalCode: $postalCode)
+    {
+        id
     }
 }
 `
@@ -70,4 +103,4 @@ mutation removeCompanyCategory($companyid: ID!, $categoryid: ID!) {
 }
 `
 
-export {companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany}
+export {companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress}

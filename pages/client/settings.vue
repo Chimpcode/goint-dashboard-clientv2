@@ -38,17 +38,105 @@
         <v-switch color="primary" v-model="item.value"></v-switch>
       </v-flex>
     </v-layout>
+
     <v-layout row wrap class="mt-4" v-if="company !== null">
       <v-flex xs12>
         <v-text-field
           name="input-1"
-          label="Terminos y Condiciones de las promociones"
-          textarea
-          v-model="editableCompany.termsConditions"
+          label="Correo"
+          v-model="editableCompany.email"
           color="primary"
         ></v-text-field>
       </v-flex>
     </v-layout>
+
+    <v-layout row wrap class="mt-4" v-if="company !== null">
+      <v-flex xs12>
+        <v-text-field
+          name="input-1"
+          label="Telefono/celular"
+          v-model="editableCompany.movilPhone"
+          color="primary"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+
+    <v-expansion-panel popout class="mb-3">
+      <v-expansion-panel-content>
+        <div slot="header">Direccion Legal</div>
+        <v-card class="px-4">
+
+          <v-layout row wrap class="mt-4" v-if="company !== null && editableCompany.legalAddress !== undefined">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Codigo postal"
+                v-model="editableCompany.legalAddress.postalCode"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap class="mt-4" v-if="company !== null && editableCompany.legalAddress !== undefined">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Direccion"
+                v-model="editableCompany.legalAddress.address"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap class="mt-4" v-if="company !== null && editableCompany.legalAddress !== undefined">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Ciudad"
+                v-model="editableCompany.legalAddress.city"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap class="mt-4" v-if="company !== null && editableCompany.legalAddress !== undefined">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Provincia"
+                v-model="editableCompany.legalAddress.province"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap class="mt-4" v-if="company !== null && editableCompany.legalAddress !== undefined">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Pais"
+                v-model="editableCompany.legalAddress.country"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap class="mt-4" v-if="company !== null">
+            <v-flex xs12>
+              <v-text-field
+                name="input-1"
+                label="Terminos y Condiciones de las promociones"
+                textarea
+                v-model="editableCompany.termsConditions"
+                color="primary"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+
     <v-layout row wrap>
       <v-flex xs12>
         <v-btn @click.native.stop="updateCompanyData">ACTUALIZAR DATOS</v-btn>
@@ -102,7 +190,7 @@
 <script>
   import CcAvatar from '~/components/cc_avatar.vue'
   // import {logoImage} from '~/apollo/settings'
-  import { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany } from '~/apollo/company'
+  import { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress } from '~/apollo/company'
   import { allCategoriesQuery } from '~/apollo/category'
 
   export default {
@@ -197,11 +285,25 @@
       updateCompanyData () {
         const self = this
         this.$apollo.mutate({
-          mutation: updateCompany,
+          mutation: updateCompanyLegalAddress,
           variables: {
-            companyid: self.company.id,
-            termsConditions: self.editableCompany.termsConditions
+            legalAddressId: self.company.legalAddress.id,
+            address: self.editableCompany.legalAddress.address,
+            city: self.editableCompany.legalAddress.city,
+            province: self.editableCompany.legalAddress.province,
+            country: self.editableCompany.legalAddress.country,
+            postalCode: self.editableCompany.legalAddress.postalCode
           }
+        }).then(legalAddress => {
+          return this.$apollo.mutate({
+            mutation: updateCompany,
+            variables: {
+              companyid: self.company.id,
+              termsConditions: self.editableCompany.termsConditions,
+              movilPhone: self.editableCompany.movilPhone,
+              email: self.editableCompany.email
+            }
+          })
         }).then(company => {
           // self.company.termsConditions = company.termsConditions
           this.$store.commit('setSnackbarMessage', 'Data updated')
@@ -257,7 +359,7 @@
     data () {
       return {
         company: null,
-        editableCompany: null,
+        editableCompany: { legalAddress: {} },
         companyFields: {
           'commercialName': 'Nombre comercial',
           'createdAt': 'Fecha de creacion',

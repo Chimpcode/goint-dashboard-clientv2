@@ -127,6 +127,9 @@
     <v-flex xs12>
       <CcTextInput v-model="dataPost.description" :name="'Descripción'" :type="'big'"/>
     </v-flex>
+    <v-flex xs12>
+      <CcTextInput v-model="dataPost.description" :name="'Condiciones Adicionales'" :type="'big'"/>
+    </v-flex>
 
     <v-flex xs12>
       <v-btn color="primary" @click="createPost" v-if="postObj === null">CREAR</v-btn>
