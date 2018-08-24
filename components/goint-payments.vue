@@ -6,7 +6,7 @@
                 <polygon fill="white" points="0,100 100,50 100,100"/>
               </svg>
               <v-card-title class="title">Subscripción y pagos</v-card-title>
-              <v-card-text>
+              <v-card-text v-if="showInfoAlert">
                 <v-alert :value="true" icon="info" outline color="primary">Adquiera a tiempo el paquete para su siguiente plan de publicidad.</v-alert>
               </v-card-text>
               <v-card-text class="plans-section">
@@ -14,7 +14,7 @@
                 <div class="option" :id="option.ref" :ref="option.ref" @click="selectOption(option)" 
                   v-for="(option, i) in options" :key="i+'-option'">
                   <div class="name-plan">{{option.name}}</div>
-                  <div class="price-plan">{{option.price}}</div>
+                  <div class="price-plan">$ {{option.price}} / EST.</div>
                   <div class="value-plan">{{option.value}}</div>
                 </div>
                 <!-- <v-btn color="red lighten-3">
@@ -23,7 +23,7 @@
                 <v-btn color="blue lighten-3">PREMIUM</v-btn>
                 <v-btn color="yellow lighten-3">PLATINUM</v-btn> -->
               </v-card-text>
-              <v-card-text class="result">Compra: S/ {{ optionSelected === null? 0 : optionSelected.price }}</v-card-text>
+              <v-card-text class="result">Compra: $ {{ optionSelected === null? 0 : optionSelected.price }}</v-card-text>
               <cc-credit-card class="cc-form" v-model="ccform"></cc-credit-card>
               <v-card-actions class="payment-actions">
                   <v-spacer></v-spacer>
@@ -43,6 +43,9 @@ export default {
   components: {
     CcCreditCard
   },
+  props: {
+    showInfoAlert: { type: Boolean, default: true }
+  },
   computed: {
     opened: {
       get () {
@@ -58,9 +61,11 @@ export default {
       ccform: {},
       optionSelected: null,
       options: [
-        { price: 20.0, name: 'BÁSICO', value: '10 LUGARES, 1 SECTORES', ref: 'option1' },
-        { price: 30.0, name: 'ESTANDAR', value: '20 LUGARES, 2 SECTORES', ref: 'option2' },
-        { price: 50.0, name: 'PREMIUM', value: '50 LUGARES, 2 SECTORES', ref: 'option3' }
+        { price: 20.0, name: 'PLAN 1', value: '1 ESTABLECIMIENTO', ref: 'option1' },
+        { price: 18.0, name: 'PLAN 2', value: '2 ESTABLECIMIENTOS', ref: 'option2' },
+        { price: 15.0, name: 'PLAN 3', value: '3 - 5 ESTABLECIMIENTOS', ref: 'option3' },
+        { price: 12.0, name: 'PLAN 4', value: '6 - 9 ESTABLECIMIENTOS', ref: 'option4' },
+        { price: 10.0, name: 'PLAN 5', value: '10+ ESTABLECIMIENTOS', ref: 'option5' }
       ]
     }
   },

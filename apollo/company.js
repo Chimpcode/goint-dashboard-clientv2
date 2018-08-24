@@ -48,7 +48,7 @@ const createCompany = gql`
 mutation createCompany($email: String!, $password: String!, $staticPhone: String!, $movilPhone: String!,
   $socialReason: String!, $commercialName: String!, $fiscalIdentity: String!, $ruc: String!, 
   $legalAddressAddress: String!, $legalAddressPostalCode: String, $link: String!, $aboutUs: String!,
-  $legalAddressCity: String!, $legalAddressProvince: String!, $legalAddressCountry: String!, $emailPayment: String!,
+  $legalAddressCity: String!, $legalAddressProvince: String!, $legalAddressCountry: String!, $emailPayment: String!, $activePlanId: ID
   $termsConditions: String!, $legalAddressRegion: String!) {
     company: createCompany(
       aboutUs: $aboutUs,
@@ -56,6 +56,7 @@ mutation createCompany($email: String!, $password: String!, $staticPhone: String
       password: $password,
       staticPhone: $staticPhone,
       movilPhone: $movilPhone,
+      activePlanId: $activePlanId,
       socialReason: $socialReason,
       commercialName: $commercialName,
       fiscalIdentity: $fiscalIdentity,

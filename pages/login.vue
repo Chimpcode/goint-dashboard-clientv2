@@ -32,6 +32,11 @@
                   <v-btn flat color="primary" light @click.native.stop="processLogin">Login!</v-btn>
                 </v-flex>
               </v-layout>
+              <v-layout row>
+                <v-flex xs12 class="text-xs-center signup-link">
+                  <nuxt-link to="/register">No tienes cuenta? Créate uno.</nuxt-link>
+                </v-flex>
+              </v-layout>
             </v-container>
             <chimpcode-banner class="chimpcode-banner"/>
           </div>
@@ -166,4 +171,5 @@
   .chimpcode-banner
     bottom 5px
     left 12px
+
 </style>

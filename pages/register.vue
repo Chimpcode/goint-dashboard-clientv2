@@ -2,10 +2,15 @@
     <div id="register-page">
       <v-app>
         <v-container>
+          <v-layout row wrap class="pt-4 pb-4">
+            <v-flex xs12>
+              <nuxt-link to="/login">Ir a Iniciar sesión</nuxt-link>
+            </v-flex>
+          </v-layout>
 
           <v-layout row wrap class="pb-5">
             <v-flex xs12>
-              <h2 class="red--text text--darken-4">Afiliate a Goint</h2>
+              <h2 class="red--text text--darken-4"><a href=""></a> Afiliate a Goint</h2>
               <v-divider class="red darken-4"></v-divider>
             </v-flex>
           </v-layout>
@@ -15,86 +20,99 @@
               <h3 class="grey--text text--darken-2">Datos Personales del representante legal</h3>
             </v-flex>
           </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Nombres"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Apellidos"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Correo" v-model="company.email"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Password" type="password" v-model="company.password"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Repetir password" type="password" v-model="company.repassword"></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <h3 class="grey--text text--darken-2">Datos de contacto</h3>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Telefono fijo" v-model="company.staticPhone"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Telefono movil" v-model="company.movilPhone"></v-text-field>
-            </v-flex>
-            <!--<v-flex xs12 sm6 class="pa-2">-->
+          <v-form v-model="isValidForm" ref="form" lazy-validation>
+            <v-layout row wrap>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Nombres" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Apellidos" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Correo" v-model="company.email" :rules="emailRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Password" type="password" v-model="company.password" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Repetir password" type="password" v-model="company.repassword" :rules="requiredRules"></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <h3 class="grey--text text--darken-2">Datos de contacto</h3>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Telefono fijo" v-model="company.staticPhone" type="number" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Telefono movil" v-model="company.movilPhone" type="number" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <!--<v-flex xs12 sm6 class="pa-2">-->
               <!--<v-text-field label="Correo alternativo" v-model="company.movilPhone"></v-text-field>-->
-            <!--</v-flex>-->
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <h3 class="grey--text text--darken-2">Datos de la empresa</h3>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Razon social" v-model="company.socialReason"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Nombre comercial" v-model="company.commercialName"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Link de pagina web" v-model="company.link"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Identificador fiscal" v-model="company.fiscalIdentity"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Direccion legal" v-model="company.legalAddress.address"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Codigo postal" v-model="company.legalAddress.postalCode"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Ciudad" v-model="company.legalAddress.city"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Provincia" v-model="company.legalAddress.province"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Pais" v-model="company.legalAddress.country"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Region" v-model="company.legalAddress.region"></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 class="pa-2">
-              <v-text-field label="Correo para envio de factura" v-model="company.emailPayment"></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-btn lg color="red darken-4"
-                     v-on:click="createNewCompany()"
-                     class="white--text">REGISTRARSE</v-btn>
-            </v-flex>
-          </v-layout>
+              <!--</v-flex>-->
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <h3 class="grey--text text--darken-2">Datos de la empresa</h3>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Razon social" v-model="company.socialReason" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Nombre comercial" v-model="company.commercialName" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Link de pagina web" v-model="company.link" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Identificador fiscal" v-model="company.fiscalIdentity" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Direccion legal" v-model="company.legalAddress.address" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Codigo postal" v-model="company.legalAddress.postalCode" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Ciudad" v-model="company.legalAddress.city" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Provincia" v-model="company.legalAddress.province" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Pais" v-model="company.legalAddress.country" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Region" v-model="company.legalAddress.region" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Correo para envio de factura" v-model="company.emailPayment" :rules="emailRules"></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <div class="upgrade-container">
+                  <v-btn color="primary"
+                         class=""
+                         @click.native.stop="$store.state.bombopaymentsdialog = !$store.state.bombopaymentsdialog">ESCOJE TU PLAN</v-btn>
+                </div>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-btn lg color="red darken-4"
+                       :disabled="!isValidForm"
+                       @click="createNewCompany"
+                       class="white--text">REGISTRARSE</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-form>
+          <goint-payments :showInfoAlert="false"></goint-payments>
         </v-container>
       </v-app>
     </div>
@@ -102,22 +120,36 @@
 
 <script>
     import { createCompany } from '~/apollo/company'
+    import GointPayments from '~/components/goint-payments'
+
+    const requiredRule = v => !!v || 'Informacion requerida'
 
     export default {
       name: 'register',
+      components: {GointPayments},
       data () {
         return {
+          isValidForm: false,
+          requiredRules: [requiredRule],
+          emailRules: [
+            requiredRule,
+            v => /.+@.+/.test(v) || 'E-mail debe ser valido'
+          ],
           company: { legalAddress: {} }
         }
       },
       methods: {
         createNewCompany () {
+          if (!this.$refs.form.validate()) {
+            return
+          }
           const self = this
           const link = self.company.link || ''
           this.$apollo.mutate({
             mutation: createCompany,
             variables: {
               aboutUs: '',
+              activePlanId: 'cjdertvveatni0102mxvhg66o',
               commercialName: self.company.commercialName,
               email: self.company.email,
               link: link,
