@@ -2,6 +2,16 @@
   <v-container>
     <v-layout row wrap class="mt-4">
       <v-flex xs12>
+        <p class="subheader">Foto de portada</p>
+      </v-flex>
+      <v-flex xs12 class="text-xs-center" v-if="company !== null">
+        <cc-portrait
+          :image-url="company.headerBackground">
+        </cc-portrait>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class="mt-4">
+      <v-flex xs12>
         <p class="subheader">Logo de la empresa</p>
       </v-flex>
       <v-flex xs12 class="text-xs-center" v-if="company !== null">
@@ -142,7 +152,8 @@
         <v-btn @click.native.stop="updateCompanyData">ACTUALIZAR DATOS</v-btn>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+
+    <v-layout row wrap class="mt-5">
       <v-flex xs12>
         <p class="subheader">Categoria seleccionada</p>
       </v-flex>
@@ -189,6 +200,7 @@
 
 <script>
   import CcAvatar from '~/components/cc_avatar.vue'
+  import CcPortrait from '~/components/cc_portrait.vue'
   // import {logoImage} from '~/apollo/settings'
   import { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress } from '~/apollo/company'
   import { allCategoriesQuery } from '~/apollo/category'
@@ -197,7 +209,7 @@
     // just for func
     middleware: 'auth',
     components: {
-      CcAvatar
+      CcAvatar, CcPortrait
     },
     layout: 'dashboard',
     apollo: {
@@ -205,7 +217,7 @@
         query: allCategoriesQuery,
         result ({data, loading, networkStatus}) {
           this.syncCategories++
-          if (this.syncCategories === 2) {
+          if (this.syncCategories >= 2) {
             const categories = data.categories
             let currentCategory = null
             if (this.company === null) {
@@ -215,11 +227,7 @@
               return false
             }
             let currentId = this.company.categories[0].id
-            categories.map(cat => {
-              if (cat.id === currentId) {
-                currentCategory = cat
-              }
-            })
+            currentCategory = categories.filter(cat => cat.id === currentId)[0] || null
             if (currentCategory !== null) {
               this.categories_selected = currentCategory.id
             }
@@ -237,20 +245,15 @@
         },
         result ({ data, loading, networkStatus }) {
           this.syncCategories++
-          this.editableCompany = Object.assign({}, data.company)
-          if (this.syncCategories === 2) {
+          this.editableCompany = {...data.company, legalAddress: {...data.company.legalAddress}}
+          if (this.syncCategories >= 2) {
             const categories = this.categories
             let currentCategory = null
             if (data.company.categories.length === 0) {
               return false
             }
-            let currentId = data.company.categories[0].id
-
-            categories.map(cat => {
-              if (cat.id === currentId) {
-                currentCategory = cat
-              }
-            })
+            const currentId = data.company.categories[0].id
+            currentCategory = categories.filter(cat => cat.id === currentId)[0] || null
             if (currentCategory !== null) {
               this.categories_selected = currentCategory.id
             }

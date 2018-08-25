@@ -10,7 +10,7 @@ query allPostsQuery ($companyid: ID) {
       }
     ) {
         id
-        title
+        title 
         image
         createdAt
         description

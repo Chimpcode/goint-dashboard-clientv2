@@ -10,10 +10,21 @@
         <v-card-text>
           <v-text-field v-model="internalData.name" label="Nombre" name="tiendaName"/>
           <v-text-field v-model="internalData.description" label="Descripcion" name="tiendaDescription"/>
+          <v-text-field v-model="internalData.businessHours" label="Horario de atencion" name="tiendaBusinessHours"/>
+
+          <v-checkbox
+            label="Ofrece Wifi el local"
+            v-model="internalData.wifi"
+            color="red"
+          ></v-checkbox>
+          <v-checkbox
+            label="Tienda virtual"
+            color="red"
+            v-model="internalData.storeType"
+          />
           <v-select
             :items="allLocations"
-            v-model="internalData.locations"
-            multiple
+            v-model="internalData.location"
             chips
             label="Inserte ubicaciones"
             item-value="id"

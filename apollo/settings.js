@@ -11,6 +11,17 @@ query ($companyid: ID) {
   }
 }`
 
+const updateHeaderPortrait = gql`
+mutation ($companyid: ID!, $headerBackground: String){
+  updateCompany(
+    id: $companyid,
+    headerBackground: $headerBackground
+  ) {
+    id
+    headerBackground
+  }
+}`
+
 const updateLogoImage = gql`
 mutation ($companyid: ID!, $logoImage: String){
   updateCompany(
@@ -22,4 +33,4 @@ mutation ($companyid: ID!, $logoImage: String){
   }
 }`
 
-export {logoImage, updateLogoImage}
+export {logoImage, updateLogoImage, updateHeaderPortrait}

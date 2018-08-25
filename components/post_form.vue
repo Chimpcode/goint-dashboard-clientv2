@@ -128,7 +128,7 @@
       <CcTextInput v-model="dataPost.description" :name="'Descripción'" :type="'big'"/>
     </v-flex>
     <v-flex xs12>
-      <CcTextInput v-model="dataPost.description" :name="'Condiciones Adicionales'" :type="'big'"/>
+      <CcTextInput v-model="dataPost.additionalInformation" :name="'Condiciones Adicionales'" :type="'big'"/>
     </v-flex>
 
     <v-flex xs12>
@@ -181,6 +181,7 @@ export default {
         id: this.postObj.id,
         title: this.postObj.title,
         description: this.postObj.description,
+        additionalInformation: '',
         expireAt: `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')}`,
         stock: this.postObj.stock,
         semiTags: this.postObj.tags.split(','),

@@ -12,7 +12,7 @@ query allStoresQuery ($companyid: ID) {
         id
         name
         description
-        locations {
+        location {
             id
             address
         }
@@ -21,17 +21,21 @@ query allStoresQuery ($companyid: ID) {
 `
 
 const addNewStoreMut = gql`
-mutation ($name: String!, $description: String!, $locations: [ID!], $byid: ID!) {
+mutation ($name: String!, $description: String!, $location: ID!, $byid: ID!, $businessHours: String!, $wifi: Boolean, $storeType: Boolean) {
     createStore (
         name: $name,
         description: $description,
-        locationsIds: $locations,
+        businessHours: $businessHours,
+        locationId: $location,
         createdById: $byid
+        wifi: $wifi,
+        storeType: $storeType
     ) {
         id
         name
+        businessHours
         description
-        locations {
+        location {
             id
             address
         }
@@ -40,17 +44,21 @@ mutation ($name: String!, $description: String!, $locations: [ID!], $byid: ID!) 
 `
 
 const updateStoreMut = gql`
-mutation ($id: ID!, $name: String!, $description: String!, $locations: [ID!]) {
+mutation ($id: ID!, $name: String!, $description: String!, $location: ID!, $businessHours: String!, $wifi: Boolean, $storeType: Boolean) {
     updateStore (
         id: $id,
         name: $name,
+        businessHours: $businessHours,
         description: $description,
-        locationsIds: $locations
+        locationId: $location,
+        wifi: $wifi,
+        storeType: $storeType
     ) {
         id
         name
         description
-        locations {
+        businessHours
+        location {
             id
             address
         }
@@ -66,7 +74,7 @@ mutation ($id: ID!) {
         id
         name
         description
-        locations {
+        location {
             address
             id
         }

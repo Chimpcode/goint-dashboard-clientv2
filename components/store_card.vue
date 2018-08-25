@@ -8,9 +8,12 @@
       </div>
     </v-card-title>
     <v-card-text>
-        <h5>Ubicaciones: </h5>
-        <div class="black--text" v-for="(location, i) in placeData.locations" :key="i">
-          <span>{{location.address}}</span>
+        <h5>Ubicacion: </h5>
+        <div class="black--text" v-if="placeData.location !== null && placeData.location !== undefined">
+          <span>{{placeData.location.address}}</span>
+        </div>
+        <div class="black--text" v-else>
+          <span>(No tiene ubicacion)</span>
         </div>
     </v-card-text>
     <v-card-actions class="roboto">
@@ -54,8 +57,8 @@ export default {
       }
     },
     onEditStore () {
-      const locations = this.placeData.locations.map(location => location.id)
-      this.$store.state.placesForm.storeFormData = { ...this.placeData, locations, edit: true }
+      const location = this.placeData.location === null ? null : this.placeData.location.id
+      this.$store.state.placesForm.storeFormData = { ...this.placeData, location, edit: true }
       if (this.onEdit) {
         this.onEdit(false)
       }

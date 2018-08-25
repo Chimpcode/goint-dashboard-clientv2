@@ -61,7 +61,8 @@
   export default {
     props: {
       onChangeState: Function,
-      isOpen: Boolean
+      isOpen: Boolean,
+      typeImage: { type: String, default: 'post' }
     },
     mounted () {
       // console.log(this.$store.state.auth.user)
@@ -117,7 +118,7 @@
         })
       },
       chooseFromDialog () {
-        if (this.$route.path !== '/client/promotions') {
+        if (this.typeImage === 'avatar') {
           //  make update of logoImage of Company and close dialog
           if (this.imageSelected !== undefined) {
             let imageUrl = this.images[this.imageSelected].src

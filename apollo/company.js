@@ -5,6 +5,7 @@ query companyQuery ($companyid: ID) {
     company: Company (id: $companyid) {
         id
         logoImage
+        headerBackground
         commercialName
         createdAt
         email
@@ -100,13 +101,6 @@ mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: S
         email
         movilPhone
         termsConditions
-        legalAddress {
-          address
-          city
-          province
-          country
-          postalCode
-        }
     }
 }
 `
