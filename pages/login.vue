@@ -148,7 +148,7 @@
 
   @media only screen and (max-width: 767px)
     .l-side-content
-      background-image:url(https://source.unsplash.com/sD1VpeflHBY/1000x1000)
+      background-image:url(https://source.unsplash.com/sD1VpeflHBY/768x600)
     .translate-middle
       transform: translateY(50%)
 
