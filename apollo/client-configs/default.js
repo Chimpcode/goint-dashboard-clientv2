@@ -3,7 +3,7 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 export default (ctx) => {
-  const httpLink = new HttpLink({ uri: 'https://api.graph.cool/simple/v1/cjdchobh82rgk0146bw4p4kyu' })
+  const httpLink = new HttpLink({ uri: 'https://api.graph.cool/simple/v1/cjlborupt7iji0181iefxheiv' })
 
   // auth token
   let token = process.server ? ctx.req.session : window.__NUXT__.state.session

@@ -127,7 +127,7 @@
 
   .l-side-content
     min-height: 100%
-    background-image: url(https://source.unsplash.com/random/1000x1000)
+    background-image: url(https://source.unsplash.com/sD1VpeflHBY/1500x1000)
     background-position: center center
     background-repeat: no-repeat
     background-attachment: fixed
@@ -148,7 +148,7 @@
 
   @media only screen and (max-width: 767px)
     .l-side-content
-      background-image:url(https://source.unsplash.com/random/768x600)
+      background-image:url(https://source.unsplash.com/sD1VpeflHBY/1000x1000)
     .translate-middle
       transform: translateY(50%)
 
