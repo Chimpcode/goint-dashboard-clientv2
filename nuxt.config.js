@@ -12,7 +12,8 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons', rel: 'stylesheet' }
+      { href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons', rel: 'stylesheet' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Quicksand' }
     ]
   },
 
@@ -29,7 +30,6 @@ module.exports = {
     '~/plugins/vue_google_maps',
     '~/plugins/vue_resource',
     { src: '~/plugins/toastui', ssr: false }
-    
     // '~/plugins/vue_datetime'
     // '~/plugins/vue_image_lightbox'
     // '~/plugins/vue_fraction_grid',

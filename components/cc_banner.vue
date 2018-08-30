@@ -23,6 +23,7 @@ export default {
 
 
 <style lang="stylus">
+  
   .banner
     font-family "Quicksand"
   .banner a

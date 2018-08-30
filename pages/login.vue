@@ -6,7 +6,7 @@
           <div class="r-side-content">
             <v-container>
               <v-layout row>
-                <v-flex xs8 offset-xs2 sm8 offset-sm2 class="text-xs-center translate-middle">
+                <v-flex xs8 offset-xs2 sm8 offset-sm2 class="text-xs-center translate-middle mb-3">
 
                   <img class="mt-4 mb-5 pb-4 hidden-sm-and-down" src="../assets/logo_goint.png" width="50%"/>
                   <img class="mt-4 mb-5 hidden-md-and-up" src="../assets/logo_goint.png" width="120"/>
@@ -34,7 +34,7 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12 class="text-xs-center signup-link">
-                  <nuxt-link to="/register">No tienes cuenta? Créate uno.</nuxt-link>
+                  <nuxt-link to="/register">¿No tienes cuenta? Créate uno.</nuxt-link>
                 </v-flex>
               </v-layout>
             </v-container>
