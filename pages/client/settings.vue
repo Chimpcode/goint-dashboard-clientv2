@@ -82,8 +82,8 @@
       </v-flex>
     </v-layout>
 
-    <v-expansion-panel popout class="mb-3">
-      <v-expansion-panel-content>
+    <v-expansion-panel class="mb-3">
+      <v-expansion-panel-content class="grey lighten-5">
         <div slot="header">Direccion Legal</div>
         <v-card class="px-4">
 
@@ -141,22 +141,21 @@
               ></v-text-field>
             </v-flex>
           </v-layout>
-
-          <v-layout row wrap class="mt-4" v-if="company !== null">
-            <v-flex xs12>
-              <v-text-field
-                name="input-1"
-                label="Terminos y Condiciones de las promociones"
-                textarea
-                v-model="editableCompany.termsConditions"
-                color="primary"
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
+
+    <v-layout row wrap class="mt-4" v-if="company !== null">
+      <v-flex xs12>
+        <v-text-field
+          name="input-1"
+          label="Descripcion de la empresa (Sobre nosotros)"
+          textarea
+          v-model="editableCompany.aboutUs"
+          color="primary"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
 
     <v-layout row wrap>
       <v-flex xs12>

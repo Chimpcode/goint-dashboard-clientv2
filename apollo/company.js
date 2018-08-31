@@ -103,10 +103,10 @@ mutation createCompany($email: String!, $password: String!, $staticPhone: String
 `
 
 const updateCompany = gql`
-mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: String, $email: String, $emailPayment: String, $commercialName: String) {
+mutation updateCompany($companyid: ID!, $aboutUs: String, $movilPhone: String, $email: String, $emailPayment: String, $commercialName: String) {
     company: updateCompany(
       id: $companyid,
-      termsConditions: $termsConditions,
+      aboutUs: $aboutUs,
       email: $email,
       emailPayment: $emailPayment,
       commercialName: $commercialName,
@@ -117,7 +117,7 @@ mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: S
         emailPayment
         commercialName
         movilPhone
-        termsConditions
+        aboutUs
         ownerFullname
     }
 }
