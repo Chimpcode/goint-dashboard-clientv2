@@ -9,7 +9,7 @@
       </profile-box>
       <div class="body-status">
         <p class="type-account-label nexalight text-xs-left">Tipo de cuenta</p>
-        <p class="type-account-value nexalight text-xs-center mb-1">{{ company.activePlan.type }}</p>
+        <p class="type-account-value nexalight text-xs-center mb-1">{{ company.activePlan.name }}</p>
         <div class="upgrade-container">
           <v-btn color="primary" class="btn-upgrade" @click.native.stop="$store.state.bombopaymentsdialog = !$store.state.bombopaymentsdialog">UPGRADE</v-btn>
         </div>

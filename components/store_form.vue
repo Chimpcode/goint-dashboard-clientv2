@@ -20,7 +20,7 @@
           <v-checkbox
             label="Tienda virtual"
             color="red"
-            v-model="internalData.storeType"
+            v-model="internalData.isVirtual"
           />
           <v-select
             :items="allLocations"
