@@ -277,11 +277,11 @@
           return {}
         }
         return {
-          commercialName: this.company.commercialName,
+          // commercialName: this.company.commercialName,
           createdAt: this.date(this.company.createdAt),
-          email: this.company.email,
-          legalAddress: this.legalAddress(this.company.legalAddress),
-          movilPhone: this.company.movilPhone,
+          // email: this.company.email,
+          // legalAddress: this.legalAddress(this.company.legalAddress),
+          // movilPhone: this.company.movilPhone,
           ruc: this.company.ruc,
           socialReason: this.company.socialReason
         }
