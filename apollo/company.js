@@ -1,5 +1,17 @@
 import gql from 'graphql-tag'
 
+const plansQuery = gql`
+query allPlansQuery {
+  plans: allPlans {
+    id
+    monthlyPrice
+    name
+    duration
+    
+  }
+}
+`
+
 const companyQuery = gql`
 query companyQuery ($companyid: ID) {
     company: Company (id: $companyid) {
@@ -34,7 +46,7 @@ query companyQuery ($companyid: ID) {
             createdAt
             duration
             id
-            type
+            name
             updatedAt
         }
         postCount
@@ -47,7 +59,7 @@ query companyQuery ($companyid: ID) {
 
 const createCompany = gql`
 mutation createCompany($email: String!, $password: String!, $staticPhone: String!, $movilPhone: String!,
-  $socialReason: String!, $commercialName: String!, $fiscalIdentity: String!, $ruc: String!, 
+  $socialReason: String!, $commercialName: String!, $fiscalIdentity: String!, $ruc: String!, $ownerFullname: String!,
   $legalAddressAddress: String!, $legalAddressPostalCode: String, $link: String!, $aboutUs: String!,
   $legalAddressCity: String!, $legalAddressProvince: String!, $legalAddressCountry: String!, $emailPayment: String!, $activePlanId: ID
   $termsConditions: String!, $legalAddressRegion: String!) {
@@ -55,6 +67,7 @@ mutation createCompany($email: String!, $password: String!, $staticPhone: String
       aboutUs: $aboutUs,
       email: $email,
       password: $password,
+      ownerFullname: $ownerFullname,
       staticPhone: $staticPhone,
       movilPhone: $movilPhone,
       activePlanId: $activePlanId,
@@ -90,17 +103,22 @@ mutation createCompany($email: String!, $password: String!, $staticPhone: String
 `
 
 const updateCompany = gql`
-mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: String, $email: String) {
+mutation updateCompany($companyid: ID!, $termsConditions: String, $movilPhone: String, $email: String, $emailPayment: String, $commercialName: String) {
     company: updateCompany(
       id: $companyid,
       termsConditions: $termsConditions,
-      movilPhone: $movilPhone,
-      email: $email
+      email: $email,
+      emailPayment: $emailPayment,
+      commercialName: $commercialName,
+      movilPhone: $movilPhone
     ) {
         id
         email
+        emailPayment
+        commercialName
         movilPhone
         termsConditions
+        ownerFullname
     }
 }
 `
@@ -141,4 +159,4 @@ mutation removeCompanyCategory($companyid: ID!, $categoryid: ID!) {
 }
 `
 
-export {companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress, createCompany}
+export { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress, createCompany, plansQuery }

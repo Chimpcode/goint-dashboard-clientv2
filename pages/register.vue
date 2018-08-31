@@ -29,10 +29,10 @@
           <v-form v-model="isValidForm" ref="form" lazy-validation>
             <v-layout row wrap>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Nombres" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Nombres"  v-model="company.name" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Apellidos" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Apellidos" v-model="company.lastname" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Correo" v-model="company.email" :rules="emailRules"></v-text-field>
@@ -76,7 +76,7 @@
                 <v-text-field label="Link de pagina web" v-model="company.link" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Identificador fiscal" v-model="company.fiscalIdentity" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Identificador fiscal (RUC, DNI, Carne de extranjería o RUT)" v-model="company.fiscalIdentity" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Direccion legal" v-model="company.legalAddress.address" :rules="requiredRules"></v-text-field>
@@ -118,7 +118,7 @@
               </v-flex>
             </v-layout>
           </v-form>
-          <goint-payments :showInfoAlert="false"></goint-payments>
+          <goint-payments :showInfoAlert="false" @onOptionSelected="onPlanSelected"></goint-payments>
         </v-container>
       </v-app>
     </div>
@@ -135,6 +135,7 @@
       components: {GointPayments},
       data () {
         return {
+          planSelected: null,
           isValidForm: false,
           requiredRules: [requiredRule],
           emailRules: [
@@ -145,8 +146,16 @@
         }
       },
       methods: {
+        onPlanSelected (plan) {
+          this.planSelected = plan
+        },
         createNewCompany () {
           if (!this.$refs.form.validate()) {
+            this.$store.commit('setSnackbarMessage', 'Form invalido')
+            return
+          }
+          if (this.planSelected === null) {
+            this.$store.commit('setSnackbarMessage', 'Escoja un plan para registrar la cuenta')
             return
           }
           const self = this
@@ -155,10 +164,11 @@
             mutation: createCompany,
             variables: {
               aboutUs: '',
-              activePlanId: 'cjdertvveatni0102mxvhg66o',
+              activePlanId: self.planSelected.id,
               commercialName: self.company.commercialName,
               email: self.company.email,
               link: link,
+              ownerFullname: self.company.name + ' ' + self.company.lastname,
               staticPhone: self.company.staticPhone,
               movilPhone: self.company.movilPhone,
               ruc: self.company.fiscalIdentity,

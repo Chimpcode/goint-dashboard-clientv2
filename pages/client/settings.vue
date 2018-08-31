@@ -71,6 +71,17 @@
       </v-flex>
     </v-layout>
 
+    <v-layout row wrap class="mt-4" v-if="company !== null">
+      <v-flex xs12>
+        <v-text-field
+          name="input-1"
+          label="Nombre Comercial"
+          v-model="editableCompany.commercialName"
+          color="primary"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+
     <v-expansion-panel popout class="mb-3">
       <v-expansion-panel-content>
         <div slot="header">Direccion Legal</div>
@@ -304,7 +315,9 @@
               companyid: self.company.id,
               termsConditions: self.editableCompany.termsConditions,
               movilPhone: self.editableCompany.movilPhone,
-              email: self.editableCompany.email
+              email: self.editableCompany.email,
+              emailPayment: self.editableCompany.emailPayment,
+              commercialName: self.editableCompany.commercialName
             }
           })
         }).then(company => {

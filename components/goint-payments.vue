@@ -11,11 +11,11 @@
               </v-card-text>
               <v-card-text class="plans-section">
 
-                <div class="option" :id="option.ref" :ref="option.ref" @click="selectOption(option)" 
+                <div class="option" :id="'option' + option.id" :ref="'plan' + option.id" @click="selectOption(option)"
                   v-for="(option, i) in options" :key="i+'-option'">
                   <div class="name-plan">{{option.name}}</div>
-                  <div class="price-plan">$ {{option.price}} / EST.</div>
-                  <div class="value-plan">{{option.value}}</div>
+                  <div class="price-plan">$ {{option.monthlyPrice}} / EST.</div>
+                  <div class="value-plan">{{option.duration}}</div>
                 </div>
                 <!-- <v-btn color="red lighten-3">
                   asdsad
@@ -23,7 +23,7 @@
                 <v-btn color="blue lighten-3">PREMIUM</v-btn>
                 <v-btn color="yellow lighten-3">PLATINUM</v-btn> -->
               </v-card-text>
-              <v-card-text class="result">Compra: $ {{ optionSelected === null? 0 : optionSelected.price }}</v-card-text>
+              <v-card-text class="result">Compra: $ {{ optionSelected === null? 0 : optionSelected.monthlyPrice }}</v-card-text>
               <cc-credit-card class="cc-form" v-model="ccform"></cc-credit-card>
               <v-card-actions class="payment-actions">
                   <v-spacer></v-spacer>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { plansQuery } from '~/apollo/company'
 import CcCreditCard from './cc-credit-card'
 
 export default {
@@ -61,11 +62,6 @@ export default {
       ccform: {},
       optionSelected: null,
       options: [
-        { price: 20.0, name: 'PLAN 1', value: '1 ESTABLECIMIENTO', ref: 'option1' },
-        { price: 18.0, name: 'PLAN 2', value: '2 ESTABLECIMIENTOS', ref: 'option2' },
-        { price: 15.0, name: 'PLAN 3', value: '3 - 5 ESTABLECIMIENTOS', ref: 'option3' },
-        { price: 12.0, name: 'PLAN 4', value: '6 - 9 ESTABLECIMIENTOS', ref: 'option4' },
-        { price: 10.0, name: 'PLAN 5', value: '10+ ESTABLECIMIENTOS', ref: 'option5' }
       ]
     }
   },
@@ -75,11 +71,22 @@ export default {
     },
     selectOption (option) {
       this.options.map(_option => {
-        document.getElementById(_option.ref).classList.remove('option-selected')
+        document.getElementById('option' + _option.id).classList.remove('option-selected')
       })
-      document.getElementById(option.ref).classList.add('option-selected')
+      document.getElementById('option' + option.id).classList.add('option-selected')
       this.optionSelected = option
+      this.$emit('onOptionSelected', option)
     }
+  },
+  created () {
+    const self = this
+    this.$apollo.query({
+      query: plansQuery
+    }).then(res => {
+      self.options = self.options.concat(res.data.plans)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>
