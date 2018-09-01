@@ -125,10 +125,10 @@
       </v-layout>
     </v-flex>
     <v-flex xs12>
-      <CcTextInput v-model="dataPost.description" :name="'Descripción'" :type="'big'"/>
+      <CcTextInput v-model="dataPost.description" :name="'Descripción'" :type="'big'" mode="textarea"/>
     </v-flex>
     <v-flex xs12>
-      <CcTextInput v-model="dataPost.additionalInformation" :name="'Condiciones Adicionales'" :type="'big'"/>
+      <CcTextInput v-model="dataPost.additionalInformation" :name="'Condiciones Adicionales'" :type="'big'" mode="textarea"/>
     </v-flex>
 
     <v-flex xs12>

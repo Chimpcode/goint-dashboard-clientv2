@@ -14,6 +14,7 @@ query allPostsQuery ($companyid: ID) {
         image
         createdAt
         description
+        
         stock
         expireAt
         isActive

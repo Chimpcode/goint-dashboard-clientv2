@@ -9,7 +9,7 @@
     <span v-if="type === 'mini'" class="mini-title">
         {{name}}
     </span>
-    <div :class="focused?'cc-container-focused':'cc-container'">
+    <div :class="[focused?'cc-container-focused':'cc-container', mode === 'textarea'?'cc-container-flex-height':'']">
       <input class="inner-input" :value="value" ref="numInput" :placeholder="placeholder"
               @focus="focused = true"
               @blur="focused = false"
@@ -26,6 +26,14 @@
              v-else-if="mode === 'date'"
              @input="updateInput()"
       />
+      <!--<textarea rows="4" cols="50" class="inner-textarea-input"-->
+                <!--ref="textInput"-->
+                <!--:value="value"-->
+                <!--@focus="focused = true"-->
+                <!--@blur="focused = false"-->
+                <!--@input="updateInput()"-->
+                <!--v-else-if="mode === 'textarea'"-->
+      <!--&gt;</textarea>-->
       <input class="inner-input" :value="value" ref="textInput" :placeholder="placeholder"
              @focus="focused = true"
              @blur="focused = false"
@@ -78,6 +86,11 @@
 </script>
 
 <style type="stylus">
+.inner-textarea-input {
+  background: red;
+  width: 100%;
+}
+
 .inner-input {
   border: none;
   width: 100%;
@@ -109,6 +122,13 @@
   vertical-align: center;
 }
 
+.cc-container-flex-height {
+  height auto !important
+  min-height: 35px !important;
+}
+.inner-textarea-input:focus {
+  outline: none;
+}
 .inner-input:focus {
     outline:none;
 }

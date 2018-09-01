@@ -58,7 +58,6 @@
     },
     computed: {
       internalData () {
-        console.log(this.$store.state.placesForm.storeFormData)
         return this.$store.state.placesForm.storeFormData
       }
     },
@@ -87,6 +86,12 @@
         }
       },
       returnData (data) {
+        if (data.isVirtual === undefined) {
+          data.isVirtual = false
+        }
+        if (data.wifi === undefined) {
+          data.wifi = false
+        }
         if (data.name === '' || data.name === undefined) {
           this.$store.commit('setSnackbarMessage', 'Inserte un nombre a la nueva la tienda')
           return
