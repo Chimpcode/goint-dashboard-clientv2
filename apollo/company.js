@@ -16,6 +16,7 @@ const companyQuery = gql`
 query companyQuery ($companyid: ID) {
     company: Company (id: $companyid) {
         id
+        aboutUs
         logoImage
         headerBackground
         commercialName

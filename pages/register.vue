@@ -81,9 +81,9 @@
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Direccion legal" v-model="company.legalAddress.address" :rules="requiredRules"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Codigo postal" v-model="company.legalAddress.postalCode" :rules="requiredRules"></v-text-field>
-              </v-flex>
+              <!--<v-flex xs12 sm6 class="pa-2">-->
+                <!--<v-text-field label="Codigo postal" v-model="company.legalAddress.postalCode" :rules="requiredRules"></v-text-field>-->
+              <!--</v-flex>-->
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Ciudad" v-model="company.legalAddress.city" :rules="requiredRules"></v-text-field>
               </v-flex>
@@ -182,7 +182,7 @@
               legalAddressCity: self.company.legalAddress.city,
               legalAddressProvince: self.company.legalAddress.province,
               legalAddressCountry: self.company.legalAddress.country,
-              legalAddressPostalCode: self.company.legalAddress.postalCode
+              legalAddressPostalCode: ''
             }
           }).then(companyCreated => {
             this.$store.commit('setSnackbarMessage', 'Cuenta creada')

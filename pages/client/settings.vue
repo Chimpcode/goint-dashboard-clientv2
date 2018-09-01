@@ -312,7 +312,7 @@
             mutation: updateCompany,
             variables: {
               companyid: self.company.id,
-              termsConditions: self.editableCompany.termsConditions,
+              aboutUs: self.editableCompany.aboutUs,
               movilPhone: self.editableCompany.movilPhone,
               email: self.editableCompany.email,
               emailPayment: self.editableCompany.emailPayment,

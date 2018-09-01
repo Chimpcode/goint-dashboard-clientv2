@@ -14,8 +14,8 @@
                 <div class="option" :id="'option' + option.id" :ref="'plan' + option.id" @click="selectOption(option)"
                   v-for="(option, i) in options" :key="i+'-option'">
                   <div class="name-plan">{{option.name}}</div>
-                  <div class="price-plan">$ {{option.monthlyPrice}} / EST.</div>
-                  <div class="value-plan">{{option.duration}}</div>
+                  <div class="price-plan">$ {{option.monthlyPrice}} / Tda.</div>
+                  <div class="value-plan">Duracion {{option.duration}} dias</div>
                 </div>
                 <!-- <v-btn color="red lighten-3">
                   asdsad
@@ -142,7 +142,7 @@ svg
   /* set height to pixels if you want angle to change with screen width */
 .payment-card
   position: relative;
-  height: 300px;
+  min-height: 300px;
 .cc-form
 .payment-actions
 .plans-section
