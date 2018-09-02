@@ -131,7 +131,7 @@
       <CcTextInput v-model="dataPost.description" :name="'Descripción'" :type="'big'" mode="textarea"/>
     </v-flex>
     <v-flex xs12>
-      <CcTextInput v-model="dataPost.additionalInformation" :name="'Condiciones Adicionales'" :type="'big'" mode="textarea"/>
+      <CcTextInput v-model="dataPost.additionalConditions" :name="'Condiciones Adicionales'" :type="'big'" mode="textarea"/>
     </v-flex>
 
     <v-flex xs12>
@@ -179,12 +179,13 @@ export default {
       const genders = this.postObj.targetPublic.gender
       const availableAge = [this.postObj.targetPublic.minAge, this.postObj.targetPublic.maxAge]
       const availableHour = [parseInt(this.postObj.targetPublic.lowerHour), parseInt(this.postObj.targetPublic.upperHour)]
+      const additionalConditions = this.postObj.additionalConditions || ''
 
       this.dataPost = {
         id: this.postObj.id,
         title: this.postObj.title,
         description: this.postObj.description,
-        additionalInformation: '',
+        additionalConditions: additionalConditions,
         expireAt: `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')}`,
         stock: this.postObj.stock,
         semiTags: this.postObj.tags.split(','),
