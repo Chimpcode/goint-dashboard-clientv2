@@ -91,8 +91,8 @@
             <v-flex xs12>
               <v-text-field
                 name="input-1"
-                label="Codigo postal"
-                v-model="editableCompany.legalAddress.postalCode"
+                label="Direccion"
+                v-model="editableCompany.legalAddress.address"
                 color="primary"
               ></v-text-field>
             </v-flex>
@@ -102,8 +102,8 @@
             <v-flex xs12>
               <v-text-field
                 name="input-1"
-                label="Direccion"
-                v-model="editableCompany.legalAddress.address"
+                label="Distrito"
+                v-model="editableCompany.legalAddress.postalCode"
                 color="primary"
               ></v-text-field>
             </v-flex>
@@ -212,7 +212,7 @@
   import CcAvatar from '~/components/cc_avatar.vue'
   import CcPortrait from '~/components/cc_portrait.vue'
   // import {logoImage} from '~/apollo/settings'
-  import { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress } from '~/apollo/company'
+  import { companyQuery, updateCompany, updateCompanyCategory, updateCompanyLegalAddress } from '~/apollo/company'
   import { allCategoriesQuery } from '~/apollo/category'
 
   export default {
@@ -328,47 +328,27 @@
         })
       },
       updateCompanyCategory () {
+        if (this.categories_selected === null) {
+          this.$store.commit('setSnackbarMessage', 'First select a category')
+          return
+        }
         const self = this
         const category = this.categories_selected
-        if (self.company.categories.length === 0) {
-          this.$apollo.mutate({
-            mutation: addCompanyCategory,
-            variables: {
-              companyid: self.company.id,
-              categoryid: category
-            }
-          }).then(data => {
-            console.log('addCompanyCategory', data)
-            // this.categories_selected = category
-            this.$store.commit('setSnackbarMessage', 'Category added')
-          }).catch(err => {
-            console.log(err)
-            this.$store.commit('setSnackbarMessage', 'Something went wrong. Try again')
-          })
-        } else {
-          this.$apollo.mutate({
-            mutation: removeCompanyCategory,
-            variables: {
-              companyid: self.company.id,
-              categoryid: self.company.categories[0].id
-            }
-          }).then(data => {
-            console.log('removeCompanyCategory', data)
-            return this.$apollo.mutate({
-              mutation: addCompanyCategory,
-              variables: {
-                companyid: self.company.id,
-                categoryid: category
-              }
-            })
-          }).then(data => {
-            console.log('addCompanyCategory', data)
-            this.$store.commit('setSnackbarMessage', 'Category updated')
-          }).catch(err => {
-            console.log(err)
-            this.$store.commit('setSnackbarMessage', 'Something went wrong. Try again')
-          })
-        }
+
+        this.$apollo.mutate({
+          mutation: updateCompanyCategory, // addCompanyCategory,
+          variables: {
+            companyid: self.company.id,
+            categoriesIds: [category]
+          }
+        }).then(data => {
+          console.log('updateCompanyCategory', data)
+          // this.categories_selected = category
+          this.$store.commit('setSnackbarMessage', 'Category updated')
+        }).catch(err => {
+          console.log(err)
+          this.$store.commit('setSnackbarMessage', 'Something went wrong. Try again')
+        })
       }
     },
     data () {

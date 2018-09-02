@@ -139,6 +139,21 @@ mutation updateCompanyLegalAddress($legalAddressId: ID!, $address: String, $city
 }
 `
 
+const updateCompanyCategory = gql`
+mutation updateCompanyCategory($companyid: ID!, $categoriesIds: [ID!]) {
+    company: updateCompany(
+      id: $companyid,
+      categoriesIds: $categoriesIds
+    ) {
+      id
+      categories {
+        id
+        name
+      }
+    }
+}
+`
+
 const addCompanyCategory = gql`
 mutation AddCompanyCategory($companyid: ID!, $categoryid: ID!) {
     reponse: addToCompanyCategories(categoriesCompanyCategoryId: $categoryid, companiesAttachedCompanyId: $companyid) {
@@ -160,4 +175,6 @@ mutation removeCompanyCategory($companyid: ID!, $categoryid: ID!) {
 }
 `
 
-export { companyQuery, addCompanyCategory, removeCompanyCategory, updateCompany, updateCompanyLegalAddress, createCompany, plansQuery }
+export { companyQuery, addCompanyCategory, removeCompanyCategory,
+  updateCompany, updateCompanyLegalAddress,
+  createCompany, plansQuery, updateCompanyCategory }
