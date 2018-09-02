@@ -75,4 +75,9 @@
   // color: #cbcbcb
   // #dashboard > .body
   //   margin-left : 22px
+  .indications-section
+    margin-left: 20px
+    font-size: 12px
+    color: grey
+    margin-bottom: 1px
 </style>

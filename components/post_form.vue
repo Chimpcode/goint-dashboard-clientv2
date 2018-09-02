@@ -3,6 +3,9 @@
     <v-flex xs12 class="principal-title">
       Crear promocion
     </v-flex>
+    <v-flex xs12>
+      <p class="indications-section">Se requiere una imagen de tipo de archivo PNG. Con una resolución de 1620x700</p>
+    </v-flex>
     <v-flex xs6 class="px-3">
       <v-layout row wrap>
         <v-flex xs12>

@@ -51,7 +51,7 @@
             </v-layout>
             <v-layout row wrap>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Telefono fijo" v-model="company.staticPhone" type="number" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Telefono fijo" v-model="company.staticPhone" type="number"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Telefono movil" v-model="company.movilPhone" type="number" :rules="requiredRules"></v-text-field>
@@ -73,7 +73,7 @@
                 <v-text-field label="Nombre comercial" v-model="company.commercialName" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Link de pagina web" v-model="company.link" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Link de pagina web" v-model="company.link"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Identificador fiscal (RUC, DNI, Carne de extranjería o RUT)" v-model="company.fiscalIdentity" :rules="requiredRules"></v-text-field>
@@ -160,6 +160,8 @@
           }
           const self = this
           const link = self.company.link || ''
+          const staticPhone = self.company.staticPhone || ''
+
           this.$apollo.mutate({
             mutation: createCompany,
             variables: {
@@ -169,7 +171,7 @@
               email: self.company.email,
               link: link,
               ownerFullname: self.company.name + ' ' + self.company.lastname,
-              staticPhone: self.company.staticPhone,
+              staticPhone: staticPhone,
               movilPhone: self.company.movilPhone,
               ruc: self.company.fiscalIdentity,
               fiscalIdentity: self.company.fiscalIdentity,

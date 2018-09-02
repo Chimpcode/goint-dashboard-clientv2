@@ -4,6 +4,9 @@
       <v-flex xs12>
         <p class="subheader">Foto de portada</p>
       </v-flex>
+      <v-flex xs12>
+        <p class="indications-section">Se requiere una imagen de tipo de archivo PNG. Con una resolución de 1620x700</p>
+      </v-flex>
       <v-flex xs12 class="text-xs-center" v-if="company !== null">
         <cc-portrait
           :image-url="company.headerBackground">
@@ -13,6 +16,9 @@
     <v-layout row wrap class="mt-4">
       <v-flex xs12>
         <p class="subheader">Logo de la empresa</p>
+      </v-flex>
+      <v-flex xs12>
+        <p class="indications-section">Se requiere una imagen de tipo de archivo PNG. Con una resolución mínima de 128x128</p>
       </v-flex>
       <v-flex xs12 class="text-xs-center" v-if="company !== null">
         <cc-avatar
@@ -55,6 +61,17 @@
           name="input-1"
           label="Correo"
           v-model="editableCompany.email"
+          color="primary"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap class="mt-4" v-if="company !== null">
+      <v-flex xs12>
+        <v-text-field
+          name="input-1"
+          label="Link página web de la empresa"
+          v-model="editableCompany.link"
           color="primary"
         ></v-text-field>
       </v-flex>
@@ -315,6 +332,7 @@
               aboutUs: self.editableCompany.aboutUs,
               movilPhone: self.editableCompany.movilPhone,
               email: self.editableCompany.email,
+              link: self.editableCompany.link,
               emailPayment: self.editableCompany.emailPayment,
               commercialName: self.editableCompany.commercialName
             }
@@ -403,7 +421,6 @@
     font-weight 600
   .field-createdAt
     font-size 12px
-
   .outline-box
     border  1px solid #2196f3 !important
   .info-color-text
