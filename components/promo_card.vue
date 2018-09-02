@@ -47,28 +47,35 @@
                   @click.native.stop="activateSwitchDialog = true"
                   :label="promoInfo.isActive===true?'Activo':'Desactivo'"
                   v-model="promoInfo.isActive"></v-switch>
+
+        <!--<v-btn :hide-details="true"-->
+               <!--color="primary"-->
+               <!--flat-->
+               <!--@click.native.stop="deleteSwitchDialog = true"-->
+               <!--:label="promoInfo.isActive === true?'Activo':'Desactivo'"><v-icon>delete_forever</v-icon> ELIMINAR</v-btn>-->
+        <v-dialog v-model="deleteDialog" max-width="500px">
+          <v-btn flat color="primary" slot="activator">Eliminar</v-btn>
+          <v-card>
+            <v-card-title>
+              Estas seguro que deseas eliminar esta promocion?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer/>
+              <v-btn color="primary" flat @click.stop="deletePost(promoData.id)">Eliminar</v-btn>
+              <v-btn color="" flat @click.stop="deleteDialog = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-btn flat color="primary" @click.native.stop="onEditMode">EDITAR</v-btn>
 
-        <!--<v-dialog v-model="deleteDialog" max-width="500px">-->
-          <!--<v-btn flat color="primary" slot="activator">Eliminar</v-btn>-->
-          <!--<v-card>-->
-            <!--<v-card-title>-->
-              <!--Estas seguro que deseas eliminar esta promocion?-->
-            <!--</v-card-title>-->
-            <!--<v-card-actions>-->
-              <!--<v-spacer/>-->
-              <!--<v-btn color="primary" flat @click.stop="deletePost(promoData.id)">Eliminar</v-btn>-->
-              <!--<v-btn color="" flat @click.stop="deleteDialog=false">Close</v-btn>-->
-            <!--</v-card-actions>-->
-          <!--</v-card>-->
-        <!--</v-dialog>-->
       </v-card-actions>
     </div>
   </v-card>
 </template>
 
 <script>
-import { toggleActivationPostMut } from '~/apollo/posts'
+import { toggleActivationPostMut, deletePostMut } from '~/apollo/posts'
 
 export default {
   name: 'PromoCard',
@@ -122,7 +129,20 @@ export default {
         this.activateSwitchDialog = false
       })
     },
-    deletePost () {
+    deletePost (postId) {
+      this.$apollo.mutate({
+        mutation: deletePostMut,
+        variables: {
+          id: postId
+        }
+      }).then(data => {
+        this.$store.commit('setSnackbarMessage', 'Promocion Eliminada')
+        this.deleteDialog = false
+      }).catch(err => {
+        this.deleteDialog = false
+        this.$store.commit('setSnackbarMessage', 'Ocurrio un problema al eliminar post. Intente dentro de unos momentos')
+        console.log('err ', err)
+      })
     },
     onEditMode () {
       this.$emit('on-edit-mode', this.promoInfo)

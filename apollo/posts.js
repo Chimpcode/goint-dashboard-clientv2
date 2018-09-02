@@ -114,4 +114,14 @@ mutation ($id: ID!, $isActive: Boolean) {
 }
 `
 
-export {allPostsQuery, addNewPostMut, toggleActivationPostMut, updatePostMut}
+const deletePostMut = gql`
+mutation ($id: ID!) {
+    deletePost (
+      id: $id,
+    ) {
+        id
+    }
+}
+`
+
+export {allPostsQuery, addNewPostMut, toggleActivationPostMut, updatePostMut, deletePostMut}

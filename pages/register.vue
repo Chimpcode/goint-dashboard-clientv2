@@ -119,6 +119,39 @@
             </v-layout>
           </v-form>
           <goint-payments :showInfoAlert="false" @onOptionSelected="onPlanSelected"></goint-payments>
+          <v-dialog
+            v-model="processWaitingDialog.show"
+            width="500"
+          >
+            <v-card>
+              <v-card-title
+                primary-title
+              >
+                Procesando...
+              </v-card-title>
+
+              <v-card-text v-if="processWaitingDialog.isLoading" class="text-xs-center">
+                <v-progress-circular :value="80" :indeterminate="true"></v-progress-circular>
+              </v-card-text>
+
+              <v-card-text v-if="!processWaitingDialog.isLoading">
+                {{ processWaitingDialog.message }}
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions v-if="!processWaitingDialog.isLoading">
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="primary"
+                  flat
+                  @click="processWaitingDialog.show = false"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-container>
       </v-app>
     </div>
@@ -135,6 +168,11 @@
       components: {GointPayments},
       data () {
         return {
+          processWaitingDialog: {
+            show: false,
+            isLoading: true,
+            message: ''
+          },
           planSelected: null,
           isValidForm: false,
           requiredRules: [requiredRule],
@@ -158,6 +196,8 @@
             this.$store.commit('setSnackbarMessage', 'Escoja un plan para registrar la cuenta')
             return
           }
+          this.processWaitingDialog.show = true
+          this.processWaitingDialog.isLoading = true
           const self = this
           const link = self.company.link || ''
           const staticPhone = self.company.staticPhone || ''
@@ -188,12 +228,16 @@
             }
           }).then(companyCreated => {
             this.$store.commit('setSnackbarMessage', 'Cuenta creada')
+            this.processWaitingDialog.message = 'Cuenta registrada. Gracias por confiar en nosotros'
+            this.processWaitingDialog.isLoading = false
             setTimeout(() => {
               this.$router.push('login')
             }, 3000)
           }).catch(err => {
             console.log(err)
-            this.$store.commit('setSnackbarMessage', 'Ocurrio problemas al crear cuenta. Intenta mas tarde')
+            this.$store.commit('setSnackbarMessage', 'Ocurrio problemas al crear cuenta. Intenta más tarde')
+            this.processWaitingDialog.message = 'Ocurrio problemas al crear cuenta. Intenta más tarde'
+            this.processWaitingDialog.isLoading = false
           })
         }
       }
