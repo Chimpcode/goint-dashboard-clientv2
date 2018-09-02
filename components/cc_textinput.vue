@@ -26,14 +26,14 @@
              v-else-if="mode === 'date'"
              @input="updateInput()"
       />
-      <!--<textarea rows="4" cols="50" class="inner-textarea-input"-->
-                <!--ref="textInput"-->
-                <!--:value="value"-->
-                <!--@focus="focused = true"-->
-                <!--@blur="focused = false"-->
-                <!--@input="updateInput()"-->
-                <!--v-else-if="mode === 'textarea'"-->
-      <!--&gt;</textarea>-->
+      <textarea rows="4" cols="50" class="inner-textarea-input"
+                ref="textInput"
+                :value="value"
+                @focus="focused = true"
+                @blur="focused = false"
+                @input="updateInput()"
+                v-else-if="mode === 'textarea'"
+      ></textarea>
       <input class="inner-input" :value="value" ref="textInput" :placeholder="placeholder"
              @focus="focused = true"
              @blur="focused = false"
@@ -87,7 +87,6 @@
 
 <style type="stylus">
 .inner-textarea-input {
-  background: red;
   width: 100%;
 }
 
@@ -121,11 +120,6 @@
   text-align: center;
   vertical-align: center;
 }
-
-.cc-container-flex-height {
-  height auto !important
-  min-height: 35px !important;
-}
 .inner-textarea-input:focus {
   outline: none;
 }
@@ -150,5 +144,9 @@
   font-size: 12px;
   color: #888888;
   margin-bottom: 10px;
+}
+
+.cc-container-flex-height {
+  height: auto
 }
 </style>
