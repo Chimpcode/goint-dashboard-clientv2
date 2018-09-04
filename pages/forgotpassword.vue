@@ -1,7 +1,7 @@
 <template>
-    <div id="register-page">
+    <div id="forgot-page">
       <v-app>
-        <v-container fluid class="header-container">
+        <v-container fluid class="header-container" style="max-height: 165px !important;">
           <v-layout row wrap class="content-centered">
             <v-flex xs12>
               <v-layout row wrap class="pt-4 pb-4">
@@ -12,7 +12,7 @@
 
               <v-layout row wrap class="pt-3 pb-3">
                 <v-flex xs12>
-                  <h2 class="white--text"><a href=""></a> Afíliate a Goint</h2>
+                  <h2 class="white--text"><a href=""></a> Recuperar Contraseña</h2>
                   <v-divider class="white"></v-divider>
                 </v-flex>
               </v-layout>
@@ -23,13 +23,13 @@
         <v-container class="mt-4">
           <v-layout row wrap>
             <v-flex xs12>
-              <h3 class="grey--text text--darken-2">Datos Personales del representante legal</h3>
+              <p class="grey--text text--darken-2">Escriba su Correo electronico para enviarle los pasos para recuperar su contraseña.</p>
             </v-flex>
           </v-layout>
           <v-form v-model="isValidForm" ref="form" lazy-validation>
             <v-layout row wrap>
               <v-flex xs12 sm6 class="pa-2">
-                <v-text-field label="Nombres"  v-model="company.name" :rules="requiredRules"></v-text-field>
+                <v-text-field label="Email"  v-model="email" :rules="emailRules"></v-text-field>
               </v-flex>
             </v-layout>
 
@@ -63,6 +63,7 @@
             isLoading: true,
             message: ''
           },
+          email: '',
           planSelected: null,
           isValidForm: false,
           requiredRules: [requiredRule],
@@ -82,11 +83,12 @@
             this.$store.commit('setSnackbarMessage', 'Form invalido')
             return
           }
-          this.processWaitingDialog.show = true
-          this.processWaitingDialog.isLoading = true
-
-          this.processWaitingDialog.message = 'Ocurrio problemas al crear cuenta. Intenta más tarde'
-          this.processWaitingDialog.isLoading = false
+          console.log('this.email', this.email)
+          // this.processWaitingDialog.show = true
+          // this.processWaitingDialog.isLoading = true
+          //
+          // this.processWaitingDialog.message = 'Ocurrio problemas al crear cuenta. Intenta más tarde'
+          // this.processWaitingDialog.isLoading = false
         }
       }
 

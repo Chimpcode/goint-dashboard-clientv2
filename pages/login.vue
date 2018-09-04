@@ -29,12 +29,19 @@
                     :type="pass_v ? 'password' : 'text'"
                   ></v-text-field>
 
-                  <v-btn flat color="primary" light @click.native.stop="processLogin">Login!</v-btn>
+                  <v-btn color="primary" class="white--text" light @click.native.stop="processLogin" :disabled="isLoginLoading">
+                    {{ isLoginLoading?'Loading':'Login!' }}
+                  </v-btn>
                 </v-flex>
               </v-layout>
               <v-layout row>
                 <v-flex xs12 class="text-xs-center signup-link">
                   <nuxt-link to="/register">¿No tienes cuenta? Créate uno.</nuxt-link>
+                </v-flex>
+              </v-layout>
+              <v-layout row>
+                <v-flex xs12 class="text-xs-center forgot-link">
+                  <nuxt-link to="/forgotpassword">Recuperar Contraseña</nuxt-link>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -47,8 +54,8 @@
         </v-flex>
         <v-dialog v-model="errorDialog" persistent max-width="290">
           <v-card>
-            <v-card-title class="headline">Error al iniciar sesion</v-card-title>
-            <v-card-text>Email o contraseña no validos</v-card-text>
+            <v-card-title class="subheading">Error al iniciar sesion</v-card-title>
+            <v-card-text>{{ errorMsg }}</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="green darken-1" flat="flat" @click.native="errorDialog = false">OK</v-btn>
@@ -75,7 +82,9 @@
     //    },
     data () {
       return {
+        isLoginLoading: false,
         errorDialog: false,
+        errorMsg: 'Email o contraseña no validos',
         password: '',
         pass_v: true,
         email: '',
@@ -89,29 +98,22 @@
     },
     methods: {
       async processLogin () {
+        this.isLoginLoading = true
         try {
-          this.$auth.loginWith('local', {
+          await this.$auth.loginWith('local', {
             data: {
               email: this.email,
               password: this.password
             }
           })
-          // await this.$store.dispatch('auth/login', {
-          //   fields: {
-          //     email: this.email,
-          //     password: this.password
-          //   }
-          // })
-          this.email = ''
-          this.password = ''
-          // this.$router.push('/dashboard')
         } catch (e) {
-          console.log(e)
+          this.errorMsg = e.response.data.error
+          this.errorDialog = true
+          console.log('===error ', e.response.data.error)
           console.log(this.$auth.loggedIn)
-          // if (!this.$store.getters['auth/loggedIn']) {
-          //   this.errorDialog = true
-          // }
           this.password = ''
+        } finally {
+          this.isLoginLoading = false
         }
       }
     }
@@ -171,5 +173,7 @@
   .chimpcode-banner
     bottom 5px
     left 12px
+  .forgot-link
+    margin-top 12px
 
 </style>
