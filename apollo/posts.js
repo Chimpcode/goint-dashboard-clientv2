@@ -14,6 +14,7 @@ query allPostsQuery ($companyid: ID) {
         image
         createdAt
         description
+        additionalConditions
         
         stock
         expireAt
@@ -40,13 +41,13 @@ query allPostsQuery ($companyid: ID) {
 const addNewPostMut = gql`
 mutation ($title: String, $tags: String!, $stock: Int, 
   $locationBySectorsIds: [ID!], $byid: ID, $image: String
-  $expireAt: DateTime, $description: String, $isActive: Boolean
+  $expireAt: DateTime, $description: String, $additionalConditions: String, $isActive: Boolean
   $maxAge: Int, $minAge: Int, $upperHour: String, $lowerHour: String, $gender: String, $availableDays: String
 ) {
     createPost (
       title: $title, tags: $tags,
       stock: $stock, locationBySectorsIds: $locationBySectorsIds,
-      byId: $byid, expireAt: $expireAt, description: $description,
+      byId: $byid, expireAt: $expireAt, description: $description, additionalConditions: $additionalConditions
       isActive: $isActive,
       image: $image
       targetPublic: {
@@ -61,6 +62,7 @@ mutation ($title: String, $tags: String!, $stock: Int,
         id
         title
         createdAt
+        additionalConditions
         description
         stock
         expireAt
@@ -72,14 +74,14 @@ mutation ($title: String, $tags: String!, $stock: Int,
 const updatePostMut = gql`
 mutation ($id: ID!, $title: String, $tags: String!, $stock: Int, 
   $locationByStoresIds: [ID!], $byid: ID, $image: String
-  $expireAt: DateTime, $description: String, $isActive: Boolean
+  $expireAt: DateTime, $description: String, $additionalConditions: String, $isActive: Boolean
   $maxAge: Int, $minAge: Int, $upperHour: String, $lowerHour: String, $gender: String, $availableDays: String
 ) {
     updatePost (
       id: $id
       title: $title, tags: $tags,
       stock: $stock, locationByStoresIds: $locationByStoresIds,
-      byId: $byid, expireAt: $expireAt, description: $description,
+      byId: $byid, expireAt: $expireAt, description: $description, additionalConditions: $additionalConditions,
       isActive: $isActive,
       image: $image,
       targetPublic: {

@@ -85,6 +85,9 @@
                 <!--<v-text-field label="Codigo postal" v-model="company.legalAddress.postalCode" :rules="requiredRules"></v-text-field>-->
               <!--</v-flex>-->
               <v-flex xs12 sm6 class="pa-2">
+                <v-text-field label="Distrito" v-model="company.legalAddress.region" :rules="requiredRules"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Ciudad" v-model="company.legalAddress.city" :rules="requiredRules"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 class="pa-2">
@@ -93,9 +96,6 @@
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Pais" v-model="company.legalAddress.country" :rules="requiredRules"></v-text-field>
               </v-flex>
-              <!--<v-flex xs12 sm6 class="pa-2">-->
-                <!--<v-text-field label="Region" v-model="company.legalAddress.region" :rules="requiredRules"></v-text-field>-->
-              <!--</v-flex>-->
               <v-flex xs12 sm6 class="pa-2">
                 <v-text-field label="Correo para envio de factura" v-model="company.emailPayment" :rules="emailRules"></v-text-field>
               </v-flex>
@@ -227,7 +227,7 @@
               socialReason: self.company.socialReason,
               emailPayment: self.company.emailPayment,
               termsConditions: '',
-              legalAddressRegion: '', // self.company.legalAddress.region,
+              legalAddressRegion: self.company.legalAddress.region, // self.company.legalAddress.region,
               legalAddressAddress: self.company.legalAddress.address,
               legalAddressCity: self.company.legalAddress.city,
               legalAddressProvince: self.company.legalAddress.province,

@@ -136,7 +136,7 @@
 
     <v-flex xs12>
       <v-btn color="primary" @click="createPost" v-if="postObj === null">CREAR</v-btn>
-      <v-btn color="primary" @click="createPost" v-else>EDITAR</v-btn>
+      <v-btn color="primary" @click="createPost" v-else>GUARDAR</v-btn>
     </v-flex>
     <v-flex xs12 v-if="wrongData">
       <div>Completar los siguientes registros: {{invalidField}}</div>

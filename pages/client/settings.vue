@@ -120,7 +120,7 @@
               <v-text-field
                 name="input-1"
                 label="Distrito"
-                v-model="editableCompany.legalAddress.postalCode"
+                v-model="editableCompany.legalAddress.region"
                 color="primary"
               ></v-text-field>
             </v-flex>
@@ -322,7 +322,8 @@
             city: self.editableCompany.legalAddress.city,
             province: self.editableCompany.legalAddress.province,
             country: self.editableCompany.legalAddress.country,
-            postalCode: self.editableCompany.legalAddress.postalCode
+            region: self.editableCompany.legalAddress.region,
+            postalCode: ''
           }
         }).then(legalAddress => {
           return this.$apollo.mutate({
@@ -378,7 +379,7 @@
           'createdAt': 'Fecha de creacion',
           'legalAddress': 'Direccion',
           'socialReason': 'Razon Social',
-          'ruc': 'EUC',
+          'ruc': 'RUC',
           'movilPhone': 'Telefono movil',
           'email': 'Email'
         },
