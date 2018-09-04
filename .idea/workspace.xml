@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="31ccbb11-755c-4cad-9562-873f823d7c1c" name="Default" comment="indications images upload&#10;register set required fields">
+    <list default="true" id="31ccbb11-755c-4cad-9562-873f823d7c1c" name="Default" comment="textarea">
+      <change afterPath="$PROJECT_DIR$/pages/forgotpassword.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apollo/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/apollo/posts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/promo_card.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/promo_card.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/register.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,6 +21,7 @@
           <entry key="project.closed" value="5" />
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.36" value="1" />
           <entry key="project.open.time.39" value="1" />
           <entry key="project.open.time.46" value="1" />
@@ -31,12 +30,12 @@
           <entry key="project.open.time.53" value="1" />
           <entry key="project.open.time.64" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="10" />
+          <entry key="ESLintLanguageService" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -45,7 +44,7 @@
           <entry key="ico" value="2" />
           <entry key="js" value="28" />
           <entry key="json" value="1" />
-          <entry key="vue" value="49" />
+          <entry key="vue" value="53" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -54,21 +53,21 @@
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="28" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Vue.js" value="49" />
+          <entry key="Vue.js" value="53" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="1140" />
-          <entry key="txt" value="494" />
-          <entry key="vue" value="6216" />
+          <entry key="txt" value="519" />
+          <entry key="vue" value="6273" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="1140" />
-          <entry key="PLAIN_TEXT" value="494" />
-          <entry key="Vue.js" value="6216" />
+          <entry key="PLAIN_TEXT" value="519" />
+          <entry key="Vue.js" value="6273" />
         </counts>
       </usages-collector>
     </session>
@@ -82,9 +81,45 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/post_form.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3380">
+              <caret line="130" column="100" selection-start-line="130" selection-start-column="92" selection-end-line="130" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/cc_textinput.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2314">
+              <caret line="89" selection-start-line="89" selection-end-line="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/forgotpassword.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="44" column="22" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/register.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1977">
+              <caret line="180" column="44" selection-start-line="180" selection-start-column="44" selection-end-line="180" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/client/promotions.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1534">
+            <state relative-caret-position="2028">
               <caret line="78" column="9" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
             </state>
           </provider>
@@ -93,17 +128,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/promo_card.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
+            <state relative-caret-position="1664">
               <caret line="64" column="60" selection-start-line="64" selection-start-column="48" selection-end-line="64" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apollo/posts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="116" column="19" selection-start-line="116" selection-start-column="6" selection-end-line="116" selection-end-column="19" />
+            <state relative-caret-position="2886">
+              <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -120,7 +155,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>description</find>
       <find>editableCompany</find>
       <find>subheader</find>
       <find>categories</find>
@@ -150,6 +184,7 @@
       <find>updateCompanyCategory</find>
       <find>&lt;/v-btn&gt;</find>
       <find>deleteDialog</find>
+      <find>cc-container-flex-height</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,7 +198,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/components/LocationCard.vue" />
         <option value="$PROJECT_DIR$/components/NewCard.vue" />
         <option value="$PROJECT_DIR$/components/StoreCard.vue" />
         <option value="$PROJECT_DIR$/components/cluster_card.vue" />
@@ -205,7 +239,6 @@
         <option value="$PROJECT_DIR$/pages/login.vue" />
         <option value="$PROJECT_DIR$/components/store_form.vue" />
         <option value="$PROJECT_DIR$/apollo/stores.js" />
-        <option value="$PROJECT_DIR$/components/cc_textinput.vue" />
         <option value="$PROJECT_DIR$/components/goint-payments.vue" />
         <option value="$PROJECT_DIR$/apollo/company.js" />
         <option value="$PROJECT_DIR$/layouts/dashboard.vue" />
@@ -214,6 +247,8 @@
         <option value="$PROJECT_DIR$/pages/register.vue" />
         <option value="$PROJECT_DIR$/apollo/posts.js" />
         <option value="$PROJECT_DIR$/components/promo_card.vue" />
+        <option value="$PROJECT_DIR$/components/cc_textinput.vue" />
+        <option value="$PROJECT_DIR$/pages/forgotpassword.vue" />
       </list>
     </option>
   </component>
@@ -261,18 +296,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="goint-dashboard-clientv2" type="b2602c69:ProjectViewProjectNode" />
               <item name="goint-dashboard-clientv2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="goint-dashboard-clientv2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="goint-dashboard-clientv2" type="462c0819:PsiDirectoryNode" />
-              <item name="apollo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="goint-dashboard-clientv2" type="b2602c69:ProjectViewProjectNode" />
@@ -284,16 +313,11 @@
               <item name="goint-dashboard-clientv2" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="goint-dashboard-clientv2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="goint-dashboard-clientv2" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -311,19 +335,19 @@
     <property name="standardjs.codestyle.accepted" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/static" />
-      <recent name="$PROJECT_DIR$/static/img" />
-      <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/components" />
-      <recent name="$PROJECT_DIR$/pages/admin" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pages" />
       <recent name="$PROJECT_DIR$/pages/index" />
       <recent name="$PROJECT_DIR$/pages/client" />
       <recent name="$PROJECT_DIR$/pages/dashboard" />
       <recent name="$PROJECT_DIR$/assets/styles" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pages" />
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/static/img" />
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -377,7 +401,8 @@
       <workItem from="1535826337728" duration="1237000" />
       <workItem from="1535836671058" duration="54000" />
       <workItem from="1535860099479" duration="9199000" />
-      <workItem from="1535914457730" duration="6357000" />
+      <workItem from="1535914457730" duration="9937000" />
+      <workItem from="1535943609978" duration="3420000" />
     </task>
     <task id="LOCAL-00001" summary="All base files for this new version">
       <created>1515644525924</created>
@@ -547,11 +572,25 @@
       <option name="project" value="LOCAL" />
       <updated>1535902884932</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="delete&#10;register">
+      <created>1535921837553</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1535921837554</updated>
+    </task>
+    <task id="LOCAL-00026" summary="textarea">
+      <created>1535923828040</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1535923828040</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="230146000" />
+    <option name="totallyTimeSpent" value="237146000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -565,7 +604,7 @@
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Floobits" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32831" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.3279396" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32686085" />
       <window_info anchor="bottom" id="Run" order="7" />
@@ -634,16 +673,11 @@
     <MESSAGE value="ui form fixes" />
     <MESSAGE value="settings&#10;company" />
     <MESSAGE value="indications images upload&#10;register set required fields" />
-    <option name="LAST_COMMIT_MESSAGE" value="indications images upload&#10;register set required fields" />
+    <MESSAGE value="delete&#10;register" />
+    <MESSAGE value="textarea" />
+    <option name="LAST_COMMIT_MESSAGE" value="textarea" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/admin/dashboard.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/location_card.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -862,13 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/cc_textinput.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="910">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/components/goint-payments.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -917,20 +944,10 @@
     <entry file="file://$PROJECT_DIR$/.eslintrc.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/post_form.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="182" selection-start-line="182" selection-end-line="182" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/layouts/dashboard.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="807">
           <caret line="81" column="22" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
-          <folding>
-            <element signature="e#649#689#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -941,31 +958,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/register.vue">
+    <entry file="file://$PROJECT_DIR$/components/post_form.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="173" column="23" selection-start-line="173" selection-start-column="23" selection-end-line="173" selection-end-column="23" />
+        <state relative-caret-position="3380">
+          <caret line="130" column="100" selection-start-line="130" selection-start-column="92" selection-end-line="130" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/cc_textinput.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2314">
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/client/promotions.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1534">
+        <state relative-caret-position="2028">
           <caret line="78" column="9" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/components/promo_card.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
+        <state relative-caret-position="1664">
           <caret line="64" column="60" selection-start-line="64" selection-start-column="48" selection-end-line="64" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apollo/posts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="116" column="19" selection-start-line="116" selection-start-column="6" selection-end-line="116" selection-end-column="19" />
+        <state relative-caret-position="2886">
+          <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/forgotpassword.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="44" column="22" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1977">
+          <caret line="180" column="44" selection-start-line="180" selection-start-column="44" selection-end-line="180" selection-end-column="44" />
         </state>
       </provider>
     </entry>

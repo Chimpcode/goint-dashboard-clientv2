@@ -109,6 +109,14 @@
                 </div>
               </v-flex>
             </v-layout>
+            <v-layout row wrap class="mt-4">
+              <v-flex xs12>
+                <div class="">
+                  <p>Al registrarme estoy aceptando los <a href="http://www.goint.pe/terminos-y-condiciones/">términos y condiciones</a></p>
+                </div>
+              </v-flex>
+            </v-layout>
+
             <v-layout row wrap>
               <v-flex xs12>
                 <v-btn lg color="red darken-4"
