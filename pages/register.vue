@@ -127,6 +127,12 @@
             </v-layout>
           </v-form>
           <goint-payments :showInfoAlert="false" @onOptionSelected="onPlanSelected"></goint-payments>
+          <v-dialog v-model="errorFormDialog" width="400">
+            <v-card>
+              <v-card-title primary-title>Ups</v-card-title>
+              <v-card-text>{{ errorFormMsg }}</v-card-text>
+            </v-card>
+          </v-dialog>
           <v-dialog
             v-model="processWaitingDialog.show"
             width="500"
@@ -153,8 +159,7 @@
                 <v-btn
                   color="primary"
                   flat
-                  @click="processWaitingDialog.show = false"
-                >
+                  @click="processWaitingDialog.show = false">
                   OK
                 </v-btn>
               </v-card-actions>
@@ -181,6 +186,8 @@
             isLoading: true,
             message: ''
           },
+          errorFormDialog: false,
+          errorFormMsg: '',
           planSelected: null,
           isValidForm: false,
           requiredRules: [requiredRule],
@@ -196,12 +203,17 @@
           this.planSelected = plan
         },
         createNewCompany () {
-          if (!this.$refs.form.validate()) {
-            this.$store.commit('setSnackbarMessage', 'Form invalido')
+          console.log('create Company')
+          if (this.planSelected === null) {
+            console.log('planSelected')
+            this.errorFormDialog = true
+            this.errorFormMsg = 'Por favor, Selecciona un plan'
             return
           }
-          if (this.planSelected === null) {
-            this.$store.commit('setSnackbarMessage', 'Escoja un plan para registrar la cuenta')
+          if (!this.$refs.form.validate()) {
+            console.log('form invalid')
+            this.errorFormDialog = true
+            this.errorFormMsg = 'Formulario incompleto'
             return
           }
           this.processWaitingDialog.show = true

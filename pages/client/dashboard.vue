@@ -4,10 +4,10 @@
     <h1> Bienvenido {{ $store.state.auth.user.name }} </h1>
     <v-layout row wrap>
       <v-flex xs12 md6>
-        <v-card>
-          <v-card-title class="subheader">Ultimos registro de visualizaciones</v-card-title>
-          <div id="myDiv"></div>
-        </v-card>
+        <!--<v-card>-->
+          <!--<v-card-title class="subheader">Ultimos registro de visualizaciones</v-card-title>-->
+          <!--<div id="myDiv"></div>-->
+        <!--</v-card>-->
       </v-flex>      
     </v-layout>
     </v-container>
@@ -31,29 +31,29 @@
       }
     },
     mounted () {
-      let xdata = [
-        this.date((new Date((new Date()).getTime() - 8 * 24 * 60 * 60 * 1000))),
-        this.date((new Date((new Date()).getTime() - 4 * 24 * 60 * 60 * 1000))),
-        this.date((new Date((new Date()).getTime() - 2 * 24 * 60 * 60 * 1000))),
-        this.date((new Date()))
-      ]
-      var Plotly = require('../../static/plotly_dependencies')
-      var trace1 = {
-        x: xdata,
-        y: [10, 15, 13, 17],
-        type: 'scatter'
-      }
-
-      var data = [trace1]
-      let layout = {
-        xaxis: {
-          type: 'date'
-        },
-        yaxis: {
-          title: 'Visualizaciones'
-        }
-      }
-      Plotly.newPlot('myDiv', data, layout)
+      // let xdata = [
+      //   this.date((new Date((new Date()).getTime() - 8 * 24 * 60 * 60 * 1000))),
+      //   this.date((new Date((new Date()).getTime() - 4 * 24 * 60 * 60 * 1000))),
+      //   this.date((new Date((new Date()).getTime() - 2 * 24 * 60 * 60 * 1000))),
+      //   this.date((new Date()))
+      // ]
+      // var Plotly = require('../../static/plotly_dependencies')
+      // var trace1 = {
+      //   x: xdata,
+      //   y: [10, 15, 13, 17],
+      //   type: 'scatter'
+      // }
+      //
+      // var data = [trace1]
+      // let layout = {
+      //   xaxis: {
+      //     type: 'date'
+      //   },
+      //   yaxis: {
+      //     title: 'Visualizaciones'
+      //   }
+      // }
+      // Plotly.newPlot('myDiv', data, layout)
 
       // if (process.client) {
       //   let container = document.getElementById('myDiv')
