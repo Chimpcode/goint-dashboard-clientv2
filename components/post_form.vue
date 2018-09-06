@@ -14,7 +14,7 @@
         <!-- image -->
         <v-flex xs12>
           <CcContainerImage
-          :height="'140px'"
+          :height="'180px'"
           @updatedImage="updateImage"
           :pastImg="dataPost.image"
           />
@@ -37,9 +37,38 @@
 
         <v-flex xs12>
           <v-select
-            :name="'Ubicacion'"
+            :name="'Ubicacion por tiendas'"
             v-bind:items="allStores"
             v-model="dataPost.locationByStoresIds"
+            item-text="name"
+            item-value="id"
+            label="Select"
+            single-line
+            bottom
+            multiple
+            chips
+          >
+            <template slot="selection" slot-scope="data">
+              <v-chip
+                @input="data.parent.selectItem(data.item)"
+                color="primary" text-color="white"
+                class="chip--select-multi"
+                :selected="data.selected"
+                :disabled="data.disabled"
+                :key="JSON.stringify(data.item)"
+              >
+                {{ data.item.name }}
+              </v-chip>
+            </template>
+          </v-select>
+        </v-flex>
+
+
+        <v-flex xs12>
+          <v-select
+            :name="'Ubicacion por sectores'"
+            v-bind:items="allSectors"
+            v-model="dataPost.locationBySectorsIds"
             item-text="name"
             item-value="id"
             label="Select"
@@ -151,6 +180,7 @@ import CcContainerImage from '~/components/cc_container_image'
 import CcRangeInput from '~/components/cc_range_input'
 import CcCheckBoxGroup from '~/components/cc_checkbox_group'
 import { allStoresQuery } from '~/apollo/stores'
+import { allSectorsQuery } from '~/apollo/sectors'
 import { addNewPostMut, updatePostMut } from '~/apollo/posts'
 
 export default {
@@ -180,6 +210,12 @@ export default {
       const availableAge = [this.postObj.targetPublic.minAge, this.postObj.targetPublic.maxAge]
       const availableHour = [parseInt(this.postObj.targetPublic.lowerHour), parseInt(this.postObj.targetPublic.upperHour)]
       const additionalConditions = this.postObj.additionalConditions || ''
+      const locationByStoresIds = (this.postObj.locationByStores || []).map((item) => {
+        return item.id
+      })
+      const locationBySectorsIds = (this.postObj.locationBySectors || []).map((item) => {
+        return item.id
+      })
 
       this.dataPost = {
         id: this.postObj.id,
@@ -195,9 +231,8 @@ export default {
         isActive: this.postObj.isActive,
         genders: genders,
         image: this.postObj.image,
-        locationByStoresIds: this.postObj.locationByStores.map((item) => {
-          return item.id
-        })
+        locationByStoresIds: locationByStoresIds,
+        locationBySectorsIds: locationBySectorsIds
       }
     }
   },
@@ -231,7 +266,8 @@ export default {
         {value: 'title', label: 'titulo'},
         {value: 'stock', label: 'stock'},
         {value: 'expireAt', label: 'Fecha de vencimiento'},
-        {value: 'locationByStoresIds', label: 'Ubicaciones'},
+        {value: 'locationByStoresIds', label: 'Ubicaciones por Tienda'},
+        {value: 'locationBySectorsIds', label: 'Ubicaciones por Sector'},
         {value: 'semiTags', label: 'Tags'},
         {value: 'activeDays', label: 'Dias Activos'},
         {value: 'genders', label: 'Genero'},
@@ -252,6 +288,15 @@ export default {
           companyid: companyId
         }
       }
+    },
+    allSectors: {
+      query: allSectorsQuery,
+      variables () {
+        let companyId = this.$store.state.auth.user.id
+        return {
+          companyid: companyId
+        }
+      }
     }
   },
   methods: {
@@ -262,6 +307,7 @@ export default {
       this.availableGender = data
     },
     createPost () {
+      this.$store.commit('isShortLoading', true)
       console.log(this.dataPost)
       if (this.validateData()) {
         console.log('valid!')
@@ -286,12 +332,22 @@ export default {
           }
         }).then((data) => {
           this.$store.commit('setSnackbarMessage', 'Promocion Creada/Actualizada')
+          this.$store.commit('isShortLoading', false)
+          setTimeout(() => {
+            window.location.reload(true)
+          }, 2000)
         })
       } else {
       }
     },
     validateData () {
-      for (var i = 0; i < this.fieldsInDataPost.length; i++) {
+      for (let i = 0; i < this.fieldsInDataPost.length; i++) {
+        if (this.fieldsInDataPost[i].value === 'locationByStoresIds' || this.fieldsInDataPost[i].value === 'locationBySectorsIds') {
+          if (this.dataPost.locationByStoresIds.length === 0 && this.dataPost.locationBySectorsIds.length === 0) {
+            this.invalidField = 'Ubicación por tienda o ubicación por sector'
+            return false
+          }
+        }
         if (!(this.fieldsInDataPost[i].value in this.dataPost)) {
           this.invalidField = this.fieldsInDataPost[i].label
           this.wrongData = true

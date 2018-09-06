@@ -43,15 +43,17 @@
 
           <!-- LIST CARDS -->
           <v-layout row wrap v-if="active_state==='list'">
-            <!-- <v-flex v-if="promocionesFiltered.length === 0" xs12 sm12 md9 
-            v-for="(promo, index) in promociones" :key="index + '-promo-card'">
-              <promo-card
-                :color="colorvariants[index%5]"
-                :promo-data="promo"
-                @on-edit-mode="(_promo) => { postObjToEdit = promo; active_state=states[2] }"
-                @on-delete="onCreateUpdatePost"/>
-            </v-flex> -->
-            <v-flex xs12 sm12 md9 v-for="(promo, index) in promocionesFiltered" :key="index+'-promo-result-card'">
+
+            <v-flex v-if="promocionesFiltered.length === 0" xs12 sm12 md9>
+              <v-alert
+                :value="true"
+                type="error"
+              >
+                No tienes una promocion creada. Crea una nueva promoción.
+              </v-alert>
+            </v-flex>
+
+            <v-flex xs12 sm12 md10 v-for="(promo, index) in promocionesFiltered" :key="index+'-promo-result-card'">
               <promo-card
                 :color="colorvariants[index%5]"
                 :promo-data="promo"
@@ -78,7 +80,7 @@
 <script>
   import PromoCard from '~/components/promo_card'
   import PostForm from '~/components/post_form'
-  import { EventBus } from '~/bus/index'
+  // import { EventBus } from '~/bus/index'
   import { allPostsQuery } from '~/apollo/posts'
 
   export default {
@@ -120,12 +122,12 @@
         // })
         // console.log('onCreateUpdatePost')
 
-        EventBus.$emit('is-short-loading', true)
+        this.$store.commit('isShortLoading', true)
         this.fetchDependencies().then(done => {
-          EventBus.$emit('is-short-loading', false)
+          this.$store.commit('isShortLoading', false)
           this.active_state = 'list'
         }, err => {
-          EventBus.$emit('is-short-loading', false)
+          this.$store.commit('isShortLoading', false)
           console.log(err)
         })
       },
@@ -174,11 +176,11 @@
       }
     },
     created () {
-      EventBus.$emit('is-loading', true)
+      this.$store.commit('isLoading', true)
       this.fetchDependencies().then(done => {
-        EventBus.$emit('is-loading', false)
+        this.$store.commit('isLoading', false)
       }, err => {
-        EventBus.$emit('is-loading', false)
+        this.$store.commit('isLoading', false)
         console.log(err)
       })
     }

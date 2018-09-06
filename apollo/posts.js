@@ -23,6 +23,9 @@ query allPostsQuery ($companyid: ID) {
         locationByStores{
           id, name
         }
+        locationBySectors{
+          id, name
+        }
         targetPublic {
           availableDays,
           createdAt
@@ -39,14 +42,17 @@ query allPostsQuery ($companyid: ID) {
 `
 
 const addNewPostMut = gql`
-mutation ($title: String, $tags: String!, $stock: Int, 
+mutation ($title: String, $tags: String!, $stock: Int,
+  $locationByStoresIds: [ID!], 
   $locationBySectorsIds: [ID!], $byid: ID, $image: String
   $expireAt: DateTime, $description: String, $additionalConditions: String, $isActive: Boolean
   $maxAge: Int, $minAge: Int, $upperHour: String, $lowerHour: String, $gender: String, $availableDays: String
 ) {
     createPost (
       title: $title, tags: $tags,
-      stock: $stock, locationBySectorsIds: $locationBySectorsIds,
+      stock: $stock,
+      locationBySectorsIds: $locationBySectorsIds,
+      locationByStoresIds: $locationByStoresIds,
       byId: $byid, expireAt: $expireAt, description: $description, additionalConditions: $additionalConditions
       isActive: $isActive,
       image: $image
@@ -73,7 +79,7 @@ mutation ($title: String, $tags: String!, $stock: Int,
 
 const updatePostMut = gql`
 mutation ($id: ID!, $title: String, $tags: String!, $stock: Int, 
-  $locationByStoresIds: [ID!], $byid: ID, $image: String
+  $locationByStoresIds: [ID!], $locationBySectorsIds: [ID!], $byid: ID, $image: String
   $expireAt: DateTime, $description: String, $additionalConditions: String, $isActive: Boolean
   $maxAge: Int, $minAge: Int, $upperHour: String, $lowerHour: String, $gender: String, $availableDays: String
 ) {
@@ -96,6 +102,7 @@ mutation ($id: ID!, $title: String, $tags: String!, $stock: Int,
         id
         title
         createdAt
+        additionalConditions
         description
         stock
         expireAt

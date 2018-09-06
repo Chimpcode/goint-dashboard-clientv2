@@ -9,7 +9,7 @@
       </v-flex>
       <v-flex xs12 class="text-xs-center" v-if="company !== null">
         <cc-portrait
-          :image-url="company.headerBackground">
+            :image-url="company.headerBackground">
         </cc-portrait>
       </v-flex>
     </v-layout>
@@ -273,6 +273,7 @@
         result ({ data, loading, networkStatus }) {
           this.syncCategories++
           this.editableCompany = {...data.company, legalAddress: {...data.company.legalAddress}}
+          console.log('---company', data)
           if (this.syncCategories >= 2) {
             const categories = this.categories
             let currentCategory = null

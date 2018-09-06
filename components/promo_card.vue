@@ -25,7 +25,7 @@
             </v-btn>
             <span>Fecha de Vencimiento</span>
         </v-tooltip>
-        <v-spacer/>
+        <!--<v-spacer/>-->
 
         <v-dialog v-model="activateSwitchDialog" max-width="500px">
           <v-card>

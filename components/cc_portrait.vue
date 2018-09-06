@@ -1,7 +1,7 @@
 <template>
     <div class="potrait-container" @click="openGalaxy">
       <span class="shadow">CAMBIAR PORTADA</span>
-      <img class="potrait-img" :src="imageUrl" alt="">
+      <img class="potrait-img" :src="(imageUrl || defaultImg)" alt="">
       <goint-galaxy :is-open="gointGalaxyIsOpen" :onChangeState="changedState"
                     typeImage="portrait"
                     @updatedImage="imageUrlUpdated"/>
@@ -18,13 +18,13 @@
     },
     props: {
       imageUrl: {
-        type: String,
-        default: '/img/placeholder_company_header_background.png'
+        type: String
       }
     },
     name: 'cc-portrait',
     data () {
       return {
+        defaultImg: 'http://13.90.253.208:9300/api/v1/i/milkyway/placeholder_company_header_background.png',
         gointGalaxyIsOpen: false,
         companyid: this.$store.state.auth.user.id
       }

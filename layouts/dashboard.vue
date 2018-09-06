@@ -20,6 +20,15 @@
         {{ snackbarMessage }}
       </v-snackbar>
 
+      <v-dialog v-model="isShortLoading" width="300">
+        <v-card>
+          <v-card-title>Cargando...</v-card-title>
+          <v-card-text class="text-xs-center">
+            <v-progress-circular :value="20" :indeterminate="true"></v-progress-circular>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
       <goint-payments></goint-payments>
     </v-app>
 
@@ -40,6 +49,9 @@
       GointPayments
     },
     computed: {
+      isShortLoading () {
+        return this.$store.state.isShortLoading
+      },
       isSnackbarOn: {
         get () {
           return this.$store.getters.isSnackbarOn
