@@ -10,6 +10,7 @@ const createStore = () => {
       snackbarMessage: '',
       snackbar: false,
       bombopaymentsdialog: false,
+      isLoading: false,
       isShortLoading: false
     },
     getters: {
@@ -27,6 +28,9 @@ const createStore = () => {
       },
       snackbarOff (state) {
         state.snackbar = false
+      },
+      isLoading (state, value) {
+        state.isLoading = value
       },
       isShortLoading (state, value) {
         state.isShortLoading = value

@@ -35,14 +35,14 @@
     <v-flex xs6 class="px-3">
       <v-layout row wrap>
 
-        <v-flex xs12>
+        <v-flex xs12 sm8>
           <v-select
             :name="'Ubicacion por tiendas'"
+            :label="'Selecciona Ubicacion por tiendas o...'"
             v-bind:items="allStores"
             v-model="dataPost.locationByStoresIds"
             item-text="name"
             item-value="id"
-            label="Select"
             single-line
             bottom
             multiple
@@ -64,14 +64,14 @@
         </v-flex>
 
 
-        <v-flex xs12>
+        <v-flex xs12 sm4>
           <v-select
             :name="'Ubicacion por sectores'"
+            :label="'por sectores'"
             v-bind:items="allSectors"
             v-model="dataPost.locationBySectorsIds"
             item-text="name"
             item-value="id"
-            label="Select"
             single-line
             bottom
             multiple
@@ -276,7 +276,8 @@ export default {
         {value: 'availableAge', label: 'Rango de edad'}
       ],
       invalidField: '',
-      allStores: []
+      allStores: [],
+      allSectors: []
     }
   },
   apollo: {
@@ -307,9 +308,9 @@ export default {
       this.availableGender = data
     },
     createPost () {
-      this.$store.commit('isShortLoading', true)
       console.log(this.dataPost)
       if (this.validateData()) {
+        this.$store.commit('isShortLoading', true)
         console.log('valid!')
         this.dataPost.upperHour = this.dataPost.availableHour[1].toString()
         this.dataPost.lowerHour = this.dataPost.availableHour[0].toString()
@@ -338,6 +339,7 @@ export default {
           }, 2000)
         })
       } else {
+        this.$store.commit('isShortLoading', false)
       }
     },
     validateData () {
