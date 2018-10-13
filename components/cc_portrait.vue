@@ -31,12 +31,11 @@
     },
     methods: {
       changedState (prevState) {
-        console.log(this.gointGalaxyIsOpen)
-        console.log(prevState)
+        // console.log(this.gointGalaxyIsOpen)
+        // console.log(prevState)
         this.gointGalaxyIsOpen = prevState
       },
       openGalaxy () {
-        console.log('clicked')
         this.gointGalaxyIsOpen = true
       },
       imageUrlUpdated (imageUrl) {

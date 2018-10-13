@@ -1,13 +1,40 @@
 <template>
   <div>
     <v-layout row justify-center>
+      <v-dialog v-model="dialogFormOpen" max-width="300px">
+        <v-card>
+          <v-card-title>Solicitar servicios de diseño gráfico (Servicio en construcción)</v-card-title>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-text-field label="Nombre de contacto" v-model="bannerFormName"></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field label="telefono" v-model="bannerFormPhonenumber"></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field label="correo" v-model="bannerFormEmail" ></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field label="contenido de la promocion" v-model="bannerFormDescription"></v-text-field>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn class="primary" @click.native.stop="dialogFormOpen = false">CANCELAR</v-btn>
+            <v-spacer/>
+            <v-btn class="primary" disabled @click.native.stop="sendBannerFormRequest">ENVIAR SOLICITUD</v-btn>
+          </v-card-actions>
+          <v-card-text v-show="bannerFormLoading">Espere...</v-card-text>
+        </v-card>
+      </v-dialog>
       <v-dialog v-model="isOpen" persistent max-width="80%">
         <v-card>
           <v-card-actions>
             <v-card-title class="headline">Imagenes subidas a la nube</v-card-title>
             <v-spacer></v-spacer>
 
-            <v-btn style="background: linear-gradient(to right, #FF3056, #FF3056);" dark @click.native="dialogOpen = false">Contratar dise&Ntilde;o grafico</v-btn>
+            <v-btn style="background: linear-gradient(to right, #FF3056, #FF3056);" dark @click.native="dialogFormOpen = true">Contratar dise&Ntilde;o grafico</v-btn>
           </v-card-actions>
           <v-card-text>
 
@@ -75,6 +102,12 @@
         baseUri: 'http://13.90.253.208:9300/api/v1/i/',
         state: this.isOpen,
         images: [],
+        bannerFormLoading: false,
+        bannerFormName: '',
+        bannerFormPhonenumber: '',
+        bannerFormEmail: '',
+        bannerFormDescription: '',
+        dialogFormOpen: false,
         ruc: '',
         companyid: this.$store.state.auth.user.id,
         imageSelected: undefined
@@ -146,6 +179,13 @@
       selectImageAsProfile (i) {
         console.log('click')
         this.imageSelected = i
+      },
+      sendBannerFormRequest () {
+        // this.bannerFormName
+        // this.bannerFormPhonenumber
+        // this.bannerFormEmail
+        // this.bannerFormDescription
+        //
       }
     }
   }
