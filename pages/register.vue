@@ -202,6 +202,9 @@
         onPlanSelected (plan) {
           this.planSelected = plan
         },
+        trimField (field) {
+          return field.trim()
+        },
         createNewCompany () {
           console.log('create Company')
           if (this.planSelected === null) {
@@ -227,17 +230,17 @@
             variables: {
               aboutUs: '',
               activePlanId: self.planSelected.id,
-              commercialName: self.company.commercialName,
-              email: self.company.email,
+              commercialName: self.trimField(self.company.commercialName),
+              email: self.trimField(self.company.email),
               link: link,
               ownerFullname: self.company.name + ' ' + self.company.lastname,
               staticPhone: staticPhone,
               movilPhone: self.company.movilPhone,
-              ruc: self.company.fiscalIdentity,
-              fiscalIdentity: self.company.fiscalIdentity,
+              ruc: self.trimField(self.company.fiscalIdentity),
+              fiscalIdentity: self.trimField(self.company.fiscalIdentity),
               password: self.company.password,
               socialReason: self.company.socialReason,
-              emailPayment: self.company.emailPayment,
+              emailPayment: self.trimField(self.company.emailPayment),
               termsConditions: '',
               legalAddressRegion: self.company.legalAddress.region, // self.company.legalAddress.region,
               legalAddressAddress: self.company.legalAddress.address,
