@@ -21,6 +21,7 @@ query companyQuery ($companyid: ID) {
         headerBackground
         commercialName
         createdAt
+        link
         email
         legalAddress {
             id
