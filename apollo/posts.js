@@ -86,7 +86,9 @@ mutation ($id: ID!, $title: String, $tags: String!, $stock: Int,
     updatePost (
       id: $id
       title: $title, tags: $tags,
-      stock: $stock, locationByStoresIds: $locationByStoresIds,
+      stock: $stock,
+      locationByStoresIds: $locationByStoresIds,
+      locationBySectorsIds: $locationBySectorsIds,
       byId: $byid, expireAt: $expireAt, description: $description, additionalConditions: $additionalConditions,
       isActive: $isActive,
       image: $image,
